@@ -1,0 +1,241 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        08/01/2011  22:38:04  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE Transmit.obj, STARTUP.obj TO Serial IXREF RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  Transmit.obj (TRANSMIT)
+  STARTUP.obj (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?COPY)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+
+
+LINK MAP OF MODULE:  Serial (TRANSMIT)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0012H     UNIT         ?DT?TRANSMIT_DATA?TRANSMIT
+            DATA    001AH     0002H     UNIT         ?DT?TRANSMIT
+            IDATA   001CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     001DH     UNIT         ?PR?INITILISE_RS232?TRANSMIT
+            CODE    0020H     0001H     UNIT         ?C_INITSEG
+                    0021H     0002H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     010FH     UNIT         ?C?LIB_CODE
+            CODE    0135H     008CH     UNIT         ?C_C51STARTUP
+            CODE    01C1H     003BH     UNIT         ?PR?TRANSMIT_DATA?TRANSMIT
+            CODE    01FCH     0016H     UNIT         ?PR?_PRINTSTR?TRANSMIT
+            CODE    0212H     0012H     UNIT         ?PR?SERIAL_INTR?TRANSMIT
+            CODE    0224H     0012H     UNIT         ?CO?TRANSMIT
+
+
+
+OVERLAY MAP OF MODULE:   Serial (TRANSMIT)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?C_INITSEG
+
+
+
+UNRESOLVED EXTERNAL SYMBOLS:
+   MAIN
+
+
+
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/01/2011  22:38:04  PAGE 2
+
+
+SYMBOL TABLE OF MODULE:  Serial (TRANSMIT)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        TRANSMIT
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:001AH         PUBLIC        serial_flag
+  B:00A8H.7       PUBLIC        EA
+  B:00A8H.4       PUBLIC        ES
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:0212H         PUBLIC        serial_intr
+  C:0003H         PUBLIC        initilise_rs232
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  D:001BH         PUBLIC        data_temp
+  D:0089H         PUBLIC        TMOD
+  C:0224H         SYMBOL        _?ix1000
+  D:008DH         PUBLIC        TH1
+  B:0088H.6       PUBLIC        TR1
+  C:01FCH         PUBLIC        _printstr
+  C:01C1H         PUBLIC        transmit_data
+  -------         PROC          INITILISE_RS232
+  C:0003H         LINE#         52
+  C:0003H         LINE#         53
+  C:0003H         LINE#         54
+  C:0005H         LINE#         55
+  C:0007H         LINE#         56
+  C:0009H         LINE#         57
+  C:000CH         LINE#         58
+  C:000FH         LINE#         59
+  C:0012H         LINE#         60
+  C:0014H         LINE#         62
+  C:0016H         LINE#         63
+  C:0018H         LINE#         64
+  C:001AH         LINE#         65
+  C:001CH         LINE#         66
+  C:001FH         LINE#         68
+  -------         ENDPROC       INITILISE_RS232
+  -------         PROC          SERIAL_INTR
+  C:0212H         LINE#         85
+  C:0212H         LINE#         87
+  C:0215H         LINE#         88
+  C:0215H         LINE#         89
+  C:0217H         LINE#         90
+  C:021AH         LINE#         91
+  C:021DH         LINE#         92
+  C:021EH         LINE#         93
+  C:0221H         LINE#         94
+  C:0221H         LINE#         95
+  C:0223H         LINE#         96
+  C:0223H         LINE#         97
+  -------         ENDPROC       SERIAL_INTR
+  -------         PROC          _PRINTSTR
+  D:0001H         SYMBOL        mstr
+  C:01FCH         LINE#         116
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/01/2011  22:38:04  PAGE 3
+
+
+  C:01FCH         LINE#         117
+  C:01FCH         LINE#         118
+  C:0201H         LINE#         119
+  C:0201H         LINE#         120
+  C:0203H         LINE#         121
+  C:020AH         LINE#         122
+  C:020DH         LINE#         123
+  C:020FH         LINE#         124
+  C:0211H         LINE#         125
+  -------         ENDPROC       _PRINTSTR
+  -------         PROC          TRANSMIT_DATA
+  -------         DO            
+  D:0008H         SYMBOL        name
+  -------         ENDDO         
+  C:01C1H         LINE#         127
+  C:01C1H         LINE#         128
+  C:01C1H         LINE#         129
+  C:01D4H         LINE#         131
+  C:01D6H         LINE#         132
+  C:01D8H         LINE#         135
+  C:01E1H         LINE#         137
+  C:01E4H         LINE#         138
+  C:01E7H         LINE#         139
+  C:01E9H         LINE#         141
+  C:01ECH         LINE#         142
+  C:01EFH         LINE#         143
+  C:01F1H         LINE#         145
+  C:01F4H         LINE#         146
+  C:01F7H         LINE#         147
+  C:01F9H         LINE#         148
+  C:01FBH         LINE#         150
+  -------         ENDPROC       TRANSMIT_DATA
+  -------         ENDMOD        TRANSMIT
+
+  -------         MODULE        ?C_STARTUP
+  C:0135H         SEGMENT       ?C_C51STARTUP
+  I:001CH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0138H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0135H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+BL51 BANKED LINKER/LOCATER V5.03                                                      08/01/2011  22:38:04  PAGE 4
+
+
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         92
+  C:0135H         LINE#         99
+  C:0137H         LINE#         100
+  C:0138H         LINE#         101
+  C:0139H         LINE#         102
+  C:013BH         LINE#         151
+  C:013EH         LINE#         155
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        ?C?COPY
+  C:00F6H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+
+  -------         MODULE        ?C?CLDPTR
+  C:011CH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+
+
+INTER-MODULE CROSS-REFERENCE LISTING
+------------------------------------
+
+
+NAME . . . . . . USAGE    MODULE NAMES
+--------------------------------------
+
+?C?CLDPTR. . . . CODE;    ?C?CLDPTR  TRANSMIT  
+?C?COPY. . . . . CODE;    ?C?COPY  TRANSMIT  
+?C_START . . . . CODE;    ?C_INIT  ?C_STARTUP  
+?C_STARTUP . . . CODE;    ?C_STARTUP  
+DATA_TEMP. . . . DATA;    TRANSMIT  
+INITILISE_RS232. CODE;    TRANSMIT  
+MAIN . . . . . . ILLEGAL  ** UNRESOLVED **  ?C_INIT  
+SERIAL_FLAG. . . DATA;    TRANSMIT  
+SERIAL_INTR. . . CODE;    TRANSMIT  
+TRANSMIT_DATA. . CODE;    TRANSMIT  
+_PRINTSTR. . . . CODE;    TRANSMIT  
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITILISE_RS232?TRANSMIT
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TRANSMIT_DATA?TRANSMIT
+
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  MAIN
+    MODULE:  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  MAIN
+    MODULE:  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+    ADDRESS: 0142H
+
+Program Size: data=29.0 xdata=0 code=564
+LINK/LOCATE RUN COMPLETE.  4 WARNING(S),  0 ERROR(S)

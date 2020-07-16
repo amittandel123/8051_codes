@@ -1,0 +1,135 @@
+C51 COMPILER V9.03   7SEGMENT_4DIGIT                                                       10/14/2011 17:52:54 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE 7SEGMENT_4DIGIT
+OBJECT MODULE PLACED IN 7Segment_4digit.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE 7Segment_4digit.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          // Program to make a bidirectional visitor counter using IR sensor
+   2          
+   3          #include <reg51.h>
+   4          #define msec 1
+   5          unsigned int num=0;
+   6          sbit dig_ctrl_4=P1^3;  //declare the control pins of seven segments 
+   7          sbit dig_ctrl_3=P1^2; 
+   8          sbit dig_ctrl_2=P1^1; 
+   9          sbit dig_ctrl_1=P1^0; 
+  10          unsigned int digi_val[10]={0x40,0xF9,0x24,0x30,0x19,0x12,0x02,0xF8,0x00,0x10};
+  11          unsigned int dig_1,dig_2,dig_3,dig_4,test=0; 
+  12          unsigned char dig_disp=0; 
+  13          sbit up=P3^5;  //up pin to make counter count up 
+  14          sbit down=P3^6;  //down pin to make counter count down
+  15          
+  16          void init()  // to initialize the output pins and Timer0 
+  17          { 
+  18   1              up=down=1;
+  19   1              dig_ctrl_4 = 0;
+  20   1              dig_ctrl_3 = 0;
+  21   1              dig_ctrl_2 = 0;
+  22   1              dig_ctrl_1 = 0;
+  23   1              TMOD=0x01;
+  24   1              TL0=0xf6;
+  25   1              TH0=0xFf;
+  26   1              IE=0x82;
+  27   1              TR0=1;
+  28   1      }
+  29          
+  30          void delay()  //To provide a small time delay 
+  31          { 
+  32   1              TMOD=0x01;
+  33   1          TL0=0x36;
+  34   1          TH0=0xF6;
+  35   1          TR0=1;
+  36   1          while(TF0==0);
+  37   1          TR0=0;
+  38   1          TF0=0;
+  39   1      }
+  40          
+  41          void display() interrupt 1  // Function to display the digits on seven segment.
+  42          {
+  43   1              TL0=0x36;
+  44   1          TH0=0xf6;
+  45   1              P2=0xFF;
+  46   1              dig_ctrl_1 = dig_ctrl_3 = dig_ctrl_2 = dig_ctrl_4 = 0; 
+  47   1              dig_disp++; 
+  48   1              dig_disp=dig_disp%4;
+  49   1              
+  50   1              switch(dig_disp)
+  51   1              {
+  52   2                        case 0:
+  53   2                        P2= digi_val[dig_1];
+  54   2                        dig_ctrl_1 = 1;
+  55   2                        break;
+C51 COMPILER V9.03   7SEGMENT_4DIGIT                                                       10/14/2011 17:52:54 PAGE 2   
+
+  56   2                      
+  57   2                        case 1:
+  58   2                        P2= digi_val[dig_2];
+  59   2                        dig_ctrl_2 = 1;
+  60   2                        break;
+  61   2                      
+  62   2                        case 2:
+  63   2                        P2= digi_val[dig_3];
+  64   2                        dig_ctrl_3 = 1;
+  65   2                        break;
+  66   2                      
+  67   2                        case 3:
+  68   2                        P2= digi_val[dig_4];
+  69   2                        dig_ctrl_4 = 1;
+  70   2                        break;
+  71   2              }
+  72   1      }
+  73          
+  74          void main()
+  75          {
+  76   1         init();
+  77   1         while(1)
+  78   1         {
+  79   2                      if(up==0&&down==1)  //check if up pin is pressed
+  80   2              {
+  81   3                              test++;
+  82   3                      num=test;
+  83   3                      dig_4=num%10;
+  84   3                              num=num/10;
+  85   3                      dig_3=num%10;
+  86   3                              num=num/10;
+  87   3                      dig_2=num%10;
+  88   3                              dig_1=num/10;
+  89   3                              if(test==9999)
+  90   3                                      test=0;
+  91   3                      }
+  92   2              
+  93   2                      if(up==1&&down==0)  //check if down pin is pressed
+  94   2              {
+  95   3                              test--;
+  96   3                          num=test;
+  97   3                          dig_4=num%10;
+  98   3                              num=num/10;
+  99   3                          dig_3=num%10;
+ 100   3                              num=num/10;
+ 101   3                          dig_2=num%10;
+ 102   3                              dig_1=num/10;
+ 103   3                              if(test==0)
+ 104   3                                      test=9999;
+ 105   3                      }
+ 106   2              }
+ 107   1      
+ 108   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    396    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     33    ----
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.03   7SEGMENT_4DIGIT                                                       10/14/2011 17:52:54 PAGE 3   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

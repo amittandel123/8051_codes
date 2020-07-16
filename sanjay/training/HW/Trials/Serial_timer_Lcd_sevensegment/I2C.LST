@@ -1,0 +1,109 @@
+C51 COMPILER V7.06   I2C                                                                   08/05/2011 22:15:52 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE I2C
+OBJECT MODULE PLACED IN I2C.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE I2C.C LARGE BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #include <intrins.h>
+   3          #include "I2C.H"
+   4          
+   5          #define HIGH 1
+   6          #define LOW  0
+   7          
+   8          sbit SDA        = P1^0;
+   9          sbit SCL        = P1^1;
+  10          
+  11          void init_I2C(void)
+  12          {
+  13   1              SCL = HIGH;
+  14   1              SDA = HIGH;
+  15   1      }
+  16          
+  17          void I2C_Start(void)
+  18          {
+  19   1              SCL = LOW;
+  20   1              SDA = HIGH;
+  21   1              SCL = HIGH;
+  22   1              SDA = LOW;
+  23   1      }
+  24          
+  25          void I2C_Stop(void)
+  26          {
+  27   1              SCL = LOW;
+  28   1              SDA = LOW;
+  29   1              SCL = HIGH;
+  30   1              SDA = HIGH;
+  31   1      }
+  32          
+  33          unsigned char Read_Data(void)
+  34          {
+  35   1              unsigned int i;
+  36   1              unsigned char readbyte;
+  37   1              for(i=0;i<8;i++)
+  38   1              {
+  39   2                      readbyte = readbyte << 1;
+  40   2      
+  41   2                      SCL = LOW;
+  42   2                      SCL = HIGH;
+  43   2                      if(SDA == 1)
+  44   2                              readbyte = readbyte | 0x01;
+  45   2                      else if(SDA == 0)
+  46   2                              readbyte = readbyte | 0x00;
+  47   2              }
+  48   1              SCL = LOW;
+  49   1              return(readbyte);
+  50   1      }
+  51          
+  52          void send_Data(unsigned char mData)
+  53          {
+  54   1              unsigned char x;
+  55   1              bit sendBit;
+C51 COMPILER V7.06   I2C                                                                   08/05/2011 22:15:52 PAGE 2   
+
+  56   1              unsigned char MASK = 0x80;
+  57   1              for(x=0;x<8;x++)
+  58   1              {
+  59   2                      sendBit = mData & MASK;
+  60   2                      MASK >>= 1;
+  61   2      
+  62   2                      SCL = LOW;
+  63   2                      SDA = sendBit;
+  64   2                      SCL = HIGH;
+  65   2              }
+  66   1              SCL = LOW;
+  67   1              SDA = LOW;
+  68   1      }
+  69          
+  70          void device_ACK(void)
+  71          {
+  72   1              SCL = LOW;
+  73   1              SDA = HIGH;
+  74   1              SCL = HIGH;
+  75   1      }
+  76          
+  77          void Master_NO_ACK(void)
+  78          {
+  79   1              SCL = LOW;
+  80   1              SDA = HIGH;
+  81   1              SCL = HIGH;
+  82   1              SCL = LOW;
+  83   1      }
+  84          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    104    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

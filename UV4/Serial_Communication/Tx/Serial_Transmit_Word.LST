@@ -1,0 +1,64 @@
+C51 COMPILER V9.03   SERIAL_TRANSMIT_WORD                                                  01/11/2012 12:22:33 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE SERIAL_TRANSMIT_WORD
+OBJECT MODULE PLACED IN Serial_Transmit_Word.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Serial_Transmit_Word.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          // Write a program for the 8051 to transfer “I am the BEST” serially at 9600
+   2          // baud, 8-bit data, 1 stop bit, do this continuously
+   3          
+   4          #include<reg51.h>
+   5          
+   6          void Initialize()
+   7          {
+   8   1              TMOD=0x20;              // Timer1 mode2 
+   9   1              TH1=0xFD;               // Baud rate 9600
+  10   1              SCON=0x50;              // 8-bit, 1 stop, REN enabled
+  11   1              TR1=1;                  // start timer  
+  12   1      }
+  13          
+  14          void Transmit()
+  15          {
+  16   1              while(1)
+  17   1              {
+  18   2                      unsigned char x,mdata[]=("I am the BEST ");
+  19   2                      for(x=0;x<14;x++)
+  20   2                      {
+  21   3                              SBUF=mdata[x];
+  22   3                              while(TI==0);
+  23   3                              TI=0;
+  24   3                      }       
+  25   2                      
+  26   2              }
+  27   1      }
+  28          /*
+  29          void Delay(unsigned char value)
+  30          {
+  31                  unsigned int u,v;
+  32                  for(u=0;u<value;u++)
+  33                          for(v=0;v<1000;v++); 
+  34          }
+  35          */
+  36          
+  37          void main()
+  38          {
+  39   1              Initialize();
+  40   1              Transmit();     
+  41   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     62    ----
+   CONSTANT SIZE    =     15    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      16
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

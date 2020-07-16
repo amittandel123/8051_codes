@@ -1,0 +1,70 @@
+C51 COMPILER V9.06   MAIN                                                                  07/06/2012 09:37:28 PAGE 1   
+
+
+C51 COMPILER V9.06, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include"iButton.h"
+   3          
+   4          sbit LED_1 = P2^0;
+   5          sbit LED_2 = P2^1;
+   6          
+   7          unsigned char sn[8],i;
+   8          void main()
+   9          {
+  10   1              int Read_Reset;
+  11   1              P1=0x00;
+  12   1              LED_1 = 0;
+  13   1              LED_2 = 0;
+  14   1              
+  15   1              while(1)
+  16   1              {
+  17   2                      Read_Reset = Reset_iButton();
+  18   2                      Write_Byte(0x33);
+  19   2                      for(i=0;i<8;i++)     //loop 8 times to read the 64 bit ID       
+  20   2                      { 
+  21   3                              sn[i] = Read_Byte(); 
+  22   3                      }                                       // the array sn[] would hold the 64bit ID
+  23   2                      if(Read_Reset)
+  24   2                              LED_1=1;
+  25   2                      else
+  26   2                              LED_1=0;
+  27   2              }
+  28   1      }
+  29          /******************************************************************************************************
+  30          for(;;)
+  31          {
+  32                  detect = 0; //paranoid check
+  33                  detect  = OWReset(); //reset the 1-wire bus
+  34                  OWWriteByte(0x33);   //issue a 1-wire command
+  35                  for(i=0;i<8;i++)     //loop 8 times to read the 64 bit ID       
+  36                  { 
+  37                          sn[i] = OWReadByte(); 
+  38                  }                                       // the array sn[] would hold the 64bit ID
+  39                  if(detect & 0x01)
+  40                  { 
+  41                          onLED(2);
+  42                  }  //if a valid 1-wire device was detected light up
+  43                  else { offLED(2); }
+  44          }
+  45          ******************************************************************************************************/
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     57    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.06   MAIN                                                                  07/06/2012 09:37:28 PAGE 2   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

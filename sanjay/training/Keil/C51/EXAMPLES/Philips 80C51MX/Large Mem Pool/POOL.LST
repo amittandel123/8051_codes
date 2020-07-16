@@ -1,0 +1,68 @@
+CX51 COMPILER V7.20   POOL                                                                 09/01/2006 15:52:31 PAGE 1   
+
+
+CX51 COMPILER V7.20, COMPILATION OF MODULE POOL
+OBJECT MODULE PLACED IN POOL.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\CX51.EXE POOL.C BROWSE DEBUG SRC(.\POOL.SRC)
+
+line level    source
+
+   1          /* 
+   2           *  Fixed Pool Management for Philips 80C51MX
+   3           */
+   4          
+   5          #include "record.h"
+   6          
+   7          #pragma ASM
+   8          
+   9          #if !defined (__C51__) && !defined (__CX51__)
+                #include "record.h"
+              #endif
+  12          /*
+  13          e_max   EQU 65535 / RecSize                 ; maximum records in a 64KB slot
+  14          s64     EQU RecNo / e_max                   ; number of complete 64KB slots
+  15          remain  EQU RecNo MOD e_max                 ; remaining rec. in last slot
+  16          segsiz  EQU (s64*65536) + (remain*RecSize)  ; size of fixed pool
+  17          
+  18          POOLSEG   SEGMENT HDATA
+  19                    RSEG POOLSEG
+  20          
+  21          POOLSTRT: DS      segsiz
+  22                    PUBLIC  POOLSTRT
+  23          */
+  24          #pragma ENDASM
+  25          
+  26          /*
+  27           * Record a Pointer to Record 'n' in Memory Pool
+  28           */
+  29          /*
+  30          RECORD far *pRecord (unsigned int n)  {
+  31            void far *p;
+  32          
+  33            p = p;       // supress unused variable warning
+  34            n = n;       // supress unused variable warning
+  35          */
+  36          #pragma ASM
+  37          /*
+  38          EXTRN CODE (?C?UIDIV)
+  39          
+  40            MOV    R4,#HIGH e_max        ; seg  = n / e_max;
+  41            MOV    R5,#LOW  e_max        ; slot = n % e_max;
+  42            CALL   ?C?UIDIV              ; gives seg in R4, slot in R6|R7
+  43            MOV    A,R7                  ; p = &POOLSTRT + (seg*65536) + slot
+  44            ADD    A,#BYTE2 (POOLSTRT)
+  45            MOV    R3,A
+  46            MOV    A,R4
+  47            MOV    R2,A
+  48            MOV    A,R5
+  49            MOV    R1,A
+  50           */
+  51          #pragma ENDASM
+  52          
+  53          //  return (p);
+  54          }
+*** ERROR C141 IN LINE 54 OF POOL.C: syntax error near '}'
+CX51 COMPILER V7.20   POOL                                                                 09/01/2006 15:52:31 PAGE 2   
+
+
+CX51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)

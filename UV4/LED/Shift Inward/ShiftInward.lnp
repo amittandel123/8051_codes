@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"ShiftInward.obj" 
+TO "ShiftInward" 
+RAMSIZE(256) 

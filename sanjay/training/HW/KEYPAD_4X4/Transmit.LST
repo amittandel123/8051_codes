@@ -1,0 +1,63 @@
+C51 COMPILER V7.06   TRANSMIT                                                              07/29/2011 00:55:22 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE TRANSMIT
+OBJECT MODULE PLACED IN Transmit.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Transmit.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #include <stdio.h>
+   3          #include <intrins.h>
+   4          
+   5          bit serial_flag;
+   6          unsigned char data_temp;
+   7          // add lcd.c and varflag.c to run this program.
+   8          
+   9          
+  10          void initilise();
+  11          void transmit_data();
+  12          
+  13          void initilise()
+  14          {
+  15   1              TR1 = 0;
+  16   1              ES = 0;
+  17   1              EA = 0;
+  18   1              SCON  = 0x40;                   /* SCON: mode 1, 8-bit UART, disable rcvr */
+  19   1              TMOD = 0x20;               /* TMOD: timer 1, mode 2, 8-bit reload */
+  20   1              TH1   = 253;                /* TH1:  reload value for 9600 baud @ 11.059 MHz */
+  21   1              TR1   = 1;                  /* TR1:  timer 1 run */
+  22   1      
+  23   1              EA = 1;
+  24   1              ES = 1;
+  25   1              RI = 0;
+  26   1              TI = 0;
+  27   1              serial_flag = 0;
+  28   1      
+  29   1      }
+  30          
+  31          void printstr(unsigned char * mstr)
+  32          {
+  33   1              while(*mstr != '\0')
+  34   1              {
+  35   2                      SBUF = *mstr;
+  36   2                      mstr++;
+  37   2                      while(!TI);
+  38   2                      TI = 0;
+  39   2              }
+  40   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     50    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

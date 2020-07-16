@@ -1,0 +1,85 @@
+C51 COMPILER V9.05   MAIN                                                                  12/13/2017 19:49:30 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          // 50 mS Delay using Timer
+   2          #include<reg51.h>
+   3          void T0M1Delay(void);
+   4          void Sec_Delay();
+   5          void Minute_Delay();
+   6          void Hour_Delay();
+   7          
+   8          sbit LED = P2^0;
+   9          
+  10          void main(void)
+  11          {
+  12   1        while(1)
+  13   1        {
+  14   2          LED = ~LED;
+  15   2          Minute_Delay();
+  16   2        }
+  17   1      }
+  18          
+  19          void Sec_Delay()
+  20          {
+  21   1        int i;
+  22   1        for(i=0;i<13;i++) // 1Sec Delay
+  23   1          T0M1Delay();
+  24   1      }
+  25          void Minute_Delay()
+  26          {
+  27   1        int i;
+  28   1        for(i=0;i<780;i++)  // 1Minute Delay
+  29   1          T0M1Delay();
+  30   1      }
+  31          void Hour_Delay()
+  32          {
+  33   1        int i;
+  34   1        for(i=0;i<60;i++) // 60 Minutes Delay
+  35   1          Minute_Delay();
+  36   1      }
+  37          /************************************************************************/
+  38          void T0M1Delay()
+  39          {
+  40   1        TMOD = 0x01;  //Timer 0, mode 1 (16 bit)
+  41   1        TL0 = 0xFD;   // 50mS Delay. FFFFh-4BFDh = B402h = 46082+1 = 46083
+  42   1        TH0 = 0x4B;   // 46083 X 1.085uS = 50mS
+  43   1        TR0 = 1;      // Turn ON timer
+  44   1        while(TF0 == 0);  // wait for TF0 to roll over
+  45   1        TR0 = 0;      // Turn OFF Timer
+  46   1        TF0 = 0;      // reset TF0  
+  47   1      }
+  48          /************************************************************************
+  49          void T0M1Delay()
+  50          {
+  51            TMOD = 0x01;  //Timer 0, mode 1 (16 bit)
+  52            TL0 = 0x00;   // 50mS Delay. FFFFh-0000h = FFFFh = 65535+1 = 65536
+  53            TH0 = 0x00;   // 65536 X 1.085uS = 71.1mS
+  54            TR0 = 1;      // Turn ON timer
+C51 COMPILER V9.05   MAIN                                                                  12/13/2017 19:49:30 PAGE 2   
+
+  55            while(TF0 == 0);  // wait for TF0 to roll over
+  56            TR0 = 0;      // Turn OFF Timer
+  57            TF0 = 0;      // reset TF0  
+  58          }
+  59          ************************************************************************/
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    110    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

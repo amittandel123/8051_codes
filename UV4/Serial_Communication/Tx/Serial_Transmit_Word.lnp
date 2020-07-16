@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"Serial_Transmit_Word.obj" 
+TO "Serial_Transmit_Word" 
+RAMSIZE(256) 

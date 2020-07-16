@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"Mazidi_Keypad.obj" 
+TO "Mazidi_Keypad" 
+RAMSIZE(256) 

@@ -1,0 +1,208 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        04/27/2017  18:06:30  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE code.obj, timer.obj TO timer
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  code.obj (CODE)
+  timer.obj (TIMER)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  timer (CODE)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0003H     UNIT         ?DT?CODE
+            IDATA   000BH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0018H                  *** GAP ***
+            CODE    001BH     0003H     ABSOLUTE     
+                    001EH     07E2H                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     0027H     UNIT         ?PR?MAIN?CODE
+            CODE    08B3H     001BH     UNIT         ?PR?_DELAY?TIMER
+            CODE    08CEH     0014H     UNIT         ?PR?MAIN?TIMER
+            CODE    08E2H     0012H     UNIT         ?PR?INITTIMER1?CODE
+            CODE    08F4H     000AH     UNIT         ?PR?CCT_INIT?CODE
+            CODE    08FEH     0006H     UNIT         ?PR?TIMER1_ISR?CODE
+            CODE    0904H     0004H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   timer (CODE)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?CODE
+  +--> ?C_INITSEG
+
+?PR?MAIN?CODE
+  +--> ?PR?CCT_INIT?CODE
+  +--> ?PR?INITTIMER1?CODE
+
+
+
+IGNORED SYMBOLS:
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/27/2017  18:06:30  PAGE 2
+
+
+   MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  timer (CODE)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        CODE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:08FEH         PUBLIC        Timer1_ISR
+  B:00A8H.7       PUBLIC        EA
+  C:088CH         PUBLIC        main
+  D:0008H         PUBLIC        count
+  D:0089H         PUBLIC        TMOD
+  B:00A0H.0       PUBLIC        Out
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.7       PUBLIC        TF1
+  C:08E2H         PUBLIC        InitTimer1
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  C:08F4H         PUBLIC        cct_init
+  D:000AH         PUBLIC        TimeUp
+  B:0088H.6       PUBLIC        TR1
+  -------         PROC          MAIN
+  C:088CH         LINE#         18
+  C:088CH         LINE#         19
+  C:088CH         LINE#         20
+  C:088FH         LINE#         21
+  C:0892H         LINE#         22
+  C:0892H         LINE#         23
+  C:0892H         LINE#         24
+  C:0896H         LINE#         25
+  C:0896H         LINE#         26
+  C:0899H         LINE#         27
+  C:089BH         LINE#         28
+  C:089DH         LINE#         29
+  C:08A5H         LINE#         30
+  C:08ABH         LINE#         31
+  C:08ABH         LINE#         32
+  C:08AFH         LINE#         33
+  C:08B1H         LINE#         34
+  C:08B1H         LINE#         35
+  C:08B1H         LINE#         36
+  -------         ENDPROC       MAIN
+  -------         PROC          CCT_INIT
+  C:08F4H         LINE#         39
+  C:08F4H         LINE#         40
+  C:08F4H         LINE#         41
+  C:08F7H         LINE#         42
+  C:08F9H         LINE#         43
+  C:08FBH         LINE#         44
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/27/2017  18:06:30  PAGE 3
+
+
+  C:08FDH         LINE#         45
+  -------         ENDPROC       CCT_INIT
+  -------         PROC          INITTIMER1
+  C:08E2H         LINE#         48
+  C:08E2H         LINE#         49
+  C:08E2H         LINE#         50
+  C:08E5H         LINE#         51
+  C:08E8H         LINE#         53
+  C:08EBH         LINE#         54
+  C:08EDH         LINE#         56
+  C:08EFH         LINE#         57
+  C:08F1H         LINE#         58
+  C:08F3H         LINE#         59
+  -------         ENDPROC       INITTIMER1
+  -------         PROC          TIMER1_ISR
+  C:08FEH         LINE#         62
+  C:08FEH         LINE#         64
+  C:0901H         LINE#         65
+  C:0903H         LINE#         66
+  -------         ENDPROC       TIMER1_ISR
+  -------         ENDMOD        CODE
+
+  -------         MODULE        TIMER
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  C:08B3H         PUBLIC        _delay
+  C:08CEH         PUBLIC        main
+  D:0089H         PUBLIC        TMOD
+  B:0088H.5       PUBLIC        TF0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0080H.0       PUBLIC        LED
+  B:0088H.4       PUBLIC        TR0
+  -------         PROC          MAIN
+  C:08CEH         LINE#         4
+  C:08CEH         LINE#         5
+  C:08CEH         LINE#         6
+  C:08D1H         LINE#         7
+  C:08D4H         LINE#         8
+  C:08D7H         LINE#         10
+  C:08D7H         LINE#         11
+  C:08D7H         LINE#         12
+  C:08D9H         LINE#         13
+  C:08E0H         LINE#         14
+  -------         ENDPROC       MAIN
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        x
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:08B3H         LINE#         17
+  C:08B3H         LINE#         18
+  C:08B3H         LINE#         20
+  C:08BDH         LINE#         21
+  C:08BDH         LINE#         22
+  C:08BFH         LINE#         23
+  C:08C2H         LINE#         24
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/27/2017  18:06:30  PAGE 4
+
+
+  C:08C4H         LINE#         25
+  C:08C6H         LINE#         26
+  C:08CDH         LINE#         27
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        TIMER
+
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  MAIN
+    MODULE:  timer.obj (TIMER)
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MAIN?TIMER
+
+*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
+    SYMBOL:  MAIN
+    MODULE:  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+    ADDRESS: 080DH
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 007EH BYTE ( 6%) *
+******************************************************************************
+
+Program Size: data=12.0 xdata=0 code=270
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  2 ERROR(S)

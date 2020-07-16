@@ -1,0 +1,221 @@
+C51 COMPILER V9.06   EEPROM                                                                04/24/2012 09:40:51 PAGE 1   
+
+
+C51 COMPILER V9.06, COMPILATION OF MODULE EEPROM
+OBJECT MODULE PLACED IN EEPROM.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE EEPROM.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          //Program to interface Serial EEPROM AT24C02 with 8051 microcontroller (AT89C51) 
+   2          #include<reg51.h>
+   3          #include<intrins.h>   //For using [_nop_()]
+   4          sbit sda=P1^0;
+   5          sbit scl=P1^1;
+   6          sbit led=P0^3;
+   7          bit ack;
+   8          sbit led1=P0^1;
+   9          sfr lcd_data_pin=0xA0;//p2 port
+  10          sfr output=0x80;//p0 port
+  11          sbit rs=P3^0;
+  12          sbit rw=P3^1;
+  13          sbit en=P3^6;
+  14          unsigned char reead,write,write2,i,j;
+  15          unsigned int temp;
+  16          void delay(unsigned int count)
+  17          {
+  18   1              int i,j;
+  19   1              for(i=0;i<count;i++)
+  20   1                      for(j=0;j<1275;j++);
+  21   1      }
+  22          void lcd_command(unsigned char comm)
+  23          {
+  24   1              lcd_data_pin=comm;
+  25   1              en=1;
+  26   1              rs=0;
+  27   1              rw=0;
+  28   1              delay(1);
+  29   1              en=0;
+  30   1      }
+  31          void lcd_data(unsigned char disp)
+  32          {
+  33   1              lcd_data_pin=disp;
+  34   1              en=1;
+  35   1              rs=1;
+  36   1              rw=0;
+  37   1              delay(1);
+  38   1              en=0;
+  39   1      }
+  40          lcd_dataa(unsigned char *disp)
+  41          {
+  42   1              int x;
+  43   1              for(x=0;disp[x]!=0;x++)
+  44   1              {
+  45   2                      lcd_data(disp[x]);
+  46   2              }
+  47   1      }
+  48          void lcd_ini()
+  49          {
+  50   1              lcd_command(0x38);                // for using 8-bit 2 row LCD 
+  51   1              delay(5);
+  52   1              lcd_command(0x0F);        // for display on, cursor blinking
+  53   1              delay(5);
+  54   1              lcd_command(0x80);
+  55   1              delay(5);
+C51 COMPILER V9.06   EEPROM                                                                04/24/2012 09:40:51 PAGE 2   
+
+  56   1      }
+  57          void aknowledge()         //acknowledge condition
+  58          {
+  59   1              scl=1;
+  60   1              _nop_();
+  61   1              _nop_();
+  62   1              scl=0;
+  63   1      } 
+  64          void start()            //start condition
+  65          {
+  66   1              sda=1;
+  67   1              scl=1;
+  68   1              _nop_();         //No operation
+  69   1              _nop_();
+  70   1              sda=0;
+  71   1              scl=0;
+  72   1      }
+  73          void stop()                     //stop condition
+  74          {
+  75   1              sda=0;
+  76   1              scl=1;
+  77   1              _nop_();
+  78   1              _nop_(); 
+  79   1              sda=1;
+  80   1              scl=0;
+  81   1      }
+  82          void send_byte(unsigned char value)     //send byte serially
+  83          { 
+  84   1              unsigned int i;
+  85   1              unsigned char send;
+  86   1              send=value;
+  87   1              for(i=0;i<8;i++)
+  88   1              {
+  89   2                      sda=send/128;                   //extracting MSB
+  90   2                      send=send<<1;                   //shiftng left
+  91   2                      scl=1;
+  92   2                      _nop_();
+  93   2                      _nop_();
+  94   2                      scl=0;
+  95   2              }
+  96   1         ack=sda;                                     //reading acknowledge
+  97   1         sda=0;
+  98   1      }
+  99          unsigned char read_byte()                       //reading from EEPROM serially
+ 100          {
+ 101   1              unsigned int i;
+ 102   1              sda=1;
+ 103   1              reead=0;
+ 104   1              for(i=0;i<8;i++)
+ 105   1              {
+ 106   2                      reead=reead<<1;
+ 107   2                      scl=1;
+ 108   2                      _nop_();
+ 109   2                      _nop_();
+ 110   2                      if(sda==1)
+ 111   2                              reead++;
+ 112   2                      scl=0;
+ 113   2              }
+ 114   1              sda=0;
+ 115   1              return reead;                           //Returns 8 bit data here
+ 116   1      }               
+ 117          void save()                                     //save in EEPROM
+C51 COMPILER V9.06   EEPROM                                                                04/24/2012 09:40:51 PAGE 3   
+
+ 118          {
+ 119   1              start();
+ 120   1              send_byte(0xA0);                                                //device address
+ 121   1              aknowledge();
+ 122   1              send_byte(0x00);                                                //word address
+ 123   1              aknowledge();
+ 124   1              send_byte(5);                                                   //send data
+ 125   1              aknowledge();
+ 126   1              send_byte(65);
+ 127   1              aknowledge();
+ 128   1              stop();                                                    
+ 129   1              if(ack==0)
+ 130   1              {
+ 131   2                      led1=1;
+ 132   2                      delay(100);
+ 133   2                      led1=0;
+ 134   2                      delay(100);
+ 135   2                      lcd_command(0x86);
+ 136   2                      lcd_data('5');
+ 137   2                      lcd_command(0x87);
+ 138   2                      lcd_data('A');
+ 139   2              }
+ 140   1              else
+ 141   1                      led1=1;
+ 142   1              aknowledge();
+ 143   1      }
+ 144          void Read()
+ 145          {
+ 146   1              start();
+ 147   1              send_byte(0xA0);
+ 148   1              aknowledge();
+ 149   1              send_byte(0x00);
+ 150   1              aknowledge();
+ 151   1              start();
+ 152   1              send_byte(0xA1);                                         //device address
+ 153   1              aknowledge();
+ 154   1              i=read_byte();
+ 155   1              aknowledge();
+ 156   1              j=read_byte();
+ 157   1              aknowledge();
+ 158   1              stop();
+ 159   1              if(i==5)
+ 160   1              {
+ 161   2                      led=0;
+ 162   2                      delay(100);
+ 163   2                      led=1;
+ 164   2                      delay(100);
+ 165   2                      write=i+48;
+ 166   2                      lcd_command(0xC6);
+ 167   2                      lcd_data(write);        
+ 168   2              }
+ 169   1              else
+ 170   1              led=1;
+ 171   1              if(j==65)
+ 172   1              {
+ 173   2                      lcd_command(0xC7);
+ 174   2                      lcd_data(j);
+ 175   2              }
+ 176   1              aknowledge();
+ 177   1      }
+ 178          
+ 179          void main()
+C51 COMPILER V9.06   EEPROM                                                                04/24/2012 09:40:51 PAGE 4   
+
+ 180          {
+ 181   1              lcd_ini();
+ 182   1              lcd_dataa("Sent :");
+ 183   1              lcd_command(0xC0);
+ 184   1              lcd_dataa("Read :");
+ 185   1              temp=0;
+ 186   1              while(1)
+ 187   1              {
+ 188   2                      save();
+ 189   2                      Read();
+ 190   2              }
+ 191   1      }
+*** WARNING C290 IN LINE 47 OF EEPROM.c: missing return value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    462    ----
+   CONSTANT SIZE    =     14    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      7       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

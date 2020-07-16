@@ -1,0 +1,33 @@
+C51 COMPILER V9.03   ASCII2BCD                                                             11/04/2011 11:31:08 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE ASCII2BCD
+OBJECT MODULE PLACED IN ASCII2BCD.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ASCII2BCD.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg51.h>
+   2          void main()
+   3          {
+   4   1              unsigned char x='4',y='7',BCD_Number;
+   5   1              x= x & 0x0F;                                                    // masking of lower 4 bits
+   6   1              y= y & 0x0F;                                                    // masking of higher 4 bits
+   7   1              x = x<<4;                                                               // making it higher bits
+   8   1              BCD_Number = x | y;
+   9   1              P1 = BCD_Number; 
+  10   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     18    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

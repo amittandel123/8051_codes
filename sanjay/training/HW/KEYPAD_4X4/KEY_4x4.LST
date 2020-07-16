@@ -1,0 +1,115 @@
+C51 COMPILER V7.06   KEY_4X4                                                               07/29/2011 01:22:48 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE KEY_4X4
+OBJECT MODULE PLACED IN KEY_4x4.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE KEY_4x4.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <intrins.h>
+   2          #include<reg51.h>
+   3          
+   4          sbit EN = P3^5;
+   5          
+   6          int prev_pressed_key=0, pressed_key=0;
+   7          
+   8          void init_serial()
+   9          {
+  10   1              TR1 = 0;
+  11   1              ES = 0;
+  12   1              EA = 0;
+  13   1              SCON  = 0x40;                   /* SCON: mode 1, 8-bit UART, disable rcvr */
+  14   1              TMOD = 0x20;               /* TMOD: timer 1, mode 2, 8-bit reload */
+  15   1              TH1   = 253;                /* TH1:  reload value for 9600 baud @ 11.059 MHz */
+  16   1              TR1   = 1;                  /* TR1:  timer 1 run */
+  17   1      
+  18   1              EA = 1;
+  19   1              ES = 1;
+  20   1              RI = 0;
+  21   1              TI = 0;
+  22   1      }
+  23          
+  24          void printstr(unsigned char * mstr)
+  25          {
+  26   1              while(*mstr != '\0')
+  27   1              {
+  28   2                      SBUF = *mstr;
+  29   2                      mstr++;
+  30   2                      while(!TI);
+  31   2                      TI = 0;
+  32   2              }
+  33   1      }
+  34          
+  35          void display(int num)
+  36          {
+  37   1              unsigned char mstr[8] = "KEY : ";
+  38   1              if (num<10)
+  39   1                      mstr[6] = num + 0x30;
+  40   1              else
+  41   1                      mstr[6] = num + 0x41 - 10;
+  42   1      
+  43   1              mstr[7] = '\0';
+  44   1              printstr(mstr);
+  45   1      }
+  46          
+  47          void initialise(void)
+  48          {
+  49   1              P1 = 0xF8;
+  50   1              P2 = 0x00;
+  51   1              EN=0;
+  52   1              EA=0;
+  53   1              P0=0xFF;
+  54   1      }
+  55          
+C51 COMPILER V7.06   KEY_4X4                                                               07/29/2011 01:22:48 PAGE 2   
+
+  56          void main(void)
+  57          {
+  58   1              int rw, cl;
+  59   1              unsigned char KEY_VAL=0;
+  60   1              unsigned char ROWS[4] = {0xE0,0xD0,0xB0,0x70};
+  61   1              unsigned char COLS[4] = {0x0E,0x0D,0x0B,0x07};
+  62   1      
+  63   1              initialise();
+  64   1              init_serial();
+  65   1      
+  66   1              while(1)
+  67   1              {
+  68   2                      for(rw=0;rw<4;rw++)
+  69   2                      {
+  70   3                              P0 = ROWS[rw] + 0x0F;
+  71   3                              KEY_VAL=P0;
+  72   3                              if((KEY_VAL & 0x0F)!= 0x0F)
+  73   3                              {
+  74   4                                      for(cl=0;cl<4;cl++)
+  75   4                                      {
+  76   5                                              if((KEY_VAL & 0x0F) == COLS[cl])
+  77   5                                              {
+  78   6                                                      pressed_key = ((cl*4)+(rw+1));
+  79   6                                                      display(pressed_key);
+  80   6                                                      P0 = 0xFF;
+  81   6                                                      while(P0 != 0xFF);
+  82   6                                                      break;
+  83   6                                              }
+  84   5                                      }
+  85   4                              }
+  86   3                      }
+  87   2              }
+  88   1      }
+  89          
+  90          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    302    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4      23
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

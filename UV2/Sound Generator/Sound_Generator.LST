@@ -1,0 +1,113 @@
+C51 COMPILER V9.06   SOUND_GENERATOR                                                       05/10/2012 18:33:56 PAGE 1   
+
+
+C51 COMPILER V9.06, COMPILATION OF MODULE SOUND_GENERATOR
+OBJECT MODULE PLACED IN Sound_Generator.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Sound_Generator.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          // Program to generate different sounds using micro controller
+   2          
+   3          #include<reg51.h>
+   4          sbit out=P1^0;  //output pin 1
+   5          
+   6          void delay(unsigned char p,unsigned char q)
+   7          {
+   8   1              TMOD=0x01;              //timer0 mode1(16 bit)
+   9   1              TL0=q;          //load TL0
+  10   1              TH0=p;          //load TH0
+  11   1              TR0=1;                  //turn on T0
+  12   1              while(TF0==0);  // wait for flag generation
+  13   1              TR0=0;                  // turn off T0
+  14   1              TF0=0;                  // clear TF0
+  15   1      }
+  16          
+  17          void play(unsigned char j,unsigned char k)
+  18          {
+  19   1              int i;
+  20   1              for(i=0;i<1000;i++)  //to play sound
+  21   1              {
+  22   2                      out=1;
+  23   2                      delay(j,k);
+  24   2                      out=0;
+  25   2                      delay(j,k);
+  26   2              }
+  27   1      }
+  28          
+  29          void main()
+  30          {
+  31   1              int l;
+  32   1              while(1)
+  33   1              {
+  34   2                      
+  35   2      //              play(0xfe,0x33);  //playing sound of frequency of about 1000 hertz with a delay between two frequencie
+             -s
+  36   2      //              for(l=0;l<5;l++)
+  37   2      //              {
+  38   2      //                      delay(0x00,0x00);  
+  39   2      //              }
+  40   2                      play(0xff,0xa3);  //playing sound of frequency of about 5000 hertz with a delay between two frequencies
+  41   2                      for(l=0;l<5;l++)
+  42   2                      {
+  43   3                              delay(0x00,0x00);  
+  44   3                      } 
+  45   2                      play(0xff,0xb3);  //playing sound of frequency of about 5000 hertz with a delay between two frequencies
+  46   2                      for(l=0;l<5;l++)
+  47   2                      {
+  48   3                              delay(0x00,0x00);  
+  49   3                      } 
+  50   2                      play(0xff,0xc3);  //playing sound of frequency of about 5000 hertz with a delay between two frequencies
+  51   2                      for(l=0;l<5;l++)
+  52   2                      {
+  53   3                              delay(0x00,0x00);  
+  54   3                      } 
+C51 COMPILER V9.06   SOUND_GENERATOR                                                       05/10/2012 18:33:56 PAGE 2   
+
+  55   2                      play(0xff,0xd3);  //playing sound of frequency of about 5000 hertz with a delay between two frequencies
+  56   2                      for(l=0;l<5;l++)
+  57   2                      {
+  58   3                              delay(0x00,0x00);  
+  59   3                      } 
+  60   2      /*              play(0xff,0xd1);  //playing sound of frequency of about 10000 hertz with a delay between two frequenci
+             -es
+  61   2                      for(l=0;l<5;l++)
+  62   2                      {
+  63   2                              delay(0x00,0x00);  
+  64   2                      }
+  65   2                      play(0xff,0xdc);  //playing sound of frequency of about 13000 hertz with a delay between two frequencies
+  66   2                      for(l=0;l<5;l++)
+  67   2                      {
+  68   2                              delay(0x00,0x00);  
+  69   2                      }
+  70   2                      play(0xff,0xcc);  //playing sound of frequency of about 9300 hertz with a delay between two frequencies
+  71   2                      for(l=0;l<5;l++)
+  72   2                      {
+  73   2                              delay(0x00,0x00);  
+  74   2                      }
+  75   2                      play(0xfc,0xcd);  //playing sound of frequency of about 500 hertz with a delay between two frequencies
+  76   2                      for(l=0;l<5;l++)   
+  77   2                      {
+  78   2                              delay(0x00,0x00);  //delay of 71 miliseconds
+  79   2                      }
+  80   2                      play(0xff,0xe8);  //playing sound of frequency of about 20000 hertz with a delay between two frequencies
+  81   2                      for(l=0;l<5;l++)
+  82   2                      {
+  83   2                              delay(0x00,0x00);  
+  84   2                      }*/
+  85   2              } 
+  86   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    162    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

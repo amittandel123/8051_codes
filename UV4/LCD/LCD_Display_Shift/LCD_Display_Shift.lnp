@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"LCD_Display_Shift.obj" 
+TO "LCD_Display_Shift" 
+RAMSIZE(256) 

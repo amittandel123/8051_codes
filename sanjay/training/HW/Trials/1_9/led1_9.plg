@@ -1,0 +1,312 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+D:\training\training\HW\Trials\1_9\led1_9.uv2
+Project File Date:  08/01/2011
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+linking...
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  ?C_START
+    MODULE:  .\STARTUP.obj (?C_STARTUP)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  ?C_START
+    MODULE:  .\STARTUP.obj (?C_STARTUP)
+    ADDRESS: 000DH
+Program Size: data=9.0 xdata=0 code=15
+"led1_9" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+LED.C(7): error C202: 'p1': undefined identifier
+LED.C(10): error C141: syntax error near '{', expected '('
+LED.C(10): error C202: 'p1': undefined identifier
+LED.C(12): error C172: 'case': missing enclosing switch
+LED.C(12): error C171: 'break': missing enclosing loop
+LED.C(13): error C172: 'case': missing enclosing switch
+LED.C(13): error C202: 'mDATA': undefined identifier
+LED.C(13): error C171: 'break': missing enclosing loop
+LED.C(14): error C172: 'case': missing enclosing switch
+LED.C(14): error C202: 'mDATA': undefined identifier
+LED.C(14): error C171: 'break': missing enclosing loop
+LED.C(15): error C172: 'case': missing enclosing switch
+LED.C(15): error C202: 'mDATA': undefined identifier
+LED.C(15): error C171: 'break': missing enclosing loop
+LED.C(16): error C172: 'case': missing enclosing switch
+LED.C(16): error C202: 'mDATA': undefined identifier
+LED.C(16): error C171: 'break': missing enclosing loop
+LED.C(17): error C172: 'case': missing enclosing switch
+LED.C(17): error C202: 'mDATA': undefined identifier
+LED.C(17): error C171: 'break': missing enclosing loop
+LED.C(18): error C172: 'case': missing enclosing switch
+LED.C(18): error C202: 'mDATA': undefined identifier
+LED.C(18): error C171: 'break': missing enclosing loop
+LED.C(19): error C172: 'case': missing enclosing switch
+LED.C(19): error C202: 'mDATA': undefined identifier
+LED.C(19): error C171: 'break': missing enclosing loop
+LED.C(20): error C172: 'case': missing enclosing switch
+LED.C(20): error C202: 'mDATA': undefined identifier
+LED.C(20): error C171: 'break': missing enclosing loop
+LED.C(21): error C172: 'case': missing enclosing switch
+LED.C(21): error C202: 'mDATA': undefined identifier
+LED.C(21): error C171: 'break': missing enclosing loop
+LED.C(22): error C172: 'default': missing enclosing switch
+LED.C(22): error C202: 'mDATA': undefined identifier
+LED.C(24): error C202: 'p0': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+LED.C(16): warning C209: '_lookup': too few actual parameters
+LED.C(36): error C141: syntax error near '{', expected '('
+LED.C(38): error C172: 'case': missing enclosing switch
+LED.C(38): error C202: 'ox3f': undefined identifier
+LED.C(38): error C171: 'break': missing enclosing loop
+LED.C(39): error C172: 'case': missing enclosing switch
+LED.C(39): error C202: 'ox06': undefined identifier
+LED.C(39): error C171: 'break': missing enclosing loop
+LED.C(40): error C172: 'case': missing enclosing switch
+LED.C(40): error C202: 'ox5b': undefined identifier
+LED.C(40): error C171: 'break': missing enclosing loop
+LED.C(41): error C172: 'case': missing enclosing switch
+LED.C(41): error C202: 'ox4f': undefined identifier
+LED.C(41): error C171: 'break': missing enclosing loop
+LED.C(42): error C172: 'case': missing enclosing switch
+LED.C(42): error C202: 'ox7d': undefined identifier
+LED.C(42): error C171: 'break': missing enclosing loop
+LED.C(43): error C172: 'case': missing enclosing switch
+LED.C(43): error C202: 'ox66': undefined identifier
+LED.C(43): error C171: 'break': missing enclosing loop
+LED.C(44): error C172: 'case': missing enclosing switch
+LED.C(44): error C202: 'ox6d': undefined identifier
+LED.C(44): error C171: 'break': missing enclosing loop
+LED.C(45): error C172: 'case': missing enclosing switch
+LED.C(45): error C202: 'ox47': undefined identifier
+LED.C(45): error C171: 'break': missing enclosing loop
+LED.C(46): error C172: 'case': missing enclosing switch
+LED.C(46): error C202: 'ox7f': undefined identifier
+LED.C(46): error C171: 'break': missing enclosing loop
+LED.C(47): error C172: 'case': missing enclosing switch
+LED.C(47): error C202: 'ox6f': undefined identifier
+LED.C(47): error C171: 'break': missing enclosing loop
+LED.C(48): error C172: 'default': missing enclosing switch
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+LED.C(16): warning C209: '_lookup': too few actual parameters
+LED.C(36): error C141: syntax error near '{', expected '('
+LED.C(38): error C172: 'case': missing enclosing switch
+LED.C(38): error C202: 'ox3f': undefined identifier
+LED.C(38): error C171: 'break': missing enclosing loop
+LED.C(39): error C172: 'case': missing enclosing switch
+LED.C(39): error C202: 'ox06': undefined identifier
+LED.C(39): error C171: 'break': missing enclosing loop
+LED.C(40): error C172: 'case': missing enclosing switch
+LED.C(40): error C202: 'ox5b': undefined identifier
+LED.C(40): error C171: 'break': missing enclosing loop
+LED.C(41): error C172: 'case': missing enclosing switch
+LED.C(41): error C202: 'ox4f': undefined identifier
+LED.C(41): error C171: 'break': missing enclosing loop
+LED.C(42): error C172: 'case': missing enclosing switch
+LED.C(42): error C202: 'ox7d': undefined identifier
+LED.C(42): error C171: 'break': missing enclosing loop
+LED.C(43): error C172: 'case': missing enclosing switch
+LED.C(43): error C202: 'ox66': undefined identifier
+LED.C(43): error C171: 'break': missing enclosing loop
+LED.C(44): error C172: 'case': missing enclosing switch
+LED.C(44): error C202: 'ox6d': undefined identifier
+LED.C(44): error C171: 'break': missing enclosing loop
+LED.C(45): error C172: 'case': missing enclosing switch
+LED.C(45): error C202: 'ox47': undefined identifier
+LED.C(45): error C171: 'break': missing enclosing loop
+LED.C(46): error C172: 'case': missing enclosing switch
+LED.C(46): error C202: 'ox7f': undefined identifier
+LED.C(46): error C171: 'break': missing enclosing loop
+LED.C(47): error C172: 'case': missing enclosing switch
+LED.C(47): error C202: 'ox6f': undefined identifier
+LED.C(47): error C171: 'break': missing enclosing loop
+LED.C(48): error C172: 'default': missing enclosing switch
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+LED.C(41): error C141: syntax error near '{', expected '('
+LED.C(43): error C172: 'case': missing enclosing switch
+LED.C(43): error C202: 'ox3f': undefined identifier
+LED.C(43): error C171: 'break': missing enclosing loop
+LED.C(44): error C172: 'case': missing enclosing switch
+LED.C(44): error C202: 'ox06': undefined identifier
+LED.C(44): error C171: 'break': missing enclosing loop
+LED.C(45): error C172: 'case': missing enclosing switch
+LED.C(45): error C202: 'ox5b': undefined identifier
+LED.C(45): error C171: 'break': missing enclosing loop
+LED.C(46): error C172: 'case': missing enclosing switch
+LED.C(46): error C202: 'ox4f': undefined identifier
+LED.C(46): error C171: 'break': missing enclosing loop
+LED.C(47): error C172: 'case': missing enclosing switch
+LED.C(47): error C202: 'ox7d': undefined identifier
+LED.C(47): error C171: 'break': missing enclosing loop
+LED.C(48): error C172: 'case': missing enclosing switch
+LED.C(48): error C202: 'ox66': undefined identifier
+LED.C(48): error C171: 'break': missing enclosing loop
+LED.C(49): error C172: 'case': missing enclosing switch
+LED.C(49): error C202: 'ox6d': undefined identifier
+LED.C(49): error C171: 'break': missing enclosing loop
+LED.C(50): error C172: 'case': missing enclosing switch
+LED.C(50): error C202: 'ox47': undefined identifier
+LED.C(50): error C171: 'break': missing enclosing loop
+LED.C(51): error C172: 'case': missing enclosing switch
+LED.C(51): error C202: 'ox7f': undefined identifier
+LED.C(51): error C171: 'break': missing enclosing loop
+LED.C(52): error C172: 'case': missing enclosing switch
+LED.C(52): error C202: 'ox6f': undefined identifier
+LED.C(52): error C171: 'break': missing enclosing loop
+LED.C(53): error C172: 'default': missing enclosing switch
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+LED.C(43): error C202: 'ox3f': undefined identifier
+LED.C(44): error C202: 'ox06': undefined identifier
+LED.C(45): error C202: 'ox5b': undefined identifier
+LED.C(46): error C202: 'ox4f': undefined identifier
+LED.C(47): error C202: 'ox7d': undefined identifier
+LED.C(48): error C202: 'ox66': undefined identifier
+LED.C(49): error C202: 'ox6d': undefined identifier
+LED.C(50): error C202: 'ox47': undefined identifier
+LED.C(51): error C202: 'ox7f': undefined identifier
+LED.C(52): error C202: 'ox6f': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=17.0 xdata=0 code=316
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=17.0 xdata=0 code=316
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=17.0 xdata=0 code=358
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=17.0 xdata=0 code=358
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=17.0 xdata=0 code=375
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=17.0 xdata=0 code=374
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=17.0 xdata=0 code=332
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=17.0 xdata=0 code=332
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=17.0 xdata=0 code=335
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=17.0 xdata=0 code=335
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=16.0 xdata=0 code=323
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=16.0 xdata=0 code=325
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=16.0 xdata=0 code=325
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=16.0 xdata=0 code=325
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=16.0 xdata=0 code=325
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=16.0 xdata=0 code=325
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=16.0 xdata=0 code=325
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+linking...
+Program Size: data=16.0 xdata=0 code=325
+creating hex file from "led1_9"...
+"led1_9" - 0 Error(s), 0 Warning(s).
+</pre>
+</body>
+</html>

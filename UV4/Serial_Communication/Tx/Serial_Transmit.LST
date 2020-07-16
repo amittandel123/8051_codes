@@ -1,0 +1,49 @@
+C51 COMPILER V9.03   SERIAL_TRANSMIT                                                       01/10/2012 09:37:16 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE SERIAL_TRANSMIT
+OBJECT MODULE PLACED IN Serial_Transmit.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Serial_Transmit.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          // Program to serially transmit letter 'A' though serial port
+   2          
+   3          #include<reg51.h>
+   4          
+   5          void Initialize()
+   6          {
+   7   1              TMOD=0x20;              // Timer 1, Mode 2(8bit auto reload)
+   8   1              TH1=0xF4;               // 2400 Baud rate
+   9   1              SCON=0x50;              // Serial Mode 1, 8-bit data, 1 stop bit, 1 start bit
+  10   1              TR1=1;                  // Start timer
+  11   1      }
+  12          void Transmit()
+  13          {
+  14   1              while(1)
+  15   1              {
+  16   2                      SBUF='G';               // Send letter A into buffer
+  17   2                      while(TI==0);   // Monitor Transmission of previous bit
+  18   2                      TI=0;
+  19   2              }
+  20   1      }
+  21          void main()
+  22          {
+  23   1              Initialize();
+  24   1              Transmit();
+  25   1      
+  26   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     28    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

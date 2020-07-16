@@ -1,0 +1,435 @@
+AX51 MACRO ASSEMBLER  XBANKING                                                              09/01/06 16:51:29 PAGE     1
+
+
+MACRO ASSEMBLER AX51 V2.13
+OBJECT MODULE PLACED IN XBANKING.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\AX51.EXE XBANKING.A51 LINES SET(SMALL) DEBUG EP
+
+LOC    OBJ             LINE     SOURCE
+
+                          1     $nomod51  NOLINES
+                          2     $nocond 
+                          3     ;------------------------------------------------------------------------------
+                          4     ;  This file is part of the LX51 Extended Linker/Locater package
+                          5     ;  Copyright (c) 2000 - 2001 Keil Elektronik GmbH and Keil Software, Inc.
+                          6     ;  Version 1.04a, Variable Banking: 'far' & 'far const' C51 memory type support
+                          7     ;  Version 1.04a: added register usage description, corrected CSTPTR function
+                          8     ;  Version 1.04b: added DISABLE_FARXRAM in IST_XRAM function
+                          9     ;------------------------------------------------------------------------------
+                         10     $nomod51 
+                         11     ;
+                         12     ;  NOTES: This file is configured for External XRAM access (also called far XRAM) 
+                         13     ;         support of the T89C51RD2 device.  
+                         14     ;
+ 008E                    15     AUXR    DATA    08EH    ; AUXR SFR
+ 00D2                    16     EECON   DATA    0D2H    ; EECON SFR
+                         17     ;
+                         18     ;************************ Configuration Section *******************************
+                         19     ;                                                                             *
+                         20     ; If the CPU provides an extended DPTR register for addressing HDATA, the     *
+                         21     ; following settings must be defined:                                         *
+ 00D2                    22     ?C?XPAGE1SFR  DATA  EECON ; SFR Address of XPAGE1 register                    *
+ 0000                    23     ?C?XPAGE1RST  EQU   0     ; XPAGE1 register value to address X:0 region       *
+                         24     ;                                                                             *
+                         25     ; The C51 Compiler must be used with the VARBANKING directive.  If your       *
+                         26     ; application accesses XDATA memory in interrupts, VARBANKING(1) must be      *
+                         27     ; applied.  With VARBANING(1) the C51 compiler saves the ?C?XPAGE1SFR and     *
+                         28     ; sets this register to the ?C?XPAGE1RST value.                               *
+                         29     ;                                                                             *
+                         30     ;-----------------------------------------------------------------------------*
+                         31     ;
+ 02000000                32     XMEM EQU 0x02000000       ; LX51 xdata symbol offset: do not change!
+ 01000000                33     CMEM EQU 0x01000000       ; LX51 code  symbol offset: do not change!
+                         34     ;
+                         35     ;******* Configuration Section for uVision2 Memory Simulation Support *********
+                         36     ;                                                                             *
+                         37     ; The following settings allow you to map the physical memory areas S:, T:    *
+                         38     ; U: and V: of the uVision2 Simulator into the logical XDATA or CODE address  *
+                         39     ; space of the LX51 linker/locater.                                           *
+                         40     ;                                                                             *
+ 0000                    41     ?B?SMEM EQU 0             ; No mapping for S: Memory                          *
+ 0000                    42     ?B?TMEM EQU 0             ; No mapping for T: Memory                          *
+ 0000                    43     ?B?UMEM EQU 0             ; No mapping for U: Memory                          *
+ 02020000                44     ?B?VMEM EQU XMEM+0x20000  ; Simulated V: Memory mapped to LX51 X:0x20000 area *
+                         45     ;                                                                             *
+                         46     ; The above setting redirects the symbols in the area X:0x20000 .. X:0x2FFFF  *
+                         47     ; into the uVision2 simulation memory area for the EEPROM  V:0 .. V:0xFFFF    *
+                         48     ;                                                                             *
+                         49     ;-----------------------------------------------------------------------------*
+                         50     ;
+                         51     ;******************************************************************************
+                         52     ;                                                                             *
+                         53     ; THEORY OF OPERATION                                                         *
+                         54     ; -------------------                                                         *
+                         55     ; This section describes how the extended LX51 linker/locater manages the     *
+                         56     ; extended address spaces that are addressed with the new C51 memory types    *
+                         57     ; 'far' and 'far const'.  The C51 Compiler uses 3 byte pointer generic        *
+                         58     ; pointer to access these memory areas.  'far' variables are placed in the    *
+AX51 MACRO ASSEMBLER  XBANKING                                                              09/01/06 16:51:29 PAGE     2
+
+                         59     ; memory class HDATA and 'far const' variables get the memory class 'HCONST'. *
+                         60     ; The LX51 linker/locater allows you to locate these memory classes in the    *
+                         61     ; logical 16 MBYTE CODE or 16 MBYTE XDATA spaces.                             *
+                         62     ;                                                                             *
+                         63     ; The memory access itself is performed via eight different subroutines that  *
+                         64     ; can be configured in this assembler module.  These routines are:            *
+                         65     ;    ?C?CLDXPTR, ?C?CSTXPTR  ; load/store BYTE (char)  in extended memory     *
+                         66     ;    ?C?ILDXPTR, ?C?ISTXPTR  ; load/store WORD (int)   in extended memory     *
+                         67     ;    ?C?PLDXPTR, ?C?PSTXPTR  ; load/store 3-BYTE PTR   in extended memory     *
+                         68     ;    ?C?LLDXPTR, ?C?LSTXPTR  ; load/store DWORD (long) in extended memory     *
+                         69     ;                                                                             *
+                         70     ; Each function gets as a parameter the memory address with 3 BYTE POINTER    *
+                         71     ; representation in the CPU registers R1/R2/R3.  The register R3 holds the    *
+                         72     ; memory type.  The C51 compiler uses the following memory types:             *
+                         73     ;                                                                             *
+                         74     ; R3 Value | Memory Type | Memory Class | Address Range                       *
+                         75     ; -----------------------+--------------+--------------------------           *
+                         76     ;    00    | data/idata  | DATA/IDATA   | I:0x00     .. I:0xFF                *
+                         77     ;    01    | xdata       | XDATA        | X:0x0000   .. X:0xFFFF              *
+                         78     ;  02..7F  | far         | HDATA        | X:0x010000 .. X:0x7E0000            *
+                         79     ;  81..FD  | far const   | HCONST       | C:0x800000 .. C:0xFD0000 (see note) *
+                         80     ;    FE    | pdata       | XDATA        | one 256-byte page in XDATA memory   *
+                         81     ;    FF    | code        | CODE         | C:0x0000   .. C:0xFFFF              *
+                         82     ;                                                                             *
+                         83     ; Note: the far const memory area is mapped into the banked memory areas.     *
+                         84     ;                                                                             *
+                         85     ; The R3 values 00, 01, FE and FF are already handled within the C51 run-time *
+                         86     ; library.  Only the values 02..FE are passed to the XPTR access functions    *
+                         87     ; described below.  The AX51 macro assembler provides the MBYTE operator      *
+                         88     ; that calculates the R3 value that needs to be passed to the XPTR access     *
+                         89     ; function.   AX51 Assembler example for using XPTR access functions:         *
+                         90     ;     MOV  R1,#LOW   (variable)   ; gives LSB address byte of variable        *
+                         91     ;     MOV  R2,#HIGH  (variable)   ; gives MSB address byte of variable        *
+                         92     ;     MOV  R3,#MBYTE (variable)   ; gives memory type byte of variable        *
+                         93     ;     CALL ?C?CLDXPTR             ; load BYTE variable into A                 *
+                         94     ;******************************************************************************
+                         95     
+                         96                     NAME    ?C?XBANKING     ; 'far' Memory Access Support
+                         97     
+                         98     PUBLIC ?B?SMEM, ?B?TMEM, ?B?UMEM, ?B?VMEM
+                         99     PUBLIC ?C?XPAGE1SFR, ?C?XPAGE1RST
+                        100     PUBLIC ?C?CLDXPTR, ?C?CSTXPTR, ?C?ILDXPTR, ?C?ISTXPTR
+                        101     PUBLIC ?C?PLDXPTR, ?C?PSTXPTR, ?C?LLDXPTR, ?C?LSTXPTR
+                        102     
+ 00F0                   103     B       DATA 0F0H       ; SFR Address
+ 0082                   104     DPL     DATA 082H
+ 0083                   105     DPH     DATA 083H
+ 00E0                   106     ACC     DATA 0E0H
+ 00A8                   107     IE0     DATA 0A8H
+ 00A8.7                 108     EA      BIT  IE0.7
+                        109     
+------                  110     ?C?LIB_CODE     SEGMENT         CODE
+------                  111                     RSEG    ?C?LIB_CODE
+                        112     
+                        113     ENABLE_FARXRAM  MACRO
+                        114                     CLR     EA              ; disable interrupt
+                        115                     ANL     AUXR,#0FDH      ; set External XRAM with EXTRAM bit
+                        116                     ENDM
+                        117     
+                        118     DISABLE_FARXRAM MACRO
+                        119                     ORL     AUXR, #002H     ; set Internal XRAM
+                        120                     SETB    EA              ; enable interrupt
+                        121                     ENDM
+                        122     
+                        123     
+                        124     ENABLE_EEPROM   MACRO
+AX51 MACRO ASSEMBLER  XBANKING                                                              09/01/06 16:51:29 PAGE     3
+
+                        125                     ORL     EECON,#002H     ; set EEE
+                        126                     ENDM
+                        127     
+                        128     DISABLE_EEPROM  MACRO
+                        129                     ANL     EECON,#NOT 002H ; reset EEE
+                        130                     ENDM
+                        131     
+                        132     ; Store Byte into EEPROM space
+000000 F0               133     ST_INC_DPTR:    MOVX    @DPTR,A
+000001 E582             134                     MOV     A,DPL          ; check for 64 Byte block overflow
+000003 543F             135                     ANL     A,#3FH
+000005 24C1             136                     ADD     A,#0C1H
+000007 A3               137                     INC     DPTR
+000008 500B             138                     JNC     NOE2PROGRAM
+00000A 75D252           139     E2PROGRAM:      MOV     EECON,#052H
+00000D 75D2A2           140                     MOV     EECON,#0A2H
+000010 E5D2             141     E2WAIT:         MOV     A,EECON
+000012 20E0FB           142                     JB      ACC.0,E2WAIT
+000015 22               143     NOE2PROGRAM:    RET
+                        144     
+                        145     
+                        146     ;-----------------------------------------------------------------------------
+                        147     ; CLDXPTR: Load   BYTE in A             via Address given in R1/R2/R3
+                        148     ; Registers which can be used without saving:  DPTR, CY, A
+                        149     ;
+000016 8982             150     ?C?CLDXPTR:     MOV     DPL,R1
+000018 8A83             151                     MOV     DPH,R2
+00001A BB0308           152                     CJNE    R3,#3,CLD_XRAM
+                        153+1                   ENABLE_EEPROM           ; EEPROM access
+000020 E0               155                     MOVX    A,@DPTR
+                        156+1                   DISABLE_EEPROM
+000024 22               158                     RET
+                        159     
+000025                  160+1   CLD_XRAM:       ENABLE_FARXRAM          ; XRAM access
+00002A E0               163                     MOVX    A,@DPTR
+                        164+1                   DISABLE_FARXRAM
+000030 22               167                     RET
+                        168     
+                        169     
+                        170     ;-----------------------------------------------------------------------------
+                        171     ; CSTXPTR: Store  BYTE in A             via Address given in R1/R2/R3
+                        172     ; Registers which can be used without saving:  DPTR, CY
+                        173     ;
+000031 8982             174     ?C?CSTXPTR:     MOV     DPL,R1
+000033 8A83             175                     MOV     DPH,R2
+000035 BB030F           176                     CJNE    R3,#3,CST_XRAM
+                        177+1                   ENABLE_EEPROM           ; EEPROM access
+00003B F0               179                     MOVX    @DPTR,A
+00003C C0E0             180                     PUSH    ACC
+00003E 120000     F     181                     CALL    E2PROGRAM
+000041 D0E0             182                     POP     ACC
+                        183+1                   DISABLE_EEPROM
+000046 22               185                     RET
+                        186     
+000047                  187+1   CST_XRAM:       ENABLE_FARXRAM          ; XRAM access
+00004C F0               190                     MOVX    @DPTR,A
+                        191+1                   DISABLE_FARXRAM
+000052 22               194                     RET
+                        195     
+                        196     ;-----------------------------------------------------------------------------
+                        197     ; ILDXPTR: Load   WORD in A(LSB)/B(HSB) via Address given in R1/R2/R3 
+                        198     ; Registers which can be used without saving:  DPTR, CY, A, B
+                        199     ;
+000053 8982             200     ?C?ILDXPTR:     MOV     DPL,R1
+000055 8A83             201                     MOV     DPH,R2
+000057 BB030C           202                     CJNE    R3,#3,ILD_XRAM
+AX51 MACRO ASSEMBLER  XBANKING                                                              09/01/06 16:51:29 PAGE     4
+
+                        203+1                   ENABLE_EEPROM           ; EEPROM access
+00005D E0               205                     MOVX    A,@DPTR
+00005E A3               206                     INC     DPTR
+00005F F5F0             207                     MOV     B,A
+000061 E0               208                     MOVX    A,@DPTR
+                        209+1                   DISABLE_EEPROM
+000065 22               211                     RET
+                        212     
+000066                  213+1   ILD_XRAM:       ENABLE_FARXRAM          ; XRAM access
+00006B E0               216                     MOVX    A,@DPTR
+00006C A3               217                     INC     DPTR
+00006D F5F0             218                     MOV     B,A
+00006F E0               219                     MOVX    A,@DPTR
+                        220+1                   DISABLE_FARXRAM
+000075 22               223                     RET
+                        224     
+                        225     ;-----------------------------------------------------------------------------
+                        226     ; ISTXPTR: Store  WORD in A(HSB)/B(LSB) via Address given in R1/R2/R3 
+                        227     ; Registers which can be used without saving:  DPTR, CY, A
+                        228     ;
+000076 8982             229     ?C?ISTXPTR:     MOV     DPL,R1
+000078 8A83             230                     MOV     DPH,R2
+00007A BB0310           231                     CJNE    R3,#3,IST_XRAM
+                        232+1                   ENABLE_EEPROM           ; EEPROM access
+000080 120000     F     234                     CALL    ST_INC_DPTR
+000083 E5F0             235                     MOV     A,B
+000085 F0               236                     MOVX    @DPTR,A
+000086 120000     F     237                     CALL    E2PROGRAM
+                        238+1                   DISABLE_EEPROM
+00008C 22               240                     RET
+                        241     
+00008D                  242+1   IST_XRAM:       ENABLE_FARXRAM          ; XRAM access
+000092 F0               245                     MOVX    @DPTR,A
+000093 A3               246                     INC     DPTR
+000094 E5F0             247                     MOV     A,B
+000096 F0               248                     MOVX    @DPTR,A
+                        249+1                   DISABLE_FARXRAM
+00009C 22               252                     RET
+                        253     
+                        254     ;-----------------------------------------------------------------------------
+                        255     ; PLDXPTR: Load    PTR in R1/R2/R3      via Address given in R1/R2/R3 
+                        256     ; Registers which can be used without saving:  DPTR, CY, A, R1, R2, R3
+                        257     ;
+00009D 8982             258     ?C?PLDXPTR:     MOV     DPL,R1
+00009F 8A83             259                     MOV     DPH,R2
+0000A1 BB030F           260                     CJNE    R3,#3,PLD_XRAM
+                        261+1                   ENABLE_EEPROM           ; EEPROM access
+0000A7 E0               263                     MOVX    A,@DPTR
+0000A8 FB               264                     MOV     R3,A
+0000A9 A3               265                     INC     DPTR
+0000AA E0               266                     MOVX    A,@DPTR
+0000AB FA               267                     MOV     R2,A
+0000AC A3               268                     INC     DPTR
+0000AD E0               269                     MOVX    A,@DPTR
+0000AE F9               270                     MOV     R1,A
+                        271+1                   DISABLE_EEPROM
+0000B2 22               273                     RET
+                        274     
+0000B3                  275+1   PLD_XRAM:       ENABLE_FARXRAM          ; XRAM access
+0000B8 E0               278                     MOVX    A,@DPTR
+0000B9 FB               279                     MOV     R3,A
+0000BA A3               280                     INC     DPTR
+0000BB E0               281                     MOVX    A,@DPTR
+0000BC FA               282                     MOV     R2,A
+0000BD A3               283                     INC     DPTR
+0000BE E0               284                     MOVX    A,@DPTR
+AX51 MACRO ASSEMBLER  XBANKING                                                              09/01/06 16:51:29 PAGE     5
+
+0000BF F9               285                     MOV     R1,A
+                        286+1                   DISABLE_FARXRAM
+0000C5 22               289                     RET
+                        290     
+                        291     ;-----------------------------------------------------------------------------
+                        292     ; PSTXPTR: Store   PTR in R0/A/B        via Address given in R1/R2/R3 
+                        293     ; Registers which can be used without saving:  DPTR, CY, A
+                        294     ;
+0000C6 8982             295     ?C?PSTXPTR:     MOV     DPL,R1
+0000C8 8A83             296                     MOV     DPH,R2
+0000CA BB0316           297                     CJNE    R3,#3,PST_XRAM
+                        298+1                   ENABLE_EEPROM           ; EEPROM access
+0000D0 C5F0             300                     XCH     A,B
+0000D2 120000     F     301                     CALL    ST_INC_DPTR
+0000D5 E5F0             302                     MOV     A,B
+0000D7 120000     F     303                     CALL    ST_INC_DPTR
+0000DA E8               304                     MOV     A,R0
+0000DB F0               305                     MOVX    @DPTR,A
+0000DC 120000     F     306                     CALL    E2PROGRAM
+                        307+1                   DISABLE_EEPROM
+0000E2 22               309                     RET
+                        310     
+0000E3                  311+1   PST_XRAM:       ENABLE_FARXRAM          ; XRAM access
+0000E8 C5F0             314                     XCH     A,B
+0000EA F0               315                     MOVX    @DPTR,A
+0000EB A3               316                     INC     DPTR
+0000EC E5F0             317                     MOV     A,B
+0000EE F0               318                     MOVX    @DPTR,A
+0000EF A3               319                     INC     DPTR
+0000F0 E8               320                     MOV     A,R0
+0000F1 F0               321                     MOVX    @DPTR,A
+                        322+1                   DISABLE_FARXRAM
+0000F7 22               325                     RET
+                        326     
+                        327     ;-----------------------------------------------------------------------------
+                        328     ; LLDXPTR: Load  DWORD in R4/R5/R6/R7   via Address given in R1/R2/R3 
+                        329     ; Registers which can be used without saving:  DPTR, CY, A, R4, R5, R6, R7
+                        330     ;
+0000F8 8982             331     ?C?LLDXPTR:     MOV     DPL,R1
+0000FA 8A83             332                     MOV     DPH,R2
+0000FC BB0312           333                     CJNE    R3,#3,LLD_XRAM
+                        334+1                   ENABLE_EEPROM           ; EEPROM access
+000102 E0               336                     MOVX    A,@DPTR
+000103 FC               337                     MOV     R4,A
+000104 A3               338                     INC     DPTR
+000105 E0               339                     MOVX    A,@DPTR
+000106 FD               340                     MOV     R5,A
+000107 A3               341                     INC     DPTR
+000108 E0               342                     MOVX    A,@DPTR
+000109 FE               343                     MOV     R6,A
+00010A A3               344                     INC     DPTR
+00010B E0               345                     MOVX    A,@DPTR
+00010C FF               346                     MOV     R7,A
+                        347+1                   DISABLE_EEPROM
+000110 22               349                     RET
+                        350     
+000111                  351+1   LLD_XRAM:       ENABLE_FARXRAM          ; XRAM access
+000116 E0               354                     MOVX    A,@DPTR
+000117 FC               355                     MOV     R4,A
+000118 A3               356                     INC     DPTR
+000119 E0               357                     MOVX    A,@DPTR
+00011A FD               358                     MOV     R5,A
+00011B A3               359                     INC     DPTR
+00011C E0               360                     MOVX    A,@DPTR
+00011D FE               361                     MOV     R6,A
+00011E A3               362                     INC     DPTR
+AX51 MACRO ASSEMBLER  XBANKING                                                              09/01/06 16:51:29 PAGE     6
+
+00011F E0               363                     MOVX    A,@DPTR
+000120 FF               364                     MOV     R7,A
+                        365+1                   DISABLE_FARXRAM
+000126 22               368                     RET
+                        369     
+                        370     ;-----------------------------------------------------------------------------
+                        371     ; LSTXPTR: Store DWORD in R4/R5/R6/R7   via Address given in R1/R2/R3 
+                        372     ; Registers which can be used without saving:  DPTR, CY, A
+                        373     ;
+000127 8982             374     ?C?LSTXPTR:     MOV     DPL,R1
+000129 8A83             375                     MOV     DPH,R2
+00012B BB0318           376                     CJNE    R3,#3,LST_XRAM
+                        377+1                   ENABLE_EEPROM           ; EEPROM access 
+000131 EC               379                     MOV     A,R4
+000132 120000     F     380                     CALL    ST_INC_DPTR
+000135 ED               381                     MOV     A,R5
+000136 120000     F     382                     CALL    ST_INC_DPTR
+000139 EE               383                     MOV     A,R6
+00013A 120000     F     384                     CALL    ST_INC_DPTR
+00013D EF               385                     MOV     A,R7
+00013E F0               386                     MOVX    @DPTR,A
+00013F 120000     F     387                     CALL    E2PROGRAM
+                        388+1                   DISABLE_EEPROM
+000145 22               390                     RET
+                        391     
+000146                  392+1   LST_XRAM:       ENABLE_FARXRAM          ; XRAM access
+00014B EC               395                     MOV     A,R4
+00014C F0               396                     MOVX    @DPTR,A
+00014D A3               397                     INC     DPTR
+00014E ED               398                     MOV     A,R5
+00014F F0               399                     MOVX    @DPTR,A
+000150 A3               400                     INC     DPTR
+000151 EE               401                     MOV     A,R6
+000152 F0               402                     MOVX    @DPTR,A
+000153 A3               403                     INC     DPTR
+000154 EF               404                     MOV     A,R7
+000155 F0               405                     MOVX    @DPTR,A
+                        406+1                   DISABLE_FARXRAM
+00015B 22               409                     RET
+                        410     
+                        411                     END
+                        412     
+AX51 MACRO ASSEMBLER  XBANKING                                                              09/01/06 16:51:29 PAGE     7
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                      T Y P E  V A L U E     ATTRIBUTES
+
+?B?SMEM . . . . . . . . . .  N  NUMB  0000H     A   
+?B?TMEM . . . . . . . . . .  N  NUMB  0000H     A   
+?B?UMEM . . . . . . . . . .  N  NUMB  0000H     A   
+?B?VMEM . . . . . . . . . .  N  NUMB  02020000H A   
+?C?CLDXPTR. . . . . . . . .  C  ADDR  0016H     R   SEG=?C?LIB_CODE
+?C?CSTXPTR. . . . . . . . .  C  ADDR  0031H     R   SEG=?C?LIB_CODE
+?C?ILDXPTR. . . . . . . . .  C  ADDR  0053H     R   SEG=?C?LIB_CODE
+?C?ISTXPTR. . . . . . . . .  C  ADDR  0076H     R   SEG=?C?LIB_CODE
+?C?LIB_CODE . . . . . . . .  C  SEG   00015CH       REL=UNIT, ALN=BYTE
+?C?LLDXPTR. . . . . . . . .  C  ADDR  00F8H     R   SEG=?C?LIB_CODE
+?C?LSTXPTR. . . . . . . . .  C  ADDR  0127H     R   SEG=?C?LIB_CODE
+?C?PLDXPTR. . . . . . . . .  C  ADDR  009DH     R   SEG=?C?LIB_CODE
+?C?PSTXPTR. . . . . . . . .  C  ADDR  00C6H     R   SEG=?C?LIB_CODE
+?C?XBANKING . . . . . . . .  -- ----  -------       
+?C?XPAGE1RST. . . . . . . .  N  NUMB  0000H     A   
+?C?XPAGE1SFR. . . . . . . .  D  ADDR  00D2H     A   
+ACC . . . . . . . . . . . .  D  ADDR  00E0H     A   
+AUXR. . . . . . . . . . . .  D  ADDR  008EH     A   
+B . . . . . . . . . . . . .  D  ADDR  00F0H     A   
+CLD_XRAM. . . . . . . . . .  C  ADDR  0025H     R   SEG=?C?LIB_CODE
+CMEM. . . . . . . . . . . .  N  NUMB  01000000H A   
+CST_XRAM. . . . . . . . . .  C  ADDR  0047H     R   SEG=?C?LIB_CODE
+DPH . . . . . . . . . . . .  D  ADDR  0083H     A   
+DPL . . . . . . . . . . . .  D  ADDR  0082H     A   
+E2PROGRAM . . . . . . . . .  C  ADDR  000AH     R   SEG=?C?LIB_CODE
+E2WAIT. . . . . . . . . . .  C  ADDR  0010H     R   SEG=?C?LIB_CODE
+EA. . . . . . . . . . . . .  B  ADDR  00A8H.7   A   
+EECON . . . . . . . . . . .  D  ADDR  00D2H     A   
+IE0 . . . . . . . . . . . .  D  ADDR  00A8H     A   
+ILD_XRAM. . . . . . . . . .  C  ADDR  0066H     R   SEG=?C?LIB_CODE
+IST_XRAM. . . . . . . . . .  C  ADDR  008DH     R   SEG=?C?LIB_CODE
+LLD_XRAM. . . . . . . . . .  C  ADDR  0111H     R   SEG=?C?LIB_CODE
+LST_XRAM. . . . . . . . . .  C  ADDR  0146H     R   SEG=?C?LIB_CODE
+NOE2PROGRAM . . . . . . . .  C  ADDR  0015H     R   SEG=?C?LIB_CODE
+PLD_XRAM. . . . . . . . . .  C  ADDR  00B3H     R   SEG=?C?LIB_CODE
+PST_XRAM. . . . . . . . . .  C  ADDR  00E3H     R   SEG=?C?LIB_CODE
+ST_INC_DPTR . . . . . . . .  C  ADDR  0000H     R   SEG=?C?LIB_CODE
+XMEM. . . . . . . . . . . .  N  NUMB  02000000H A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S).

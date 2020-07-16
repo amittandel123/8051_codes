@@ -1,0 +1,83 @@
+C51 COMPILER V7.06   EEPROM_24C256                12/09/2008 12:09:32 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE EEPROM_24C256
+OBJECT MODULE PLACED IN EEPROM_24C256.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE EEPROM_24C256.C LARGE DEBUG OBJECT
+                    -EXTEND PAGEWIDTH(79) PAGELENGTH(66)
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #include "declare.h"
+   3          
+   4          void wait(int time)
+   5          {
+   6   1              time *=1000;
+   7   1              while(time--)
+   8   1              {
+   9   2              }
+  10   1      }
+  11          
+  12          void Write_Add_I2C(unsigned char Device_Address,unsigned char byt
+             -e1_Word_Address,unsigned char byte2_Word_Address)
+  13          {
+  14   1              I2C_Start();    
+  15   1              send_Device_Address(Device_Address); // write mode
+  16   1              device_ACK();
+  17   1      
+  18   1              send_Word_Address(byte1_Word_Address); // first byte of word add
+             -ress
+  19   1              device_ACK();
+  20   1      
+  21   1              send_Word_Address(byte2_Word_Address); // second byte of word ad
+             -dress
+  22   1              device_ACK();
+  23   1      }
+  24          
+  25          unsigned char Read_I2C(unsigned char Dev_Address)
+  26          {
+  27   1              unsigned char Readbyte;
+  28   1              I2C_Start();    
+  29   1                      send_Device_Address(Dev_Address + 1); // read mode
+  30   1                      device_ACK();
+  31   1                      Readbyte = Read_Data();
+  32   1                      Master_NO_ACK();
+  33   1              I2C_Stop();     
+  34   1              return(Readbyte);
+  35   1      }
+  36          
+  37          void I2C_Write(unsigned char mData,unsigned char Device_Address,u
+             -nsigned char byte1_Word_Address,unsigned char byte2_Word_Address)
+  38          {
+  39   1              Write_Add_I2C(Device_Address,byte1_Word_Address, byte2_Word_Addr
+             -ess);
+  40   1      
+  41   1              send_Data(mData);                       
+  42   1              device_ACK();
+  43   1              I2C_Stop();               
+  44   1              wait(1);
+  45   1      }
+  46          
+  47          unsigned char I2C_Read(unsigned char Dev_Add,unsigned char Add_MS
+             -B,unsigned char Add_LSB)
+  48          {
+  49   1              Write_Add_I2C(Dev_Add,Add_MSB,Add_LSB);
+  50   1              return(Read_I2C(Dev_Add));
+C51 COMPILER V7.06   EEPROM_24C256                12/09/2008 12:09:32 PAGE 2   
+
+  51   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    162    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----      10
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

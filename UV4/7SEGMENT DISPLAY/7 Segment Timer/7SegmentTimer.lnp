@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"7SegmentTimer.obj" 
+TO "7SegmentTimer" 
+RAMSIZE(256) 

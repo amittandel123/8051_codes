@@ -1,0 +1,237 @@
+C51 COMPILER V9.06   MELODY_TONE                                                           07/23/2012 18:47:51 PAGE 1   
+
+
+C51 COMPILER V9.06, COMPILATION OF MODULE MELODY_TONE
+OBJECT MODULE PLACED IN Melody_Tone.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Melody_Tone.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <intrins.h>
+   3          #include<delay.src>
+*** WARNING C318 IN LINE 3 OF Melody_Tone.c: can't open file 'delay.src'
+   4          
+   5          
+   6          sbit P3_7 = P3 ^ 7;
+   7          
+   8          #define pitch_P         0
+   9          #define pitch_C5        64580
+  10          #define pitch_Db5       64634
+  11          #define pitch_D5        64685
+  12          #define pitch_Eb5       64732
+  13          #define pitch_E5        64778
+  14          #define pitch_F5        64820
+  15          #define pitch_Gb5       64860
+  16          #define pitch_G5        64898
+  17          #define pitch_Ab5       64934
+  18          #define pitch_A5        64968
+  19          #define pitch_Bb5       65000
+  20          #define pitch_B5        65030
+  21          #define pitch_C6        65058
+  22          #define pitch_Db6       65085
+  23          #define pitch_D6        65110
+  24          #define pitch_Eb6       65134
+  25          #define pitch_E6        65157
+  26          #define pitch_F6        65178
+  27          #define pitch_Gb6       65198
+  28          #define pitch_G6        65217
+  29          #define pitch_Ab6       65235
+  30          #define pitch_A6        65252
+  31          #define pitch_Bb6       65268
+  32          #define pitch_B6        65283
+  33          
+  34          #define MelodyPin       P3_7
+  35          
+  36          unsigned int qtrN, qtrN_us, wholeN, wholeN_us, halfN, halfN_us, eighthN, eighthN_us,
+  37                                   sixteenN, sixteenN_us, thirtyTwoN, thirtyTwoN_us, sixtyFourN, sixtyFourN_us,
+  38                                   sixN, sixN_us, twelveN, twelveN_us, twentyFourN, twentyFourN_us;
+  39          
+  40          void Delay10MC(unsigned char);
+  41          
+  42          void timer0(void) interrupt 1
+  43          {
+  44   1              MelodyPin = ~MelodyPin;
+  45   1              TF0 = 0;
+  46   1      }
+  47          
+  48          void MelodyTempo(int Tempo)
+  49          {
+  50   1              qtrN = ((60000/Tempo));
+  51   1              wholeN = qtrN*4;
+  52   1              halfN = (qtrN*2);
+  53   1              eighthN = (qtrN/2);
+  54   1              sixteenN = (qtrN/4);
+C51 COMPILER V9.06   MELODY_TONE                                                           07/23/2012 18:47:51 PAGE 2   
+
+  55   1              thirtyTwoN = (qtrN/8);
+  56   1              sixtyFourN = (qtrN/16);
+  57   1              sixN = (wholeN/6);
+  58   1              twelveN = (wholeN/12);
+  59   1              twentyFourN = (wholeN/24);
+  60   1      }
+  61          
+  62          void PlayNote(const unsigned char PitchH, const unsigned char PitchL)
+  63          {
+  64   1      //      RCAP2H = PitchH;        // auto reload value
+  65   1      //      RCAP2L = PitchL;        // auto reload value
+  66   1      
+  67   1              TH0 = PitchH;
+  68   1              TL0 = PitchL;
+  69   1              TF0 = 0;
+  70   1              TR0 = 1;
+  71   1              ET0 = 1;
+  72   1              EA = 1;
+  73   1      }
+  74          
+  75          void EndNote(void)
+  76          {
+  77   1              EA = 0;
+  78   1              TR0 = 0;
+  79   1              TF0 = 0;
+  80   1              MelodyPin = 1;
+  81   1      }
+  82          
+  83          void delay_ms(unsigned int ms)
+  84          {
+  85   1              for(;ms>0;ms--)
+  86   1                      Delay10MC(100);
+  87   1      }
+  88          
+  89          void Melodyplay(const int Pitch, unsigned int interval)
+  90          {
+  91   1              if(Pitch!=0)
+  92   1                      PlayNote(Pitch >> 8, Pitch);
+  93   1              delay_ms(interval);
+  94   1              EndNote();
+  95   1      }
+  96          
+  97          void AdamsFamily()
+  98          { //d=4, o=6, b=50
+  99   1              MelodyTempo(50);
+ 100   1              Melodyplay(pitch_P, thirtyTwoN); //32P
+ 101   1              Melodyplay(pitch_Db6, thirtyTwoN); //32c#
+ 102   1              Melodyplay(pitch_Gb6, sixteenN); //16f#
+ 103   1              Melodyplay(pitch_Bb6, thirtyTwoN); //32a#
+ 104   1              Melodyplay(pitch_Gb6, sixteenN); //16f#
+ 105   1              Melodyplay(pitch_Db6, thirtyTwoN); //32c#
+ 106   1              Melodyplay(pitch_C6, sixteenN); //16c
+ 107   1              Melodyplay(pitch_Ab6, eighthN); //8g#
+ 108   1              Melodyplay(pitch_Gb6, thirtyTwoN); //32f#
+ 109   1              Melodyplay(pitch_F6, sixteenN); //16f
+ 110   1              Melodyplay(pitch_Ab6, thirtyTwoN); //32g#
+ 111   1              Melodyplay(pitch_F6, sixteenN); //16f
+ 112   1              Melodyplay(pitch_Db6, thirtyTwoN); //32c#
+ 113   1              Melodyplay(pitch_Bb5, sixteenN); //16a#5
+ 114   1              Melodyplay(pitch_Gb6, eighthN); //8f#
+ 115   1              Melodyplay(pitch_Db6, thirtyTwoN); //32c#
+ 116   1              Melodyplay(pitch_Gb6, sixteenN); //16f#
+C51 COMPILER V9.06   MELODY_TONE                                                           07/23/2012 18:47:51 PAGE 3   
+
+ 117   1              Melodyplay(pitch_Bb6, thirtyTwoN); //32a#
+ 118   1              Melodyplay(pitch_Gb6, sixteenN); //16f#
+ 119   1              Melodyplay(pitch_Db6, thirtyTwoN); //32c#
+ 120   1              Melodyplay(pitch_C6, sixteenN); //16c
+ 121   1              Melodyplay(pitch_Ab6, eighthN); //8g#
+ 122   1              Melodyplay(pitch_Gb6, thirtyTwoN); //32f#
+ 123   1              Melodyplay(pitch_F6, sixteenN); //16f
+ 124   1              Melodyplay(pitch_Db6, thirtyTwoN); //32c#
+ 125   1              Melodyplay(pitch_Eb6, sixteenN); //16d#
+ 126   1              Melodyplay(pitch_F6, thirtyTwoN); //32f
+ 127   1              Melodyplay(pitch_Gb6, qtrN); //f#
+ 128   1              Melodyplay(pitch_Db6, thirtyTwoN); //32c#
+ 129   1              Melodyplay(pitch_Eb6, thirtyTwoN); //32d#
+ 130   1              Melodyplay(pitch_F6, thirtyTwoN); //32f
+ 131   1              Melodyplay(pitch_Gb6, qtrN); //f#
+ 132   1              Melodyplay(pitch_Db6, thirtyTwoN); //32c#
+ 133   1              Melodyplay(pitch_Eb6, thirtyTwoN); //32d#
+ 134   1              Melodyplay(pitch_G6, thirtyTwoN); //32g
+ 135   1              Melodyplay(pitch_Ab6, qtrN); //g#
+ 136   1              Melodyplay(pitch_Eb6, thirtyTwoN); //32d#
+ 137   1              Melodyplay(pitch_F6, thirtyTwoN); //32f
+ 138   1              Melodyplay(pitch_G6, thirtyTwoN); //32g
+ 139   1              Melodyplay(pitch_Ab6, sixteenN); //16g#.
+ 140   1              Melodyplay(pitch_Ab6, eighthN); //16g#.
+ 141   1              Melodyplay(pitch_Eb6, thirtyTwoN); //32d#
+ 142   1              Melodyplay(pitch_F6, thirtyTwoN); //32f
+ 143   1              Melodyplay(pitch_G6, thirtyTwoN); //32g
+ 144   1              Melodyplay(pitch_Ab6, sixteenN); //16g#.
+ 145   1              Melodyplay(pitch_Ab6, eighthN); //16g#.
+ 146   1              Melodyplay(pitch_Db6, thirtyTwoN); //32c#
+ 147   1              Melodyplay(pitch_Eb6, thirtyTwoN); //32d#
+ 148   1              Melodyplay(pitch_F6, thirtyTwoN); //32f
+ 149   1              Melodyplay(pitch_Gb6, thirtyTwoN); //32f#
+ 150   1      }
+ 151          
+ 152          void LooneyToons()
+ 153          { //d=4,o=5,b=140
+ 154   1              MelodyTempo(140);
+ 155   1              Melodyplay(pitch_C6, qtrN); //c6
+ 156   1              Melodyplay(pitch_F6, eighthN); //8f6
+ 157   1              Melodyplay(pitch_E6, eighthN); //8e6
+ 158   1              Melodyplay(pitch_D6, eighthN); //8d6
+ 159   1              Melodyplay(pitch_C6, eighthN); //8c6
+ 160   1              Melodyplay(pitch_A5, qtrN); //a.
+ 161   1              Melodyplay(pitch_A5, eighthN); //a.
+ 162   1              Melodyplay(pitch_C6, eighthN); //8c6
+ 163   1              Melodyplay(pitch_F6, eighthN); //8f6
+ 164   1              Melodyplay(pitch_E6, eighthN); //8e6
+ 165   1              Melodyplay(pitch_D6, eighthN); //8d6
+ 166   1              Melodyplay(pitch_Eb6, eighthN); //8d#6
+ 167   1              Melodyplay(pitch_E6, qtrN); //e.6
+ 168   1              Melodyplay(pitch_E6, eighthN); //e.6
+ 169   1              Melodyplay(pitch_E6, eighthN); //8e6
+ 170   1              Melodyplay(pitch_E6, eighthN); //8e6
+ 171   1              Melodyplay(pitch_C6, eighthN); //8c6
+ 172   1              Melodyplay(pitch_D6, eighthN); //8d6
+ 173   1              Melodyplay(pitch_C6, eighthN); //8c6
+ 174   1              Melodyplay(pitch_E6, eighthN); //8e6
+ 175   1              Melodyplay(pitch_C6, eighthN); //8c6
+ 176   1              Melodyplay(pitch_D6, eighthN); //8d6
+ 177   1              Melodyplay(pitch_C6, eighthN); //8c6
+ 178   1              Melodyplay(pitch_A5, eighthN); //8a
+C51 COMPILER V9.06   MELODY_TONE                                                           07/23/2012 18:47:51 PAGE 4   
+
+ 179   1              Melodyplay(pitch_C6, eighthN); //8c6
+ 180   1              Melodyplay(pitch_G5, eighthN); //8g
+ 181   1              Melodyplay(pitch_Bb5, eighthN); //8a#
+ 182   1              Melodyplay(pitch_A5, eighthN); //8a
+ 183   1              Melodyplay(pitch_F5, eighthN); //8f
+ 184   1              Melodyplay(pitch_P, wholeN); //1P
+ 185   1      }
+ 186          
+ 187          void main()
+ 188          {
+ 189   1              TMOD=0x02;
+ 190   1              IE=0x82;
+ 191   1              while(1)
+ 192   1              {
+ 193   2                      AdamsFamily();
+ 194   2                      delay_ms(1000);
+ 195   2                      LooneyToons();
+ 196   2                      delay_ms(1000);
+ 197   2      /*              Flintstones();
+ 198   2                      delay_ms(1000);
+ 199   2                      PinkPanther();
+ 200   2                      delay_ms(1000);
+ 201   2                      BeethovenPlay();
+ 202   2                      delay_ms(1000);
+ 203   2                      Saregama();
+ 204   2                      delay_ms(1000);
+ 205   2      */
+ 206   2              }
+ 207   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1152    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     40       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

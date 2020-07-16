@@ -1,0 +1,67 @@
+C51 COMPILER V7.20   CSAMPLE3                                                              09/01/2006 16:14:36 PAGE 1   
+
+
+C51 COMPILER V7.20, COMPILATION OF MODULE CSAMPLE3
+OBJECT MODULE PLACED IN CSAMPLE3.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE CSAMPLE3.C HOLD(128,0,0) OPTIMIZE(6,SPEED) REGFILE(.\CSample.ORC) BROWSE DE
+                    -BUG OBJECTEXTEND CODE SYMBOLS
+
+line level    source
+
+   1          /*------------------------------------------------------------------------------
+   2          CSAMPLE3.C
+   3          
+   4          Copyright 1995-1999 Keil Software, Inc.
+   5          ------------------------------------------------------------------------------*/
+   6          
+   7          #include <stdio.h>                             /* define I/O functions */
+   8          
+   9          char dummy_buffer [25];                        /* only for demostration */
+  10           
+  11          void output (unsigned int number)  {
+  12   1        printf ("\nresult: %d\n\n", number);
+  13   1      }
+C51 COMPILER V7.20   CSAMPLE3                                                              09/01/2006 16:14:36 PAGE 2   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION _output (BEGIN)
+                                           ; SOURCE LINE # 11
+;---- Variable 'number' assigned to Register 'R6/R7' ----
+                                           ; SOURCE LINE # 12
+0000 7BFF              MOV     R3,#0FFH
+0002 7A00        R     MOV     R2,#HIGH ?SC_0
+0004 7900        R     MOV     R1,#LOW ?SC_0
+0006 8E00        E     MOV     ?_printf?BYTE+03H,R6
+0008 8F00        E     MOV     ?_printf?BYTE+04H,R7
+000A 120000      E     LCALL   _printf
+                                           ; SOURCE LINE # 13
+000D 22                RET     
+             ; FUNCTION _output (END)
+
+C51 COMPILER V7.20   CSAMPLE3                                                              09/01/2006 16:14:36 PAGE 3   
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+dummy_buffer . . . . . . . . . . . . .  PUBLIC   DATA   ARRAY    0000H  25
+size_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
+_output. . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  number . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
+_printf. . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     14    ----
+   CONSTANT SIZE    =     14    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     25    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

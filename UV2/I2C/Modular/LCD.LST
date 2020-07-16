@@ -1,0 +1,96 @@
+C51 COMPILER V9.06   LCD                                                                   04/24/2012 13:39:12 PAGE 1   
+
+
+C51 COMPILER V9.06, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN LCD.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LCD.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          // Program for LCD
+   2          
+   3          #include<reg51.h>
+   4          #include "LCD.h"          // To include all declarations of functions
+   5          sbit RS=P2^0;
+   6          sbit RW=P2^1;
+   7          sbit EN=P2^2;
+   8          
+   9          void Initialize_LCD()
+  10          {
+  11   1              P0=0xFF;
+  12   1              P1=0xFF;
+  13   1              P2=0xFF;
+  14   1              Send_Command_LCD(0x38);
+  15   1              Delay(5);
+  16   1              Send_Command_LCD(0x0C);
+  17   1              Delay(5);
+  18   1              Clear_LCD();
+  19   1              Delay(5);
+  20   1      }
+  21          
+  22          void Send_Command_LCD(unsigned char comd)
+  23          {
+  24   1              RS=0;
+  25   1              RW=0;
+  26   1              EN=1;
+  27   1              P1=comd;
+  28   1              Delay(5);
+  29   1              EN=0;
+  30   1      }
+  31          
+  32          void Delay(unsigned int value)
+  33          {
+  34   1              unsigned int u,v;
+  35   1              for(u=0;u<value;u++)
+  36   1                      for(v=0;v<100;v++);
+  37   1      }
+  38          
+  39          void Display_Data_LCD(unsigned char *mdata, unsigned char count)
+  40          {
+  41   1              unsigned char s;
+  42   1              for(s=0;s<count;s++)
+  43   1              {
+  44   2                      RS=1;
+  45   2                      RW=0;
+  46   2                      EN=1;
+  47   2                      P1=*mdata;
+  48   2                      mdata++;
+  49   2                      Delay(100);
+  50   2                      EN=0;
+  51   2              }
+  52   1              
+  53   1      }
+  54          
+  55          void Display_Char_LCD(unsigned char a)
+C51 COMPILER V9.06   LCD                                                                   04/24/2012 13:39:12 PAGE 2   
+
+  56          {
+  57   1              RS=1;
+  58   1              RW=0;
+  59   1              EN=1;
+  60   1              P1=a;
+  61   1              Delay(100);
+  62   1              EN=0;
+  63   1      }
+  64          
+  65          void Clear_LCD()
+  66          {
+  67   1              Send_Command_LCD(0x01);
+  68   1              Delay(5);
+  69   1              Send_Command_LCD(0x02);
+  70   1              Delay(5);
+  71   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    183    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,39 @@
+C51 COMPILER V7.20   EEPROM                                                                09/01/2006 16:51:29 PAGE 1   
+
+
+C51 COMPILER V7.20, COMPILATION OF MODULE EEPROM
+OBJECT MODULE PLACED IN Eeprom.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Eeprom.c OMF2 VARBANKING(1) DEBUG
+
+line level    source
+
+   1          /*
+   2           *  This file contains the frame-work for the EEPROM Memory Classes
+   3           */
+   4          
+   5          #pragma ORDER                      // keep variables in order of definition
+   6          
+   7          #pragma USERCLASS (HDATA = EEPROM) // use HDATA_EEPROM for E2PROM area
+   8          
+   9          #define DECLARE 
+  10          #include <eeprom.h>                // include all variables
+  11          
+  12          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =    283    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

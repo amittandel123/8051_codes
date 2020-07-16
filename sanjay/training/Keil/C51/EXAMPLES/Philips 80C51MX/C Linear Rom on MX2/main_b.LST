@@ -1,0 +1,222 @@
+CX51 COMPILER V7.20   MAIN_B                                                               09/01/2006 16:05:20 PAGE 1   
+
+
+CX51 COMPILER V7.20, COMPILATION OF MODULE MAIN_B
+OBJECT MODULE PLACED IN main_b.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\CX51.EXE main_b.c LARGE OBJECTADVANCED ROM(HUGE) OPTIMIZE(9,SPEED) DEBUG CODE
+
+line level    source
+
+   1          /*
+   2           * MAIN BOOT SECTION
+   3           */
+   4          
+   5          #include <reg51m.h>
+   6          
+   7          unsigned char stsys  = 0;   // system status: 0-boot, 1-application
+   8          unsigned char t2_ind = 0;   // t2 interrupt ISR indication: 0-none, 1-happened
+   9          
+  10          extern void main_app(void);
+  11          
+  12          void int_off(void);
+  13          void t2_ini_load(void);
+  14          void int_on(void);
+  15          
+  16          main()
+  17          {
+  18   1              int_off();
+  19   1              t2_ini_load();
+  20   1              t2_ind = 0;
+  21   1              int_on();
+  22   1              P2 = 0xFF;
+  23   1              while(1)
+  24   1                      {
+  25   2                      if (P2 != 0xFF)
+  26   2                              {
+  27   3                              stsys = 1;
+  28   3                              main_app();
+  29   3                              }
+  30   2                      if (t2_ind == 1)
+  31   2                              {
+  32   3                              t2_ind = 0;
+  33   3                              P3 = 0x00;
+  34   3                              P3 = 0xFF;
+  35   3                              P3 = 0x00;
+  36   3                              P3 = 0xFF;
+  37   3                              P3 = 0x00;
+  38   3                              P3 = 0xFF;
+  39   3                              }
+  40   2                      }
+  41   1      }
+  42          
+  43          
+  44          void t2_ini_load(void)
+  45          {
+  46   1              ET2 = 0;
+  47   1              T2MOD = 0x00;                   //T2 is in 16 bit autoreload mode
+  48   1              T2CON = 0x00;
+  49   1              RCAP2L = 0xFF;                  //genereating interrupts on 10 ms|22.1184 MHz clock
+  50   1              RCAP2H = 0x6f;
+  51   1              TL2 = RCAP2L;
+  52   1              TH2 = RCAP2H;
+  53   1              ET2 = 1;
+  54   1              TR2 = 1;                                //T2 is on
+  55   1      }
+CX51 COMPILER V7.20   MAIN_B                                                               09/01/2006 16:05:20 PAGE 2   
+
+  56          
+  57          void t2_isr_load(void)  {
+  58   1              P1 = 0x00;                              //signal t2 ISR activity (bootloader)
+  59   1              P1 = 0xFF;
+  60   1              t2_ind = 1;
+  61   1      }
+  62          
+  63          void int_on(void)  {
+  64   1              EA = 1;
+  65   1      }
+  66          
+  67          void int_off(void)  {
+  68   1              EA = 0;
+  69   1      }
+  70          
+  71          
+CX51 COMPILER V7.20   MAIN_B                                                               09/01/2006 16:05:20 PAGE 3   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION main (BEGIN)
+                                           ; SOURCE LINE # 16
+                                           ; SOURCE LINE # 17
+                                           ; SOURCE LINE # 18
+                 R     ECALL   int_off
+                                           ; SOURCE LINE # 19
+                 R     ECALL   t2_ini_load
+                                           ; SOURCE LINE # 20
+                       CLR     A
+                 R     MOV     DPTR,#t2_ind
+                       MOVX    @DPTR,A
+                                           ; SOURCE LINE # 21
+                 R     ECALL   int_on
+                                           ; SOURCE LINE # 22
+                       MOV     P2,#0FFH
+             ?C0001:
+                                           ; SOURCE LINE # 23
+                                           ; SOURCE LINE # 24
+                                           ; SOURCE LINE # 25
+                       MOV     A,P2
+                       CPL     A
+                 R     xJZ     ?C0003
+                                           ; SOURCE LINE # 26
+                                           ; SOURCE LINE # 27
+                 R     MOV     DPTR,#stsys
+                       MOV     A,#01H
+                       MOVX    @DPTR,A
+                                           ; SOURCE LINE # 28
+                 E     ECALL   main_app
+                                           ; SOURCE LINE # 29
+             ?C0003:
+                                           ; SOURCE LINE # 30
+                 R     MOV     DPTR,#t2_ind
+                       MOVX    A,@DPTR
+                 R     xJNE    A,#01H,?C0001
+                                           ; SOURCE LINE # 31
+                                           ; SOURCE LINE # 32
+                       CLR     A
+                       MOVX    @DPTR,A
+                                           ; SOURCE LINE # 33
+                       MOV     P3,A
+                                           ; SOURCE LINE # 34
+                       MOV     P3,#0FFH
+                                           ; SOURCE LINE # 35
+                       MOV     P3,A
+                                           ; SOURCE LINE # 36
+                       MOV     P3,#0FFH
+                                           ; SOURCE LINE # 37
+                       MOV     P3,A
+                                           ; SOURCE LINE # 38
+                       MOV     P3,#0FFH
+                                           ; SOURCE LINE # 39
+                                           ; SOURCE LINE # 40
+                 R     xJMP    ?C0001
+             ; FUNCTION main (END)
+
+             ; FUNCTION t2_ini_load (BEGIN)
+                                           ; SOURCE LINE # 44
+                                           ; SOURCE LINE # 45
+CX51 COMPILER V7.20   MAIN_B                                                               09/01/2006 16:05:20 PAGE 4   
+
+                                           ; SOURCE LINE # 46
+                       CLR     ET2
+                                           ; SOURCE LINE # 47
+                       CLR     A
+                       MOV     T2MOD,A
+                                           ; SOURCE LINE # 48
+                       MOV     T2CON,A
+                                           ; SOURCE LINE # 49
+                       MOV     RCAP2L,#0FFH
+                                           ; SOURCE LINE # 50
+                       MOV     RCAP2H,#06FH
+                                           ; SOURCE LINE # 51
+                       MOV     TL2,RCAP2L
+                                           ; SOURCE LINE # 52
+                       MOV     TH2,RCAP2H
+                                           ; SOURCE LINE # 53
+                       SETB    ET2
+                                           ; SOURCE LINE # 54
+                       SETB    TR2
+                                           ; SOURCE LINE # 55
+                       ERET    
+             ; FUNCTION t2_ini_load (END)
+
+             ; FUNCTION t2_isr_load (BEGIN)
+                                           ; SOURCE LINE # 57
+                                           ; SOURCE LINE # 58
+                       CLR     A
+                       MOV     P1,A
+                                           ; SOURCE LINE # 59
+                       MOV     P1,#0FFH
+                                           ; SOURCE LINE # 60
+                 R     MOV     DPTR,#t2_ind
+                       INC     A
+                       MOVX    @DPTR,A
+                                           ; SOURCE LINE # 61
+                       ERET    
+             ; FUNCTION t2_isr_load (END)
+
+             ; FUNCTION int_on (BEGIN)
+                                           ; SOURCE LINE # 63
+                                           ; SOURCE LINE # 64
+                       SETB    EA
+                                           ; SOURCE LINE # 65
+                       ERET    
+             ; FUNCTION int_on (END)
+
+             ; FUNCTION int_off (BEGIN)
+                                           ; SOURCE LINE # 67
+                                           ; SOURCE LINE # 68
+                       CLR     EA
+                                           ; SOURCE LINE # 69
+                       ERET    
+             ; FUNCTION int_off (END)
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    112    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      2    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+CX51 COMPILER V7.20   MAIN_B                                                               09/01/2006 16:05:20 PAGE 5   
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+CX51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

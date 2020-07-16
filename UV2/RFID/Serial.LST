@@ -1,0 +1,55 @@
+C51 COMPILER V9.06   SERIAL                                                                10/04/2012 10:58:01 PAGE 1   
+
+
+C51 COMPILER V9.06, COMPILATION OF MODULE SERIAL
+OBJECT MODULE PLACED IN Serial.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Serial.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          
+   2          // Program for serial communication
+   3          
+   4          // The m/c cycle freq of 8051=11.0529MHz/12=921.6kHz.
+   5          // The 8051's serial communication UART cktry divides the m/c cycle freq of 921.6kHz by 32once more
+   6          // before it is used by Timer 1 to set the baud rate.
+   7          // 921.6kHz/32=28800Hz is the freq provided by UART to Timer1 to set baud rate.
+   8          // (a) 28800/3=9600  => 3=FD(hex) is loaded into TH1 
+   9          // (b) 28800/12=2400 => 12=F4(hex) is loaded into TH1
+  10          // (c) 28800/24=1200 => 24=E8(hex) is loaded into TH1
+  11          
+  12          
+  13          #include <reg51.h>
+  14          void Serial_Init()
+  15          {
+  16   1              TMOD=0x20;              //use Timer 1, mode 2
+  17   1              TH1=0xFA;               //4800 baud rate
+  18   1              SCON=0x50;
+  19   1              TR1=1;                  //start timer
+  20   1      } 
+  21          
+  22          unsigned char Serial_Receive()
+  23          { 
+  24   1              unsigned char k,mybyte;
+  25   1          for(k=0;k<12;k++)
+  26   1              {
+  27   2                      while(RI==0);    //wait to receive
+  28   2                      mybyte=SBUF;    //save value to mybyte
+  29   2                      RI=0;
+  30   2              }
+  31   1              return(mybyte);
+  32   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     26    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,228 @@
+C51 COMPILER V7.06   LCD                                                                   08/01/2011 23:12:29 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN LCD.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LCD.c LARGE BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #include <intrins.h>
+   3          #include "LCD.H"
+   4          #include "COMMON.H"
+   5          
+   6          // cursor movement
+   7          #define LEFT 0
+   8          #define RIGHT 1
+   9          int No_Of_Char_on_LCD=1;
+  10          
+  11          bit LCD_8_BIT = 1;
+  12          bit BLINK = 0;
+  13          bit CURSOR = 0;
+  14          bit SHIFT_L = 0;
+  15          bit SHIFT_R = 0;
+  16          
+  17          sbit RS = P2^6;
+  18          sbit EN = P2^5;
+  19          int multi_char_count;
+  20          
+  21          void delay(unsigned int val);
+  22          
+  23          unsigned char Lookup_table[]= {'0','1','2','3','4','5','6','7','8','9','.',65,66,67,68,69,70,71,72,73,74,7
+             -5,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,
+             -116,117,118,119,120,121,122};
+  24          
+  25          void initialise_LCD(void)
+  26          {
+  27   1              P1 = 0xFF;
+  28   1              P2 = 0xFF;
+  29   1              P3=0xFF;
+  30   1              EN=0;
+  31   1              RS= 0;
+  32   1      }
+  33          
+  34          void writeCommand_LCD(void)
+  35          {
+  36   1              unsigned char Command;
+  37   1              if(LCD_8_BIT==1)
+  38   1                      Command=0x38;
+  39   1              else if(LCD_8_BIT==0)
+  40   1                      Command=0x28;
+  41   1      
+  42   1              delay(5);
+  43   1              SendCommand(Command);
+  44   1      
+  45   1              delay(5);
+  46   1              SendCommand(Command);
+  47   1      
+  48   1      
+  49   1              delay(5);
+  50   1              SendCommand(0x0C);
+  51   1      
+  52   1              delay(5);
+  53   1              ClearDisplay();
+C51 COMPILER V7.06   LCD                                                                   08/01/2011 23:12:29 PAGE 2   
+
+  54   1              delay(5);
+  55   1      }
+  56          
+  57          void GenChar_at_CGRAM(unsigned char mdata[])
+  58          {
+  59   1              int cnt;
+  60   1              SendCommand(0x41);
+  61   1              delay(5);
+  62   1              for(cnt=0;cnt < 8;cnt++)
+  63   1              {
+  64   2                      display_data(mdata[cnt]);
+  65   2                      delay(5);
+  66   2              }
+  67   1      }
+  68          
+  69          void Send(unsigned char comd)
+  70          {
+  71   1              RS=0;  // to select Command Register
+  72   1              P0 = comd;// put command on PORT2
+  73   1              EN=1;// to Enable the LCD processor
+  74   1              _nop_();
+  75   1              EN=0;// to disable the LCD processor
+  76   1      }
+  77          
+  78          void SendCommand(unsigned char comd)
+  79          {
+  80   1              unsigned char tmpcomd;
+  81   1              tmpcomd=comd;
+  82   1              if(LCD_8_BIT==1)
+  83   1              {       
+  84   2                      Send(comd);
+  85   2                      delay(5);
+  86   2              }
+  87   1              else if (LCD_8_BIT==0)//4 bit
+  88   1              {
+  89   2                      Send(comd);
+  90   2                      delay(5);
+  91   2                      Send(16*(tmpcomd & 0x0F));
+  92   2                      delay(5);
+  93   2              }
+  94   1      }
+  95          
+  96          void ClearDisplay(void)
+  97          {
+  98   1              SendCommand(0x01);// clear display
+  99   1              delay(5);
+ 100   1      
+ 101   1              SendCommand(0x02);//send cursor to home location
+ 102   1              delay(5);
+ 103   1      }
+ 104          
+ 105          void writeData_LCD(unsigned char mdata[], unsigned int counter)
+ 106          {
+ 107   1              unsigned char tmpdata;
+ 108   1              unsigned int cnt;
+ 109   1              if(LCD_8_BIT==1)
+ 110   1              {       for(cnt=0;cnt < counter;cnt++)
+ 111   2                      {
+ 112   3                              display_data(mdata[cnt]);
+ 113   3                              delay(5);
+ 114   3                      }
+ 115   2              }
+C51 COMPILER V7.06   LCD                                                                   08/01/2011 23:12:29 PAGE 3   
+
+ 116   1              else if(LCD_8_BIT==0)//4 bit
+ 117   1              {
+ 118   2                      for(cnt=0;cnt < counter;cnt++)
+ 119   2                      {       
+ 120   3                              tmpdata=mdata[cnt];
+ 121   3                              display_data(tmpdata);
+ 122   3                              delay(5);
+ 123   3                              display_data(16*(tmpdata & 0x0F));
+ 124   3                              delay(5);
+ 125   3                      }
+ 126   2              }
+ 127   1      }
+ 128          
+ 129          void display_data(unsigned char port_data)
+ 130          {
+ 131   1              RS=1;// to select DDRAM Register i.e. data register
+ 132   1              P0=port_data;// put data on port
+ 133   1              EN=1;// to Enable the LCD processor
+ 134   1              _nop_();
+ 135   1              EN=0;// to disable the LCD processor
+ 136   1      }
+ 137          
+ 138          void multi_char_key(void)
+ 139          {
+ 140   1              writeData_LCD(&(Lookup_table[multi_char_count]),1);
+ 141   1              multi_char_count++;
+ 142   1              move_cursor(LEFT,0);
+ 143   1              if(multi_char_count>63)
+ 144   1                      multi_char_count=0;
+ 145   1              delay(5);
+ 146   1      }
+ 147          
+ 148          void move_cursor(int Direction, unsigned int ChangeCount)
+ 149          {
+ 150   1              if (Direction==LEFT)
+ 151   1              {
+ 152   2                      if(ChangeCount==1)
+ 153   2                      {
+ 154   3                              multi_char_count=0;
+ 155   3                              No_Of_Char_on_LCD--;
+ 156   3                      }
+ 157   2                      if(No_Of_Char_on_LCD==40)
+ 158   2                      {       
+ 159   3                              No_Of_Char_on_LCD=16;
+ 160   3                              SendCommand(0x8F);
+ 161   3                      }
+ 162   2                      else if(No_Of_Char_on_LCD==0)
+ 163   2                      {       
+ 164   3                              No_Of_Char_on_LCD=80;
+ 165   3                              SendCommand(0xCF);
+ 166   3                      }
+ 167   2                      else
+ 168   2                      {
+ 169   3                              SendCommand(0x10);
+ 170   3                      }
+ 171   2              }
+ 172   1              else if (Direction==RIGHT)
+ 173   1              {
+ 174   2                      if(ChangeCount==1)
+ 175   2                      {
+ 176   3                              multi_char_count=0;
+ 177   3                              No_Of_Char_on_LCD++;
+C51 COMPILER V7.06   LCD                                                                   08/01/2011 23:12:29 PAGE 4   
+
+ 178   3                      }
+ 179   2                      
+ 180   2                      if(No_Of_Char_on_LCD==17)
+ 181   2                      {       
+ 182   3                              No_Of_Char_on_LCD=41;
+ 183   3                              SendCommand(0xC0);
+ 184   3                      }
+ 185   2                      else if(No_Of_Char_on_LCD==81)
+ 186   2                      {       
+ 187   3                              No_Of_Char_on_LCD=1;
+ 188   3                              SendCommand(0x80);
+ 189   3                      }
+ 190   2                      else
+ 191   2                      {
+ 192   3                              SendCommand(0x14);
+ 193   3                      }
+ 194   2              }
+ 195   1              delay(500);
+ 196   1      }
+ 197          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    757    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     67      20
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      5    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

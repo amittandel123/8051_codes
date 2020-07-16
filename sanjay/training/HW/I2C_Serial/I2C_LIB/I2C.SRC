@@ -1,0 +1,407 @@
+; .\I2C.SRC generated from: I2C.c
+; COMPILER INVOKED BY:
+;        C:\Keil\C51\BIN\C51.EXE I2C.c LARGE DEBUG OBJECTEXTEND PAGEWIDTH(79) PAGELENGTH(66) SRC(.\I2C.SRC)
+
+$NOMOD51
+
+NAME	I2C
+
+P0	DATA	080H
+P1	DATA	090H
+P2	DATA	0A0H
+P3	DATA	0B0H
+T0	BIT	0B0H.4
+AC	BIT	0D0H.6
+T1	BIT	0B0H.5
+EA	BIT	0A8H.7
+IE	DATA	0A8H
+RD	BIT	0B0H.7
+ES	BIT	0A8H.4
+IP	DATA	0B8H
+RI	BIT	098H.0
+INT0	BIT	0B0H.2
+CY	BIT	0D0H.7
+TI	BIT	098H.1
+INT1	BIT	0B0H.3
+PS	BIT	0B8H.4
+SP	DATA	081H
+OV	BIT	0D0H.2
+WR	BIT	0B0H.6
+SBUF	DATA	099H
+PCON	DATA	087H
+SCON	DATA	098H
+TMOD	DATA	089H
+TCON	DATA	088H
+IE0	BIT	088H.1
+IE1	BIT	088H.3
+B	DATA	0F0H
+ACC	DATA	0E0H
+ET0	BIT	0A8H.1
+ET1	BIT	0A8H.3
+TF0	BIT	088H.5
+ET2	BIT	0A8H.5
+TF1	BIT	088H.7
+RB8	BIT	098H.2
+TH0	DATA	08CH
+EX0	BIT	0A8H.0
+IT0	BIT	088H.0
+TH1	DATA	08DH
+TB8	BIT	098H.3
+EX1	BIT	0A8H.2
+IT1	BIT	088H.2
+P	BIT	0D0H.0
+SM0	BIT	098H.7
+TL0	DATA	08AH
+SM1	BIT	098H.6
+TL1	DATA	08BH
+SM2	BIT	098H.5
+PT0	BIT	0B8H.1
+PT1	BIT	0B8H.3
+RS0	BIT	0D0H.3
+TR0	BIT	088H.4
+RS1	BIT	0D0H.4
+TR1	BIT	088H.6
+SDA	BIT	090H.0
+PX0	BIT	0B8H.0
+PX1	BIT	0B8H.2
+DPH	DATA	083H
+DPL	DATA	082H
+IPH	DATA	0B7H
+SCL	BIT	090H.1
+REN	BIT	098H.4
+SADEN	DATA	0B9H
+RXD	BIT	0B0H.0
+SADDR	DATA	0A9H
+TXD	BIT	0B0H.1
+F0	BIT	0D0H.5
+PSW	DATA	0D0H
+?PR?I2C_initialise?I2C                   SEGMENT CODE 
+?PR?I2C_Start?I2C    SEGMENT CODE 
+?PR?I2C_Stop?I2C     SEGMENT CODE 
+?PR?Read_Data?I2C    SEGMENT CODE 
+?PR?_send_Data?I2C   SEGMENT CODE 
+?XD?_send_Data?I2C   SEGMENT XDATA OVERLAYABLE 
+?PR?device_ACK?I2C   SEGMENT CODE 
+?PR?Master_NO_ACK?I2C                    SEGMENT CODE 
+	PUBLIC	Master_NO_ACK
+	PUBLIC	device_ACK
+	PUBLIC	_send_Data
+	PUBLIC	Read_Data
+	PUBLIC	I2C_Stop
+	PUBLIC	I2C_Start
+	PUBLIC	I2C_initialise
+
+	RSEG  ?XD?_send_Data?I2C
+?_send_Data?BYTE:
+      mData?440:   DS   1
+; #include <reg51.h>
+; #include <intrins.h>
+; 
+; #define HIGH 1
+; #define LOW  0
+; 
+; sbit SDA 	= P1^0;
+; sbit SCL 	= P1^1;
+; 
+; //sbit WP 	= P1^2;
+; /*
+; void I2C_Reset(void)
+; {
+; 	unsigned int j = 0,i = 0;
+; 	while(1)
+; 	{
+; 		for(j=0;j<9;j++)
+; 		{
+; 			SCL = LOW;
+; 			SCL = HIGH;
+; 			if(SDA==HIGH)
+; 				i++;
+; 		}
+; 		if(i<9)// memory not Resetted
+; 			break;
+; 	}
+; 		
+; 		
+; }
+; */
+; 
+; void I2C_initialise(void)
+
+	RSEG  ?PR?I2C_initialise?I2C
+I2C_initialise:
+			; SOURCE LINE # 32
+; {
+			; SOURCE LINE # 33
+; //	WP 	= 0x00;
+; 	SCL = HIGH;
+			; SOURCE LINE # 35
+	SETB 	SCL
+; 	SDA = HIGH;
+			; SOURCE LINE # 36
+	SETB 	SDA
+; }
+			; SOURCE LINE # 37
+	RET  	
+; END OF I2C_initialise
+
+; 
+; void I2C_Start(void)
+
+	RSEG  ?PR?I2C_Start?I2C
+I2C_Start:
+			; SOURCE LINE # 39
+; {
+			; SOURCE LINE # 40
+; //	WP 	= 0x00;
+; 	SCL = LOW;
+			; SOURCE LINE # 42
+	CLR  	SCL
+; 	SDA = HIGH;
+			; SOURCE LINE # 43
+	SETB 	SDA
+; 	SCL = HIGH;
+			; SOURCE LINE # 44
+	SETB 	SCL
+; 	SDA = LOW;
+			; SOURCE LINE # 45
+	CLR  	SDA
+; }
+			; SOURCE LINE # 46
+	RET  	
+; END OF I2C_Start
+
+; 
+; void I2C_Stop(void)
+
+	RSEG  ?PR?I2C_Stop?I2C
+I2C_Stop:
+			; SOURCE LINE # 48
+; {
+			; SOURCE LINE # 49
+; 	SCL = LOW;
+			; SOURCE LINE # 50
+	CLR  	SCL
+; 	SDA = LOW;
+			; SOURCE LINE # 51
+	CLR  	SDA
+; 	SCL = HIGH;
+			; SOURCE LINE # 52
+	SETB 	SCL
+; 	SDA = HIGH;
+			; SOURCE LINE # 53
+	SETB 	SDA
+; //	WP 	= 0x01;
+; }
+			; SOURCE LINE # 55
+	RET  	
+; END OF I2C_Stop
+
+; 
+; unsigned char Read_Data(void)
+
+	RSEG  ?PR?Read_Data?I2C
+Read_Data:
+			; SOURCE LINE # 57
+; {
+			; SOURCE LINE # 58
+; 	#pragma ASM
+; 		MOV R7, #0x00
+	  MOV R7, #0x00
+; 		MOV R6, #0x08
+	  MOV R6, #0x08
+; 	READ_LOOP:
+	  READ_LOOP:
+; 		CLR SCL
+	  CLR SCL
+; 		SETB SCL
+	  SETB SCL
+; 
+	  
+; 		CLR C
+	  CLR C
+; //		MOV A, R7
+	  
+; 		RL A
+	  RL A
+; 		MOV R7, A
+	  MOV R7, A
+; 
+	  
+; 		JNB SDA, LINE_IS_CLR
+	  JNB SDA, LINE_IS_CLR
+; 		MOV A, R7
+	  MOV A, R7
+; 		ORL A, #0x01
+	  ORL A, #0x01
+; 		MOV R7, A
+	  MOV R7, A
+; 	LINE_IS_CLR:	
+	  LINE_IS_CLR:	
+; 		DJNZ R6, READ_LOOP
+	  DJNZ R6, READ_LOOP
+; 		CLR SCL
+	  CLR SCL
+; 	#pragma ENDASM
+; 	
+; /*	unsigned int i;
+; 	unsigned char readbyte;
+; 	for(i=0;i<8;i++)
+; 	{
+; 		readbyte = readbyte << 1;
+; 
+; 		SCL = LOW;
+; 		SCL = HIGH;
+; 		if(SDA == 1)
+; 			readbyte = readbyte | 0x01;
+; 		else if(SDA == 0)
+; 			readbyte = readbyte | 0x00;
+; 	}
+; 	SCL = LOW;
+; 	return(readbyte);
+; */
+; }
+			; SOURCE LINE # 96
+	RET  	
+; END OF Read_Data
+
+; 
+; void send_Data(unsigned char mData)
+
+	RSEG  ?PR?_send_Data?I2C
+_send_Data:
+			; SOURCE LINE # 98
+	MOV  	DPTR,#mData?440
+	MOV  	A,R7
+	MOVX 	@DPTR,A
+; {
+			; SOURCE LINE # 99
+; 	#pragma ASM
+; 		MOV A, R7 // store command
+	  MOV A, R7  
+; 		MOV R5,A
+	  MOV R5,A
+; 		MOV R7, #0x00
+	  MOV R7, #0x00
+; 		MOV R6, #0x08
+	  MOV R6, #0x08
+; 	WRITE_LOOP:
+	  WRITE_LOOP:
+; 		CLR C
+	  CLR C
+; 		CLR SCL
+	  CLR SCL
+; 		CLR SDA
+	  CLR SDA
+; 		MOV A, R5
+	  MOV A, R5
+; 		RLC A
+	  RLC A
+; 		MOV R5, A
+	  MOV R5, A
+; 		JNC CLR_LINE
+	  JNC CLR_LINE
+; 		SETB SDA
+	  SETB SDA
+; 	CLR_LINE:
+	  CLR_LINE:
+; 		SETB SCL
+	  SETB SCL
+; 		DJNZ R6, WRITE_LOOP
+	  DJNZ R6, WRITE_LOOP
+; 		CLR SCL
+	  CLR SCL
+; 		CLR SDA
+	  CLR SDA
+; 	#pragma ENDASM
+; 
+; /*	unsigned char x;
+; 	bit sendBit;
+; 	unsigned char MASK = 0x80;
+; 	for(x=0;x<8;x++)
+; 	{
+; 		sendBit = mData & MASK;
+; 		MASK >>= 1;
+; 
+; 		SCL = LOW;
+; 		SDA = sendBit;
+; 		SCL = HIGH;
+; 	}
+; 	SCL = LOW;
+; 	SDA = LOW;
+; */
+; }
+			; SOURCE LINE # 136
+	RET  	
+; END OF _send_Data
+
+; 
+; /*
+; void send_Device_Address(unsigned char address)
+; {
+; 	send_Data(address);
+; }
+; 
+; void send_Word_Address(unsigned char address)
+; {
+; 	send_Data(address);
+; }
+; */
+; 
+; void device_ACK(void)
+
+	RSEG  ?PR?device_ACK?I2C
+device_ACK:
+			; SOURCE LINE # 150
+; {
+			; SOURCE LINE # 151
+; 	SCL = LOW;
+			; SOURCE LINE # 152
+	CLR  	SCL
+; 	SDA = HIGH;
+			; SOURCE LINE # 153
+	SETB 	SDA
+; 	SCL = HIGH;
+			; SOURCE LINE # 154
+	SETB 	SCL
+; //	while(SDA == HIGH);
+; }
+			; SOURCE LINE # 156
+	RET  	
+; END OF device_ACK
+
+; 
+; /*
+; void Master_ACK(void)
+; {
+; 	SCL = LOW;
+; 	SDA = LOW;
+; 	SCL = HIGH;
+; 	SCL = LOW;
+; }
+; */
+; 
+; void Master_NO_ACK(void)
+
+	RSEG  ?PR?Master_NO_ACK?I2C
+Master_NO_ACK:
+			; SOURCE LINE # 168
+; {
+			; SOURCE LINE # 169
+; 	SCL = LOW;
+			; SOURCE LINE # 170
+	CLR  	SCL
+; 	SDA = HIGH;
+			; SOURCE LINE # 171
+	SETB 	SDA
+; 	SCL = HIGH;
+			; SOURCE LINE # 172
+	SETB 	SCL
+; 	SCL = LOW;
+			; SOURCE LINE # 173
+	CLR  	SCL
+; }
+			; SOURCE LINE # 174
+	RET  	
+; END OF Master_NO_ACK
+
+	END

@@ -1,0 +1,7 @@
+"CSAMPLE1.obj",
+"CSAMPLE2.obj",
+"CSAMPLE3.obj" 
+TO "CSample" REGFILE (.\CSample.ORC) 
+IXREF 
+RAMSIZE(256) 
+PRECEDE( ?DT?CSAMPLE3 )

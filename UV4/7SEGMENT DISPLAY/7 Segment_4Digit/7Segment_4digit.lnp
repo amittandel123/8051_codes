@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"7Segment_4digit.obj" 
+TO "7Segment_4digit" 
+RAMSIZE(256) 

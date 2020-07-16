@@ -1,0 +1,152 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+D:\Amit\E-Projects\8051Projects\UV2\ADC\ADC.uv2
+Project File Date:  05/16/2012
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+linking...
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  ?C_START
+    MODULE:  .\STARTUP.obj (?C_STARTUP)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  ?C_START
+    MODULE:  .\STARTUP.obj (?C_STARTUP)
+    ADDRESS: 080AH
+Program Size: data=9.0 xdata=0 code=15
+"ADC" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling ADC.c...
+ADC.c(10): error C309: bad or missing filename
+ADC.c(10): warning C318: can't open file ''
+ADC.c(11): error C309: bad or missing filename
+ADC.c(11): warning C318: can't open file ''
+ADC.c(15): error C202: 'P3': undefined identifier
+ADC.c(16): error C202: 'P3': undefined identifier
+ADC.c(17): error C202: 'P3': undefined identifier
+ADC.c(20): error C202: 'TH0': undefined identifier
+ADC.c(22): error C202: 'sec10': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling ADC.c...
+ADC.c(10): error C309: bad or missing filename
+ADC.c(10): warning C318: can't open file ''
+ADC.c(11): error C309: bad or missing filename
+ADC.c(11): warning C318: can't open file ''
+ADC.c(15): error C202: 'P3': undefined identifier
+ADC.c(16): error C202: 'P3': undefined identifier
+ADC.c(17): error C202: 'P3': undefined identifier
+ADC.c(20): error C202: 'TH0': undefined identifier
+ADC.c(22): error C202: 'sec10': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling ADC.c...
+ADC.c(11): error C309: bad or missing filename
+ADC.c(11): warning C318: can't open file ''
+ADC.c(22): error C202: 'sec10': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling ADC.c...
+ADC.c(22): error C202: 'sec10': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling ADC.c...
+ADC.c(23): error C202: 'sec10': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling ADC.c...
+ADC.c(25): warning C206: 'rdadc': missing function-prototype
+ADC.c(26): warning C206: 'setout': missing function-prototype
+ADC.c(62): warning C206: '_nop_': missing function-prototype
+ADC.c(62): error C264: intrinsic '_nop_': declaration/activation error
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling ADC.c...
+ADC.c(28): warning C206: 'rdadc': missing function-prototype
+ADC.c(29): warning C206: 'setout': missing function-prototype
+ADC.c(65): warning C206: '_nop_': missing function-prototype
+ADC.c(65): error C264: intrinsic '_nop_': declaration/activation error
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling ADC.c...
+ADC.c(30): warning C206: 'rdadc': missing function-prototype
+ADC.c(31): warning C206: 'setout': missing function-prototype
+ADC.c(67): warning C206: '_nop_': missing function-prototype
+ADC.c(67): error C264: intrinsic '_nop_': declaration/activation error
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling ADC.c...
+ADC.c(31): warning C206: 'rdadc': missing function-prototype
+ADC.c(32): warning C206: 'setout': missing function-prototype
+ADC.c(84): warning C206: 'If': missing function-prototype
+ADC.c(84): error C267: 'If': requires ANSI-style prototype
+ADC.c(85): error C141: syntax error near 'RI'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling ADC.c...
+ADC.c(31): warning C206: 'rdadc': missing function-prototype
+ADC.c(32): warning C206: 'setout': missing function-prototype
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SEND?ADC
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?RDADC0804?ADC
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  RDADC
+    MODULE:  ADC.obj (ADC)
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  SETOUT
+    MODULE:  ADC.obj (ADC)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  RDADC
+    MODULE:  ADC.obj (ADC)
+    ADDRESS: 082AH
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  SETOUT
+    MODULE:  ADC.obj (ADC)
+    ADDRESS: 082DH
+Program Size: data=12.0 xdata=0 code=165
+"ADC" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling ADC.c...
+ADC.c(31): warning C206: 'rdadc': missing function-prototype
+ADC.c(32): warning C206: 'setout': missing function-prototype
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SEND?ADC
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?RDADC0804?ADC
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  RDADC
+    MODULE:  ADC.obj (ADC)
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  SETOUT
+    MODULE:  ADC.obj (ADC)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  RDADC
+    MODULE:  ADC.obj (ADC)
+    ADDRESS: 082AH
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  SETOUT
+    MODULE:  ADC.obj (ADC)
+    ADDRESS: 082DH
+Program Size: data=12.0 xdata=0 code=165
+"ADC" - 0 Error(s), 8 Warning(s).
+</pre>
+</body>
+</html>

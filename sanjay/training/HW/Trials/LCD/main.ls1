@@ -1,0 +1,432 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 08/05/2011 21:04:38 PAGE     1
+
+
+MACRO ASSEMBLER A51 V7.07
+OBJECT MODULE PLACED IN main.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE main.src PR(.\main.ls1) EP DEBUG
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; .\main.SRC generated from: main.c
+                       2     ; COMPILER INVOKED BY:
+                       3     ;        C:\Keil\C51\BIN\C51.EXE main.c LARGE BROWSE DEBUG OBJECTEXTEND SRC(.\main.SRC)
+                       4     
+                       5     $nomod51 
+                       6     
+                       7     NAME    MAIN
+                       8     
+  0080                 9     P0      DATA    080H
+  0090                10     P1      DATA    090H
+  00A0                11     P2      DATA    0A0H
+  00B0                12     P3      DATA    0B0H
+  00B4                13     T0      BIT     0B0H.4
+  00D6                14     AC      BIT     0D0H.6
+  00B5                15     T1      BIT     0B0H.5
+  00AF                16     EA      BIT     0A8H.7
+  00A8                17     IE      DATA    0A8H
+  00B7                18     RD      BIT     0B0H.7
+  00AC                19     ES      BIT     0A8H.4
+  00B8                20     IP      DATA    0B8H
+  0098                21     RI      BIT     098H.0
+  00B2                22     INT0    BIT     0B0H.2
+  00D7                23     CY      BIT     0D0H.7
+  0099                24     TI      BIT     098H.1
+  00B3                25     INT1    BIT     0B0H.3
+  00BC                26     PS      BIT     0B8H.4
+  0081                27     SP      DATA    081H
+  00D2                28     OV      BIT     0D0H.2
+  00B6                29     WR      BIT     0B0H.6
+  0099                30     SBUF    DATA    099H
+  0087                31     PCON    DATA    087H
+  0098                32     SCON    DATA    098H
+  0089                33     TMOD    DATA    089H
+  0088                34     TCON    DATA    088H
+  0089                35     IE0     BIT     088H.1
+  008B                36     IE1     BIT     088H.3
+  00F0                37     B       DATA    0F0H
+  00E0                38     ACC     DATA    0E0H
+  00A9                39     ET0     BIT     0A8H.1
+  00AB                40     ET1     BIT     0A8H.3
+  008D                41     TF0     BIT     088H.5
+  008F                42     TF1     BIT     088H.7
+  009A                43     RB8     BIT     098H.2
+  008C                44     TH0     DATA    08CH
+  00A8                45     EX0     BIT     0A8H.0
+  0088                46     IT0     BIT     088H.0
+  008D                47     TH1     DATA    08DH
+  009B                48     TB8     BIT     098H.3
+  00AA                49     EX1     BIT     0A8H.2
+  008A                50     IT1     BIT     088H.2
+  00D0                51     P       BIT     0D0H.0
+  009F                52     SM0     BIT     098H.7
+  008A                53     TL0     DATA    08AH
+  009E                54     SM1     BIT     098H.6
+  008B                55     TL1     DATA    08BH
+  009D                56     SM2     BIT     098H.5
+  00B9                57     PT0     BIT     0B8H.1
+  00BB                58     PT1     BIT     0B8H.3
+A51 MACRO ASSEMBLER  MAIN                                                                 08/05/2011 21:04:38 PAGE     2
+
+  00D3                59     RS0     BIT     0D0H.3
+  008C                60     TR0     BIT     088H.4
+  00D4                61     RS1     BIT     0D0H.4
+  008E                62     TR1     BIT     088H.6
+  00B8                63     PX0     BIT     0B8H.0
+  00BA                64     PX1     BIT     0B8H.2
+  0083                65     DPH     DATA    083H
+  0082                66     DPL     DATA    082H
+  009C                67     REN     BIT     098H.4
+  00B0                68     RXD     BIT     0B0H.0
+  00B1                69     TXD     BIT     0B0H.1
+  00D5                70     F0      BIT     0D0H.5
+  00D0                71     PSW     DATA    0D0H
+                      72     ?PR?board_init?MAIN  SEGMENT CODE 
+                      73     ?PR?main?MAIN        SEGMENT CODE 
+                      74     ?XD?main?MAIN        SEGMENT XDATA OVERLAYABLE 
+                      75     ?CO?MAIN             SEGMENT CODE 
+                      76             EXTRN   CODE (writeCommand_LCD)
+                      77             EXTRN   CODE (_SendCommand)
+                      78             EXTRN   CODE (_writeData_LCD)
+                      79             EXTRN   CODE (_display_data)
+                      80             EXTRN   CODE (initialise_LCD)
+                      81             EXTRN   CODE (_delay)
+                      82             EXTRN   CODE (?C_STARTUP)
+                      83             EXTRN   CODE (?C?COPY)
+                      84             PUBLIC  main
+                      85             PUBLIC  board_init
+                      86     
+----                  87             RSEG  ?XD?main?MAIN
+0000                  88     ?main?BYTE:
+0000                  89               i?140:   DS   1
+0001                  90          myChar?141:   DS   48
+                      91     
+----                  92             RSEG  ?CO?MAIN
+0000                  93     ?SC_0:
+0000 2A2A2A2A         94             DB  '*' ,'*' ,'*' ,'*' ,' ' ,'S' ,'a' ,'c' ,'h' ,'i' 
+0004 20536163                
+0008 6869                    
+000A 6E202A2A         95             DB  'n' ,' ' ,'*' ,'*' ,'*' ,'*' ,000H
+000E 2A2A00                  
+                      96     
+0011                  97     ?SC_17:
+0011 20536163         98             DB  ' ' ,'S' ,'a' ,'c' ,'h' ,'i' ,'n' ,' ' ,'b' ,'a' 
+0015 68696E20                
+0019 6261                    
+001B 6D616E65         99             DB  'm' ,'a' ,'n' ,'e' ,000H
+001F 00                      
+                     100     
+0020                 101     _?ix1000:
+0020 1F              102             DB      01FH
+0021 10              103             DB      010H
+0022 1F              104             DB      01FH
+0023 01              105             DB      001H
+0024 1F              106             DB      01FH
+0025 00              107             DB      000H
+0026 00              108             DB      000H
+0027 00              109             DB      000H
+0028 0E              110             DB      00EH
+0029 11              111             DB      011H
+002A 11              112             DB      011H
+002B 1F              113             DB      01FH
+002C 11              114             DB      011H
+002D 00              115             DB      000H
+002E 00              116             DB      000H
+002F 00              117             DB      000H
+0030 1F              118             DB      01FH
+A51 MACRO ASSEMBLER  MAIN                                                                 08/05/2011 21:04:38 PAGE     3
+
+0031 10              119             DB      010H
+0032 10              120             DB      010H
+0033 10              121             DB      010H
+0034 1F              122             DB      01FH
+0035 00              123             DB      000H
+0036 00              124             DB      000H
+0037 00              125             DB      000H
+0038 11              126             DB      011H
+0039 11              127             DB      011H
+003A 1F              128             DB      01FH
+003B 11              129             DB      011H
+003C 11              130             DB      011H
+003D 00              131             DB      000H
+003E 00              132             DB      000H
+003F 00              133             DB      000H
+0040 1F              134             DB      01FH
+0041 04              135             DB      004H
+0042 04              136             DB      004H
+0043 04              137             DB      004H
+0044 1F              138             DB      01FH
+0045 00              139             DB      000H
+0046 00              140             DB      000H
+0047 00              141             DB      000H
+0048 11              142             DB      011H
+0049 19              143             DB      019H
+004A 15              144             DB      015H
+004B 13              145             DB      013H
+004C 11              146             DB      011H
+004D 00              147             DB      000H
+004E 00              148             DB      000H
+004F 00              149             DB      000H
+                     150     
+                     151     ; #include <reg51.h>
+                     152     ; #include "LCD.H"
+                     153     ; #include "COMMON.H"
+                     154     ; #include "Keydata.h"
+                     155     ; 
+                     156     ; void board_init(void)
+                     157     
+----                 158             RSEG  ?PR?board_init?MAIN
+0000                 159     board_init:
+                     160             USING   0
+                     161                             ; SOURCE LINE # 6
+                     162     ; {
+                     163                             ; SOURCE LINE # 7
+                     164     ;       initialise_LCD();
+                     165                             ; SOURCE LINE # 8
+0000 020000   F      166             LJMP    initialise_LCD
+                     167     ; END OF board_init
+                     168     
+                     169     ; }
+                     170     ; 
+                     171     ; void main(void)
+                     172     
+----                 173             RSEG  ?PR?main?MAIN
+0000                 174     main:
+                     175             USING   0
+                     176                             ; SOURCE LINE # 11
+                     177     ; {
+                     178                             ; SOURCE LINE # 12
+                     179     ; 
+                     180     ;       unsigned char i,myChar[6][8]={{31,16,31,01,31,00,00,00},
+                     181                             ; SOURCE LINE # 14
+0000 7800     F      182             MOV     R0,#LOW (myChar?141)
+0002 7C00     F      183             MOV     R4,#HIGH (myChar?141)
+0004 7D01            184             MOV     R5,#01H
+A51 MACRO ASSEMBLER  MAIN                                                                 08/05/2011 21:04:38 PAGE     4
+
+0006 7BFF            185             MOV     R3,#0FFH
+0008 7A00     F      186             MOV     R2,#HIGH (_?ix1000)
+000A 7900     F      187             MOV     R1,#LOW (_?ix1000)
+000C 7E00            188             MOV     R6,#00H
+000E 7F30            189             MOV     R7,#030H
+0010 120000   F      190             LCALL   ?C?COPY
+                     191     ;                                                               {14,17,17,31,17,00,00,00},
+                     192     ;                                                               {31,16,16,16,31,00,00,00},
+                     193     ;                                                               {17,17,31,17,17,00,00,00},
+                     194     ;                                                               {31,04,04,04,31,00,00,00},
+                     195     ;                                                               {17,25,21,19,17,00,00,00}};
+                     196     ;       board_init();
+                     197                             ; SOURCE LINE # 20
+0013 120000   F      198             LCALL   board_init
+                     199     ;       writeCommand_LCD();
+                     200                             ; SOURCE LINE # 21
+0016 120000   F      201             LCALL   writeCommand_LCD
+                     202     ;       SendCommand(0x80);// select line 1 on LCD
+                     203                             ; SOURCE LINE # 22
+0019 7F80            204             MOV     R7,#080H
+001B 120000   F      205             LCALL   _SendCommand
+                     206     ;       delay(5);
+                     207                             ; SOURCE LINE # 23
+001E 7F05            208             MOV     R7,#05H
+0020 7E00            209             MOV     R6,#00H
+0022 120000   F      210             LCALL   _delay
+                     211     ; 
+                     212     ;       writeData_LCD("**** Sachin ****",16);
+                     213                             ; SOURCE LINE # 25
+0025 7BFF            214             MOV     R3,#0FFH
+0027 7A00     F      215             MOV     R2,#HIGH (?SC_0)
+0029 7900     F      216             MOV     R1,#LOW (?SC_0)
+002B 7D10            217             MOV     R5,#010H
+002D 7C00            218             MOV     R4,#00H
+002F 120000   F      219             LCALL   _writeData_LCD
+                     220     ;               
+                     221     ;       SendCommand(0xC0);// select line 2 n LCD
+                     222                             ; SOURCE LINE # 27
+0032 7FC0            223             MOV     R7,#0C0H
+0034 120000   F      224             LCALL   _SendCommand
+                     225     ;       delay(5);
+                     226                             ; SOURCE LINE # 28
+0037 7F05            227             MOV     R7,#05H
+0039 7E00            228             MOV     R6,#00H
+003B 120000   F      229             LCALL   _delay
+                     230     ;       
+                     231     ;       writeData_LCD(" Sachin bamane",14);
+                     232                             ; SOURCE LINE # 30
+003E 7BFF            233             MOV     R3,#0FFH
+0040 7A00     F      234             MOV     R2,#HIGH (?SC_17)
+0042 7900     F      235             MOV     R1,#LOW (?SC_17)
+0044 7D0E            236             MOV     R5,#0EH
+0046 7C00            237             MOV     R4,#00H
+0048 120000   F      238             LCALL   _writeData_LCD
+                     239     ;       P0=0xFF;
+                     240                             ; SOURCE LINE # 31
+004B 7580FF          241             MOV     P0,#0FFH
+                     242     ;       SendCommand(0x02);
+                     243                             ; SOURCE LINE # 32
+004E 7F02            244             MOV     R7,#02H
+0050 120000   F      245             LCALL   _SendCommand
+                     246     ;       delay(5);
+                     247                             ; SOURCE LINE # 33
+0053 7F05            248             MOV     R7,#05H
+0055 7E00            249             MOV     R6,#00H
+0057 120000   F      250             LCALL   _delay
+A51 MACRO ASSEMBLER  MAIN                                                                 08/05/2011 21:04:38 PAGE     5
+
+005A                 251     ?C0002:
+                     252     ;       
+                     253     ;       while(1)
+                     254                             ; SOURCE LINE # 35
+                     255     ;       {
+                     256                             ; SOURCE LINE # 36
+                     257     ; //            if(P0!=0xFF)
+                     258     ;               {
+                     259                             ; SOURCE LINE # 38
+                     260     ; //                    if(P0==0x7F)
+                     261     ;                       {
+                     262                             ; SOURCE LINE # 40
+                     263     ;                               for(i=0;i<8;i++)
+                     264                             ; SOURCE LINE # 41
+005A E4              265             CLR     A
+005B 900000   F      266             MOV     DPTR,#i?140
+005E F0              267             MOVX    @DPTR,A
+005F                 268     ?C0004:
+005F 900000   F      269             MOV     DPTR,#i?140
+0062 E0              270             MOVX    A,@DPTR
+0063 FF              271             MOV     R7,A
+0064 C3              272             CLR     C
+0065 9408            273             SUBB    A,#08H
+0067 50F1            274             JNC     ?C0002
+                     275     ;                               {
+                     276                             ; SOURCE LINE # 42
+                     277     ;                                       SendCommand(0x80 + i);// select line 1 on LCD
+                     278                             ; SOURCE LINE # 43
+0069 EF              279             MOV     A,R7
+006A 2480            280             ADD     A,#080H
+006C FF              281             MOV     R7,A
+006D 120000   F      282             LCALL   _SendCommand
+                     283     ;                                       delay(5);
+                     284                             ; SOURCE LINE # 44
+0070 7F05            285             MOV     R7,#05H
+0072 7E00            286             MOV     R6,#00H
+0074 120000   F      287             LCALL   _delay
+                     288     ;                                       display_data(i);
+                     289                             ; SOURCE LINE # 45
+0077 900000   F      290             MOV     DPTR,#i?140
+007A E0              291             MOVX    A,@DPTR
+007B FF              292             MOV     R7,A
+007C 120000   F      293             LCALL   _display_data
+                     294     ;                                       delay(5);
+                     295                             ; SOURCE LINE # 46
+007F 7F05            296             MOV     R7,#05H
+0081 7E00            297             MOV     R6,#00H
+0083 120000   F      298             LCALL   _delay
+                     299     ;                               }
+                     300                             ; SOURCE LINE # 47
+0086 900000   F      301             MOV     DPTR,#i?140
+0089 E0              302             MOVX    A,@DPTR
+008A 04              303             INC     A
+008B F0              304             MOVX    @DPTR,A
+008C 80D1            305             SJMP    ?C0004
+                     306     ; END OF main
+                     307     
+                     308             END
+A51 MACRO ASSEMBLER  MAIN                                                                 08/05/2011 21:04:38 PAGE     6
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E              T Y P E  V A L U E   ATTRIBUTES
+
+?C0002. . . . . . .  C ADDR   005AH   R   SEG=?PR?MAIN?MAIN
+?C0004. . . . . . .  C ADDR   005FH   R   SEG=?PR?MAIN?MAIN
+?C?COPY . . . . . .  C ADDR   -----       EXT
+?CO?MAIN. . . . . .  C SEG    0050H       REL=UNIT
+?C_STARTUP. . . . .  C ADDR   -----       EXT
+?MAIN?BYTE. . . . .  X ADDR   0000H   R   SEG=?XD?MAIN?MAIN
+?PR?BOARD_INIT?MAIN  C SEG    0003H       REL=UNIT
+?PR?MAIN?MAIN . . .  C SEG    008EH       REL=UNIT
+?SC_0 . . . . . . .  C ADDR   0000H   R   SEG=?CO?MAIN
+?SC_17. . . . . . .  C ADDR   0011H   R   SEG=?CO?MAIN
+?XD?MAIN?MAIN . . .  X SEG    0031H       REL=UNIT
+AC. . . . . . . . .  B ADDR   00D0H.6 A   
+ACC . . . . . . . .  D ADDR   00E0H   A   
+B . . . . . . . . .  D ADDR   00F0H   A   
+BOARD_INIT. . . . .  C ADDR   0000H   R   SEG=?PR?BOARD_INIT?MAIN
+CY. . . . . . . . .  B ADDR   00D0H.7 A   
+DPH . . . . . . . .  D ADDR   0083H   A   
+DPL . . . . . . . .  D ADDR   0082H   A   
+EA. . . . . . . . .  B ADDR   00A8H.7 A   
+ES. . . . . . . . .  B ADDR   00A8H.4 A   
+ET0 . . . . . . . .  B ADDR   00A8H.1 A   
+ET1 . . . . . . . .  B ADDR   00A8H.3 A   
+EX0 . . . . . . . .  B ADDR   00A8H.0 A   
+EX1 . . . . . . . .  B ADDR   00A8H.2 A   
+F0. . . . . . . . .  B ADDR   00D0H.5 A   
+I?140 . . . . . . .  X ADDR   0000H   R   SEG=?XD?MAIN?MAIN
+IE. . . . . . . . .  D ADDR   00A8H   A   
+IE0 . . . . . . . .  B ADDR   0088H.1 A   
+IE1 . . . . . . . .  B ADDR   0088H.3 A   
+INITIALISE_LCD. . .  C ADDR   -----       EXT
+INT0. . . . . . . .  B ADDR   00B0H.2 A   
+INT1. . . . . . . .  B ADDR   00B0H.3 A   
+IP. . . . . . . . .  D ADDR   00B8H   A   
+IT0 . . . . . . . .  B ADDR   0088H.0 A   
+IT1 . . . . . . . .  B ADDR   0088H.2 A   
+MAIN. . . . . . . .  C ADDR   0000H   R   SEG=?PR?MAIN?MAIN
+MYCHAR?141. . . . .  X ADDR   0001H   R   SEG=?XD?MAIN?MAIN
+OV. . . . . . . . .  B ADDR   00D0H.2 A   
+P . . . . . . . . .  B ADDR   00D0H.0 A   
+P0. . . . . . . . .  D ADDR   0080H   A   
+P1. . . . . . . . .  D ADDR   0090H   A   
+P2. . . . . . . . .  D ADDR   00A0H   A   
+P3. . . . . . . . .  D ADDR   00B0H   A   
+PCON. . . . . . . .  D ADDR   0087H   A   
+PS. . . . . . . . .  B ADDR   00B8H.4 A   
+PSW . . . . . . . .  D ADDR   00D0H   A   
+PT0 . . . . . . . .  B ADDR   00B8H.1 A   
+PT1 . . . . . . . .  B ADDR   00B8H.3 A   
+PX0 . . . . . . . .  B ADDR   00B8H.0 A   
+PX1 . . . . . . . .  B ADDR   00B8H.2 A   
+RB8 . . . . . . . .  B ADDR   0098H.2 A   
+RD. . . . . . . . .  B ADDR   00B0H.7 A   
+REN . . . . . . . .  B ADDR   0098H.4 A   
+RI. . . . . . . . .  B ADDR   0098H.0 A   
+RS0 . . . . . . . .  B ADDR   00D0H.3 A   
+RS1 . . . . . . . .  B ADDR   00D0H.4 A   
+RXD . . . . . . . .  B ADDR   00B0H.0 A   
+SBUF. . . . . . . .  D ADDR   0099H   A   
+SCON. . . . . . . .  D ADDR   0098H   A   
+SM0 . . . . . . . .  B ADDR   0098H.7 A   
+A51 MACRO ASSEMBLER  MAIN                                                                 08/05/2011 21:04:38 PAGE     7
+
+SM1 . . . . . . . .  B ADDR   0098H.6 A   
+SM2 . . . . . . . .  B ADDR   0098H.5 A   
+SP. . . . . . . . .  D ADDR   0081H   A   
+T0. . . . . . . . .  B ADDR   00B0H.4 A   
+T1. . . . . . . . .  B ADDR   00B0H.5 A   
+TB8 . . . . . . . .  B ADDR   0098H.3 A   
+TCON. . . . . . . .  D ADDR   0088H   A   
+TF0 . . . . . . . .  B ADDR   0088H.5 A   
+TF1 . . . . . . . .  B ADDR   0088H.7 A   
+TH0 . . . . . . . .  D ADDR   008CH   A   
+TH1 . . . . . . . .  D ADDR   008DH   A   
+TI. . . . . . . . .  B ADDR   0098H.1 A   
+TL0 . . . . . . . .  D ADDR   008AH   A   
+TL1 . . . . . . . .  D ADDR   008BH   A   
+TMOD. . . . . . . .  D ADDR   0089H   A   
+TR0 . . . . . . . .  B ADDR   0088H.4 A   
+TR1 . . . . . . . .  B ADDR   0088H.6 A   
+TXD . . . . . . . .  B ADDR   00B0H.1 A   
+WR. . . . . . . . .  B ADDR   00B0H.6 A   
+WRITECOMMAND_LCD. .  C ADDR   -----       EXT
+_?IX1000. . . . . .  C ADDR   0020H   R   SEG=?CO?MAIN
+_DELAY. . . . . . .  C ADDR   -----       EXT
+_DISPLAY_DATA . . .  C ADDR   -----       EXT
+_SENDCOMMAND. . . .  C ADDR   -----       EXT
+_WRITEDATA_LCD. . .  C ADDR   -----       EXT
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

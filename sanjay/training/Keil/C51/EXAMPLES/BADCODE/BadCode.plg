@@ -1,0 +1,73 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+C:\Keil\C51\EXAMPLES\BADCODE\BADCODE.uv2
+Project File Date:  10/20/2000
+
+<h2>Output:</h2>
+Build target 'Standard'
+compiling Badcode.c...
+Badcode.c(10): warning C315: unknown #directive 'incldue'
+BADCODE.C(12): error C159: 'typelist': type follows void
+Badcode.c(24): error C305: unterminated string/char const
+Target not created
+Build target 'Standard'
+compiling Badcode.c...
+BADCODE.C(12): error C159: 'typelist': type follows void
+Badcode.c(24): error C305: unterminated string/char const
+Target not created
+Build target 'Standard'
+compiling Badcode.c...
+BADCODE.C(19): warning C206: 'fer': missing function-prototype
+BADCODE.C(19): error C267: 'fer': requires ANSI-style prototype
+BADCODE.C(19): error C141: syntax error near ';'
+BADCODE.C(19): error C141: syntax error near 'OOO'
+BADCODE.C(19): error C202: 'OOO': undefined identifier
+BADCODE.C(19): error C141: syntax error near ')'
+BADCODE.C(24): error C103: '<string>': unclosed string
+Badcode.c(24): error C305: unterminated string/char const
+BADCODE.C(25): error C141: syntax error near 'printf'
+Target not created
+Build target 'Standard'
+compiling Badcode.c...
+BADCODE.C(19): error C141: syntax error near 'OOO'
+BADCODE.C(19): error C202: 'OOO': undefined identifier
+BADCODE.C(19): error C141: syntax error near ')'
+BADCODE.C(24): error C103: '<string>': unclosed string
+Badcode.c(24): error C305: unterminated string/char const
+BADCODE.C(25): error C141: syntax error near 'printf'
+Target not created
+Build target 'Standard'
+compiling Badcode.c...
+BADCODE.C(19): error C141: syntax error near 'OOO'
+BADCODE.C(19): error C202: 'OOO': undefined identifier
+BADCODE.C(19): error C141: syntax error near ')'
+BADCODE.C(24): error C103: '<string>': unclosed string
+Badcode.c(24): error C305: unterminated string/char const
+BADCODE.C(25): error C141: syntax error near 'printf'
+Target not created
+Build target 'Standard'
+compiling Badcode.c...
+BADCODE.C(19): error C141: syntax error near 'OOO'
+BADCODE.C(19): error C202: 'OOO': undefined identifier
+BADCODE.C(19): error C141: syntax error near ')'
+Target not created
+Build target 'Standard'
+compiling Badcode.c...
+BADCODE.C(19): error C141: syntax error near 'O'
+BADCODE.C(19): error C202: 'O': undefined identifier
+BADCODE.C(19): error C141: syntax error near ')'
+Target not created
+Build target 'Standard'
+compiling Badcode.c...
+BADCODE.C(19): error C141: syntax error near 'O'
+BADCODE.C(19): error C202: 'O': undefined identifier
+BADCODE.C(19): error C141: syntax error near ')'
+Target not created
+Build target 'Standard'
+compiling Badcode.c...
+linking...
+Program Size: data=36.1 xdata=0 code=1192
+"BadCode" - 0 Error(s), 0 Warning(s).

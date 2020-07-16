@@ -1,0 +1,65 @@
+C51 COMPILER V9.05   DELAY                                                                 12/01/2017 10:14:36 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE DELAY
+OBJECT MODULE PLACED IN .\Objects\delay.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE delay.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\del
+                    -ay.lst) TABS(2) OBJECT(.\Objects\delay.obj)
+
+line level    source
+
+   1          /*
+   2            Program to create Delay of mSec, Sec & Minutes.
+   3            Crystal Freq = 11.0592MHz
+   4            uC : P89V51RD2
+   5          */
+   6          
+   7          #include<reg51.h>
+   8          
+   9          sbit LED1 = P2^1;
+  10          sbit LED2 = P2^2;
+  11          sbit LED3 = P2^3;
+  12          
+  13          void mSec_Delay(unsigned int value)
+  14          {
+  15   1        unsigned int u,v;
+  16   1        for(u=0;u<value;u++)
+  17   1          for(v=0;v<108;v++);
+  18   1      }
+  19          void Sec_Delay(unsigned int value)
+  20          {
+  21   1        unsigned int u,v;
+  22   1        for(u=0;u<value;u++)
+  23   1          for(v=0;v<100;v++);
+  24   1      }
+  25          void Minute_Delay(unsigned int value)
+  26          {
+  27   1        unsigned int u,v;
+  28   1        for(u=0;u<value;u++)
+  29   1          for(v=0;v<1275;v++);
+  30   1      }
+  31          void main()
+  32          {
+  33   1        P2 = 0x00;  // P2 as Output port
+  34   1        while(1)
+  35   1        {
+  36   2          LED1 = 1;
+  37   2          mSec_Delay(1000);
+  38   2          LED1 = 0;
+  39   2          mSec_Delay(1000);
+  40   2        }
+  41   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    115    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

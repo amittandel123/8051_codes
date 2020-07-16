@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"Digital_Hour_Clock.obj" 
+TO "Digital_Hour_Clock" 
+RAMSIZE(256) 

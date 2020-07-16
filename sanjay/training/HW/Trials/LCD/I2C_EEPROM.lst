@@ -1,0 +1,103 @@
+C51 COMPILER V7.06   I2C_EEPROM                                                            08/05/2011 21:04:39 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE I2C_EEPROM
+OBJECT MODULE PLACED IN .\I2C_EEPROM.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\I2C\I2C_EEPROM.C LARGE BROWSE DEBUG OBJECTEXTEND PRINT(.\I2C_EEPROM.l
+                    -st) OBJECT(.\I2C_EEPROM.obj)
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #include "I2C_EEPROM.H"
+   3          #include "Keydata.h"
+   4          #include "I2CDATA.H"
+   5          sbit WP = P2^0;
+   6          
+   7          void initialise(void)
+   8          {
+   9   1              P0              = 0xFF;
+  10   1              P1              = 0xFF;
+  11   1              WP              = 0x00;
+  12   1              SCON    = 0x50;
+  13   1              TMOD    = 0x20;
+  14   1              TI              = 0x01;
+  15   1              TR1             = 0x01;
+  16   1              TH1             = 0xFD;
+  17   1              EA              = 0x00;
+  18   1      }
+  19          
+  20          void Print(unsigned char mData)
+  21          {
+  22   1              TI              = 0x00;
+  23   1              SBUF    = mData;
+  24   1              while   (!TI);
+  25   1              TI              = 0x00;
+  26   1      }
+  27          
+  28          /* void main(void)
+  29          {
+  30                  int xyz = 20, mno = 1;
+  31                  unsigned char y,asm,Dev_Add = 0xA0,ReadByte;
+  32                  unsigned int add;
+  33                  unsigned int No_Of_Bytes_2_Write = 100;
+  34          //      unsigned char data_2_I2C[]= {"Amit Tandel Tarapur M"};
+  35                  unsigned char PWD[] = {120,86,100,18}; 
+  36          
+  37          
+  38                  //      xyz=test();
+  39                  initialise();
+  40                  I2C_initialise();       
+  41                  y=mno;
+  42                  mno = xyz+10;
+  43                  {
+  44                          extern int xyz;
+  45                          mno = xyz;
+  46                  }
+  47                  //***************************************************************************
+  48                  //*                                             Writing Data into Memory                                                        *
+  49                  //***************************************************************************
+  50          
+  51          /*      for(y=0;y<21;y++)
+  52                  {       
+  53                          I2C_Write(data_2_I2C[y], 0xA0, 0x00, y); // (data,Dev_add,word1,word2)
+  54                          wait(2);
+C51 COMPILER V7.06   I2C_EEPROM                                                            08/05/2011 21:04:39 PAGE 2   
+
+  55                  }       
+  56          */      //***************************************************************************
+  57                  //*                                             Reading Data from Memory                                                        *
+  58                  //***************************************************************************
+  59          //      while(1);
+  60          
+  61          /*      add=0;
+  62                  asm=0;
+  63                  No_Of_Bytes_2_Write = 21;
+  64                  while(No_Of_Bytes_2_Write--)
+  65                  {       
+  66                          ReadByte = I2C_Read(Dev_Add,asm,add);
+  67                          Print(ReadByte);
+  68                          if(add==255)
+  69                          {
+  70                                  asm++;
+  71                          }
+  72                          add++;
+  73                  }
+  74          
+  75                  while(1);
+  76          }
+  77          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     34    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,536 @@
+A51 MACRO ASSEMBLER  I2C                                                                  12/09/2008 12:09:32 PAGE     1
+
+
+MACRO ASSEMBLER A51 V7.07
+OBJECT MODULE PLACED IN I2C.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE I2C.src PR(.\I2C.ls1) EP DEBUG
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; .\I2C.SRC generated from: I2C.c
+                       2     ; COMPILER INVOKED BY:
+                       3     ;        C:\Keil\C51\BIN\C51.EXE I2C.c LARGE DEBUG OBJECTEXTEND PAGEWIDTH(79) PAGELENGTH(66
+                             ) SRC(.\I2C.SRC)
+                       4     
+                       5     $nomod51 
+                       6     
+                       7     NAME    I2C
+                       8     
+  0080                 9     P0      DATA    080H
+  0090                10     P1      DATA    090H
+  00A0                11     P2      DATA    0A0H
+  00B0                12     P3      DATA    0B0H
+  00B4                13     T0      BIT     0B0H.4
+  00D6                14     AC      BIT     0D0H.6
+  00B5                15     T1      BIT     0B0H.5
+  00AF                16     EA      BIT     0A8H.7
+  00A8                17     IE      DATA    0A8H
+  00B7                18     RD      BIT     0B0H.7
+  00AC                19     ES      BIT     0A8H.4
+  00B8                20     IP      DATA    0B8H
+  0098                21     RI      BIT     098H.0
+  00B2                22     INT0    BIT     0B0H.2
+  00D7                23     CY      BIT     0D0H.7
+  0099                24     TI      BIT     098H.1
+  00B3                25     INT1    BIT     0B0H.3
+  00BC                26     PS      BIT     0B8H.4
+  0081                27     SP      DATA    081H
+  00D2                28     OV      BIT     0D0H.2
+  00B6                29     WR      BIT     0B0H.6
+  0099                30     SBUF    DATA    099H
+  0087                31     PCON    DATA    087H
+  0098                32     SCON    DATA    098H
+  0089                33     TMOD    DATA    089H
+  0088                34     TCON    DATA    088H
+  0089                35     IE0     BIT     088H.1
+  008B                36     IE1     BIT     088H.3
+  00F0                37     B       DATA    0F0H
+  00E0                38     ACC     DATA    0E0H
+  00A9                39     ET0     BIT     0A8H.1
+  00AB                40     ET1     BIT     0A8H.3
+  008D                41     TF0     BIT     088H.5
+  00AD                42     ET2     BIT     0A8H.5
+  008F                43     TF1     BIT     088H.7
+  009A                44     RB8     BIT     098H.2
+  008C                45     TH0     DATA    08CH
+  00A8                46     EX0     BIT     0A8H.0
+  0088                47     IT0     BIT     088H.0
+  008D                48     TH1     DATA    08DH
+  009B                49     TB8     BIT     098H.3
+  00AA                50     EX1     BIT     0A8H.2
+  008A                51     IT1     BIT     088H.2
+  00D0                52     P       BIT     0D0H.0
+  009F                53     SM0     BIT     098H.7
+  008A                54     TL0     DATA    08AH
+  009E                55     SM1     BIT     098H.6
+  008B                56     TL1     DATA    08BH
+  009D                57     SM2     BIT     098H.5
+A51 MACRO ASSEMBLER  I2C                                                                  12/09/2008 12:09:32 PAGE     2
+
+  00B9                58     PT0     BIT     0B8H.1
+  00BB                59     PT1     BIT     0B8H.3
+  00D3                60     RS0     BIT     0D0H.3
+  008C                61     TR0     BIT     088H.4
+  00D4                62     RS1     BIT     0D0H.4
+  008E                63     TR1     BIT     088H.6
+  0090                64     SDA     BIT     090H.0
+  00B8                65     PX0     BIT     0B8H.0
+  00BA                66     PX1     BIT     0B8H.2
+  0083                67     DPH     DATA    083H
+  0082                68     DPL     DATA    082H
+  00B7                69     IPH     DATA    0B7H
+  0091                70     SCL     BIT     090H.1
+  009C                71     REN     BIT     098H.4
+  00B9                72     SADEN   DATA    0B9H
+  00B0                73     RXD     BIT     0B0H.0
+  00A9                74     SADDR   DATA    0A9H
+  00B1                75     TXD     BIT     0B0H.1
+  00D5                76     F0      BIT     0D0H.5
+  00D0                77     PSW     DATA    0D0H
+                      78     ?PR?I2C_initialise?I2C                   SEGMENT CODE 
+                      79     ?PR?I2C_Start?I2C    SEGMENT CODE 
+                      80     ?PR?I2C_Stop?I2C     SEGMENT CODE 
+                      81     ?PR?Read_Data?I2C    SEGMENT CODE 
+                      82     ?PR?_send_Data?I2C   SEGMENT CODE 
+                      83     ?XD?_send_Data?I2C   SEGMENT XDATA OVERLAYABLE 
+                      84     ?PR?device_ACK?I2C   SEGMENT CODE 
+                      85     ?PR?Master_NO_ACK?I2C                    SEGMENT CODE 
+                      86             PUBLIC  Master_NO_ACK
+                      87             PUBLIC  device_ACK
+                      88             PUBLIC  _send_Data
+                      89             PUBLIC  Read_Data
+                      90             PUBLIC  I2C_Stop
+                      91             PUBLIC  I2C_Start
+                      92             PUBLIC  I2C_initialise
+                      93     
+----                  94             RSEG  ?XD?_send_Data?I2C
+0000                  95     ?_send_Data?BYTE:
+0000                  96           mData?440:   DS   1
+                      97     ; #include <reg51.h>
+                      98     ; #include <intrins.h>
+                      99     ; 
+                     100     ; #define HIGH 1
+                     101     ; #define LOW  0
+                     102     ; 
+                     103     ; sbit SDA      = P1^0;
+                     104     ; sbit SCL      = P1^1;
+                     105     ; 
+                     106     ; //sbit WP     = P1^2;
+                     107     ; /*
+                     108     ; void I2C_Reset(void)
+                     109     ; {
+                     110     ;       unsigned int j = 0,i = 0;
+                     111     ;       while(1)
+                     112     ;       {
+                     113     ;               for(j=0;j<9;j++)
+                     114     ;               {
+                     115     ;                       SCL = LOW;
+                     116     ;                       SCL = HIGH;
+                     117     ;                       if(SDA==HIGH)
+                     118     ;                               i++;
+                     119     ;               }
+                     120     ;               if(i<9)// memory not Resetted
+                     121     ;                       break;
+                     122     ;       }
+                     123     ;               
+A51 MACRO ASSEMBLER  I2C                                                                  12/09/2008 12:09:32 PAGE     3
+
+                     124     ;               
+                     125     ; }
+                     126     ; */
+                     127     ; 
+                     128     ; void I2C_initialise(void)
+                     129     
+----                 130             RSEG  ?PR?I2C_initialise?I2C
+0000                 131     I2C_initialise:
+                     132                             ; SOURCE LINE # 32
+                     133     ; {
+                     134                             ; SOURCE LINE # 33
+                     135     ; //    WP      = 0x00;
+                     136     ;       SCL = HIGH;
+                     137                             ; SOURCE LINE # 35
+0000 D291            138             SETB    SCL
+                     139     ;       SDA = HIGH;
+                     140                             ; SOURCE LINE # 36
+0002 D290            141             SETB    SDA
+                     142     ; }
+                     143                             ; SOURCE LINE # 37
+0004 22              144             RET     
+                     145     ; END OF I2C_initialise
+                     146     
+                     147     ; 
+                     148     ; void I2C_Start(void)
+                     149     
+----                 150             RSEG  ?PR?I2C_Start?I2C
+0000                 151     I2C_Start:
+                     152                             ; SOURCE LINE # 39
+                     153     ; {
+                     154                             ; SOURCE LINE # 40
+                     155     ; //    WP      = 0x00;
+                     156     ;       SCL = LOW;
+                     157                             ; SOURCE LINE # 42
+0000 C291            158             CLR     SCL
+                     159     ;       SDA = HIGH;
+                     160                             ; SOURCE LINE # 43
+0002 D290            161             SETB    SDA
+                     162     ;       SCL = HIGH;
+                     163                             ; SOURCE LINE # 44
+0004 D291            164             SETB    SCL
+                     165     ;       SDA = LOW;
+                     166                             ; SOURCE LINE # 45
+0006 C290            167             CLR     SDA
+                     168     ; }
+                     169                             ; SOURCE LINE # 46
+0008 22              170             RET     
+                     171     ; END OF I2C_Start
+                     172     
+                     173     ; 
+                     174     ; void I2C_Stop(void)
+                     175     
+----                 176             RSEG  ?PR?I2C_Stop?I2C
+0000                 177     I2C_Stop:
+                     178                             ; SOURCE LINE # 48
+                     179     ; {
+                     180                             ; SOURCE LINE # 49
+                     181     ;       SCL = LOW;
+                     182                             ; SOURCE LINE # 50
+0000 C291            183             CLR     SCL
+                     184     ;       SDA = LOW;
+                     185                             ; SOURCE LINE # 51
+0002 C290            186             CLR     SDA
+                     187     ;       SCL = HIGH;
+                     188                             ; SOURCE LINE # 52
+0004 D291            189             SETB    SCL
+A51 MACRO ASSEMBLER  I2C                                                                  12/09/2008 12:09:32 PAGE     4
+
+                     190     ;       SDA = HIGH;
+                     191                             ; SOURCE LINE # 53
+0006 D290            192             SETB    SDA
+                     193     ; //    WP      = 0x01;
+                     194     ; }
+                     195                             ; SOURCE LINE # 55
+0008 22              196             RET     
+                     197     ; END OF I2C_Stop
+                     198     
+                     199     ; 
+                     200     ; unsigned char Read_Data(void)
+                     201     
+----                 202             RSEG  ?PR?Read_Data?I2C
+0000                 203     Read_Data:
+                     204                             ; SOURCE LINE # 57
+                     205     ; {
+                     206                             ; SOURCE LINE # 58
+                     207     ;       #pragma ASM
+                     208     ;               MOV R7, #0x00
+0000 7F00            209               MOV R7, #0x00
+                     210     ;               MOV R6, #0x08
+0002 7E08            211               MOV R6, #0x08
+                     212     ;       READ_LOOP:
+0004                 213               READ_LOOP:
+                     214     ;               CLR SCL
+0004 C291            215               CLR SCL
+                     216     ;               SETB SCL
+0006 D291            217               SETB SCL
+                     218     ; 
+                     219               
+                     220     ;               CLR C
+0008 C3              221               CLR C
+                     222     ; //            MOV A, R7
+                     223               
+                     224     ;               RL A
+0009 23              225               RL A
+                     226     ;               MOV R7, A
+000A FF              227               MOV R7, A
+                     228     ; 
+                     229               
+                     230     ;               JNB SDA, LINE_IS_CLR
+000B 309004          231               JNB SDA, LINE_IS_CLR
+                     232     ;               MOV A, R7
+000E EF              233               MOV A, R7
+                     234     ;               ORL A, #0x01
+000F 4401            235               ORL A, #0x01
+                     236     ;               MOV R7, A
+0011 FF              237               MOV R7, A
+                     238     ;       LINE_IS_CLR:    
+0012                 239               LINE_IS_CLR:  
+                     240     ;               DJNZ R6, READ_LOOP
+0012 DEF0            241               DJNZ R6, READ_LOOP
+                     242     ;               CLR SCL
+0014 C291            243               CLR SCL
+                     244     ;       #pragma ENDASM
+                     245     ;       
+                     246     ; /*    unsigned int i;
+                     247     ;       unsigned char readbyte;
+                     248     ;       for(i=0;i<8;i++)
+                     249     ;       {
+                     250     ;               readbyte = readbyte << 1;
+                     251     ; 
+                     252     ;               SCL = LOW;
+                     253     ;               SCL = HIGH;
+                     254     ;               if(SDA == 1)
+                     255     ;                       readbyte = readbyte | 0x01;
+A51 MACRO ASSEMBLER  I2C                                                                  12/09/2008 12:09:32 PAGE     5
+
+                     256     ;               else if(SDA == 0)
+                     257     ;                       readbyte = readbyte | 0x00;
+                     258     ;       }
+                     259     ;       SCL = LOW;
+                     260     ;       return(readbyte);
+                     261     ; */
+                     262     ; }
+                     263                             ; SOURCE LINE # 96
+0016 22              264             RET     
+                     265     ; END OF Read_Data
+                     266     
+                     267     ; 
+                     268     ; void send_Data(unsigned char mData)
+                     269     
+----                 270             RSEG  ?PR?_send_Data?I2C
+0000                 271     _send_Data:
+                     272                             ; SOURCE LINE # 98
+0000 900000   F      273             MOV     DPTR,#mData?440
+0003 EF              274             MOV     A,R7
+0004 F0              275             MOVX    @DPTR,A
+                     276     ; {
+                     277                             ; SOURCE LINE # 99
+                     278     ;       #pragma ASM
+                     279     ;               MOV A, R7 // store command
+0005 EF              280               MOV A, R7  
+                     281     ;               MOV R5,A
+0006 FD              282               MOV R5,A
+                     283     ;               MOV R7, #0x00
+0007 7F00            284               MOV R7, #0x00
+                     285     ;               MOV R6, #0x08
+0009 7E08            286               MOV R6, #0x08
+                     287     ;       WRITE_LOOP:
+000B                 288               WRITE_LOOP:
+                     289     ;               CLR C
+000B C3              290               CLR C
+                     291     ;               CLR SCL
+000C C291            292               CLR SCL
+                     293     ;               CLR SDA
+000E C290            294               CLR SDA
+                     295     ;               MOV A, R5
+0010 ED              296               MOV A, R5
+                     297     ;               RLC A
+0011 33              298               RLC A
+                     299     ;               MOV R5, A
+0012 FD              300               MOV R5, A
+                     301     ;               JNC CLR_LINE
+0013 5002            302               JNC CLR_LINE
+                     303     ;               SETB SDA
+0015 D290            304               SETB SDA
+                     305     ;       CLR_LINE:
+0017                 306               CLR_LINE:
+                     307     ;               SETB SCL
+0017 D291            308               SETB SCL
+                     309     ;               DJNZ R6, WRITE_LOOP
+0019 DEF0            310               DJNZ R6, WRITE_LOOP
+                     311     ;               CLR SCL
+001B C291            312               CLR SCL
+                     313     ;               CLR SDA
+001D C290            314               CLR SDA
+                     315     ;       #pragma ENDASM
+                     316     ; 
+                     317     ; /*    unsigned char x;
+                     318     ;       bit sendBit;
+                     319     ;       unsigned char MASK = 0x80;
+                     320     ;       for(x=0;x<8;x++)
+                     321     ;       {
+A51 MACRO ASSEMBLER  I2C                                                                  12/09/2008 12:09:32 PAGE     6
+
+                     322     ;               sendBit = mData & MASK;
+                     323     ;               MASK >>= 1;
+                     324     ; 
+                     325     ;               SCL = LOW;
+                     326     ;               SDA = sendBit;
+                     327     ;               SCL = HIGH;
+                     328     ;       }
+                     329     ;       SCL = LOW;
+                     330     ;       SDA = LOW;
+                     331     ; */
+                     332     ; }
+                     333                             ; SOURCE LINE # 136
+001F 22              334             RET     
+                     335     ; END OF _send_Data
+                     336     
+                     337     ; 
+                     338     ; /*
+                     339     ; void send_Device_Address(unsigned char address)
+                     340     ; {
+                     341     ;       send_Data(address);
+                     342     ; }
+                     343     ; 
+                     344     ; void send_Word_Address(unsigned char address)
+                     345     ; {
+                     346     ;       send_Data(address);
+                     347     ; }
+                     348     ; */
+                     349     ; 
+                     350     ; void device_ACK(void)
+                     351     
+----                 352             RSEG  ?PR?device_ACK?I2C
+0000                 353     device_ACK:
+                     354                             ; SOURCE LINE # 150
+                     355     ; {
+                     356                             ; SOURCE LINE # 151
+                     357     ;       SCL = LOW;
+                     358                             ; SOURCE LINE # 152
+0000 C291            359             CLR     SCL
+                     360     ;       SDA = HIGH;
+                     361                             ; SOURCE LINE # 153
+0002 D290            362             SETB    SDA
+                     363     ;       SCL = HIGH;
+                     364                             ; SOURCE LINE # 154
+0004 D291            365             SETB    SCL
+                     366     ; //    while(SDA == HIGH);
+                     367     ; }
+                     368                             ; SOURCE LINE # 156
+0006 22              369             RET     
+                     370     ; END OF device_ACK
+                     371     
+                     372     ; 
+                     373     ; /*
+                     374     ; void Master_ACK(void)
+                     375     ; {
+                     376     ;       SCL = LOW;
+                     377     ;       SDA = LOW;
+                     378     ;       SCL = HIGH;
+                     379     ;       SCL = LOW;
+                     380     ; }
+                     381     ; */
+                     382     ; 
+                     383     ; void Master_NO_ACK(void)
+                     384     
+----                 385             RSEG  ?PR?Master_NO_ACK?I2C
+0000                 386     Master_NO_ACK:
+                     387                             ; SOURCE LINE # 168
+A51 MACRO ASSEMBLER  I2C                                                                  12/09/2008 12:09:32 PAGE     7
+
+                     388     ; {
+                     389                             ; SOURCE LINE # 169
+                     390     ;       SCL = LOW;
+                     391                             ; SOURCE LINE # 170
+0000 C291            392             CLR     SCL
+                     393     ;       SDA = HIGH;
+                     394                             ; SOURCE LINE # 171
+0002 D290            395             SETB    SDA
+                     396     ;       SCL = HIGH;
+                     397                             ; SOURCE LINE # 172
+0004 D291            398             SETB    SCL
+                     399     ;       SCL = LOW;
+                     400                             ; SOURCE LINE # 173
+0006 C291            401             CLR     SCL
+                     402     ; }
+                     403                             ; SOURCE LINE # 174
+0008 22              404             RET     
+                     405     ; END OF Master_NO_ACK
+                     406     
+                     407             END
+A51 MACRO ASSEMBLER  I2C                                                                  12/09/2008 12:09:32 PAGE     8
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                 T Y P E  V A L U E   ATTRIBUTES
+
+?PR?DEVICE_ACK?I2C . .  C SEG    0007H       REL=UNIT
+?PR?I2C_INITIALISE?I2C  C SEG    0005H       REL=UNIT
+?PR?I2C_START?I2C. . .  C SEG    0009H       REL=UNIT
+?PR?I2C_STOP?I2C . . .  C SEG    0009H       REL=UNIT
+?PR?MASTER_NO_ACK?I2C.  C SEG    0009H       REL=UNIT
+?PR?READ_DATA?I2C. . .  C SEG    0017H       REL=UNIT
+?PR?_SEND_DATA?I2C . .  C SEG    0020H       REL=UNIT
+?XD?_SEND_DATA?I2C . .  X SEG    0001H       REL=UNIT
+?_SEND_DATA?BYTE . . .  X ADDR   0000H   R   SEG=?XD?_SEND_DATA?I2C
+AC . . . . . . . . . .  B ADDR   00D0H.6 A   
+ACC. . . . . . . . . .  D ADDR   00E0H   A   
+B. . . . . . . . . . .  D ADDR   00F0H   A   
+CLR_LINE . . . . . . .  C ADDR   0017H   R   SEG=?PR?_SEND_DATA?I2C
+CY . . . . . . . . . .  B ADDR   00D0H.7 A   
+DEVICE_ACK . . . . . .  C ADDR   0000H   R   SEG=?PR?DEVICE_ACK?I2C
+DPH. . . . . . . . . .  D ADDR   0083H   A   
+DPL. . . . . . . . . .  D ADDR   0082H   A   
+EA . . . . . . . . . .  B ADDR   00A8H.7 A   
+ES . . . . . . . . . .  B ADDR   00A8H.4 A   
+ET0. . . . . . . . . .  B ADDR   00A8H.1 A   
+ET1. . . . . . . . . .  B ADDR   00A8H.3 A   
+ET2. . . . . . . . . .  B ADDR   00A8H.5 A   
+EX0. . . . . . . . . .  B ADDR   00A8H.0 A   
+EX1. . . . . . . . . .  B ADDR   00A8H.2 A   
+F0 . . . . . . . . . .  B ADDR   00D0H.5 A   
+I2C. . . . . . . . . .  N NUMB   -----       
+I2C_INITIALISE . . . .  C ADDR   0000H   R   SEG=?PR?I2C_INITIALISE?I2C
+I2C_START. . . . . . .  C ADDR   0000H   R   SEG=?PR?I2C_START?I2C
+I2C_STOP . . . . . . .  C ADDR   0000H   R   SEG=?PR?I2C_STOP?I2C
+IE . . . . . . . . . .  D ADDR   00A8H   A   
+IE0. . . . . . . . . .  B ADDR   0088H.1 A   
+IE1. . . . . . . . . .  B ADDR   0088H.3 A   
+INT0 . . . . . . . . .  B ADDR   00B0H.2 A   
+INT1 . . . . . . . . .  B ADDR   00B0H.3 A   
+IP . . . . . . . . . .  D ADDR   00B8H   A   
+IPH. . . . . . . . . .  D ADDR   00B7H   A   
+IT0. . . . . . . . . .  B ADDR   0088H.0 A   
+IT1. . . . . . . . . .  B ADDR   0088H.2 A   
+LINE_IS_CLR. . . . . .  C ADDR   0012H   R   SEG=?PR?READ_DATA?I2C
+MASTER_NO_ACK. . . . .  C ADDR   0000H   R   SEG=?PR?MASTER_NO_ACK?I2C
+MDATA?440. . . . . . .  X ADDR   0000H   R   SEG=?XD?_SEND_DATA?I2C
+OV . . . . . . . . . .  B ADDR   00D0H.2 A   
+P. . . . . . . . . . .  B ADDR   00D0H.0 A   
+P0 . . . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . . . .  D ADDR   00A0H   A   
+P3 . . . . . . . . . .  D ADDR   00B0H   A   
+PCON . . . . . . . . .  D ADDR   0087H   A   
+PS . . . . . . . . . .  B ADDR   00B8H.4 A   
+PSW. . . . . . . . . .  D ADDR   00D0H   A   
+PT0. . . . . . . . . .  B ADDR   00B8H.1 A   
+PT1. . . . . . . . . .  B ADDR   00B8H.3 A   
+PX0. . . . . . . . . .  B ADDR   00B8H.0 A   
+PX1. . . . . . . . . .  B ADDR   00B8H.2 A   
+RB8. . . . . . . . . .  B ADDR   0098H.2 A   
+RD . . . . . . . . . .  B ADDR   00B0H.7 A   
+READ_DATA. . . . . . .  C ADDR   0000H   R   SEG=?PR?READ_DATA?I2C
+READ_LOOP. . . . . . .  C ADDR   0004H   R   SEG=?PR?READ_DATA?I2C
+REN. . . . . . . . . .  B ADDR   0098H.4 A   
+RI . . . . . . . . . .  B ADDR   0098H.0 A   
+A51 MACRO ASSEMBLER  I2C                                                                  12/09/2008 12:09:32 PAGE     9
+
+RS0. . . . . . . . . .  B ADDR   00D0H.3 A   
+RS1. . . . . . . . . .  B ADDR   00D0H.4 A   
+RXD. . . . . . . . . .  B ADDR   00B0H.0 A   
+SADDR. . . . . . . . .  D ADDR   00A9H   A   
+SADEN. . . . . . . . .  D ADDR   00B9H   A   
+SBUF . . . . . . . . .  D ADDR   0099H   A   
+SCL. . . . . . . . . .  B ADDR   0090H.1 A   
+SCON . . . . . . . . .  D ADDR   0098H   A   
+SDA. . . . . . . . . .  B ADDR   0090H.0 A   
+SM0. . . . . . . . . .  B ADDR   0098H.7 A   
+SM1. . . . . . . . . .  B ADDR   0098H.6 A   
+SM2. . . . . . . . . .  B ADDR   0098H.5 A   
+SP . . . . . . . . . .  D ADDR   0081H   A   
+T0 . . . . . . . . . .  B ADDR   00B0H.4 A   
+T1 . . . . . . . . . .  B ADDR   00B0H.5 A   
+TB8. . . . . . . . . .  B ADDR   0098H.3 A   
+TCON . . . . . . . . .  D ADDR   0088H   A   
+TF0. . . . . . . . . .  B ADDR   0088H.5 A   
+TF1. . . . . . . . . .  B ADDR   0088H.7 A   
+TH0. . . . . . . . . .  D ADDR   008CH   A   
+TH1. . . . . . . . . .  D ADDR   008DH   A   
+TI . . . . . . . . . .  B ADDR   0098H.1 A   
+TL0. . . . . . . . . .  D ADDR   008AH   A   
+TL1. . . . . . . . . .  D ADDR   008BH   A   
+TMOD . . . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . . . .  B ADDR   0088H.4 A   
+TR1. . . . . . . . . .  B ADDR   0088H.6 A   
+TXD. . . . . . . . . .  B ADDR   00B0H.1 A   
+WR . . . . . . . . . .  B ADDR   00B0H.6 A   
+WRITE_LOOP . . . . . .  C ADDR   000BH   R   SEG=?PR?_SEND_DATA?I2C
+_SEND_DATA . . . . . .  C ADDR   0000H   R   SEG=?PR?_SEND_DATA?I2C
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

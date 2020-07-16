@@ -1,0 +1,16 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\Amit\8051Projects\LCD\LCD_Display_Shift\LCD_Display_Shift.uvproj
+Project File Date:  11/30/2011
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD_Display_Shift.c...
+linking...
+Program Size: data=15.0 xdata=0 code=399
+creating hex file from "LCD_Display_Shift"...
+"LCD_Display_Shift" - 0 Error(s), 0 Warning(s).

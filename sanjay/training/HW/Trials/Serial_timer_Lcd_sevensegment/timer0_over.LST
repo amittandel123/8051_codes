@@ -1,0 +1,58 @@
+C51 COMPILER V7.06   TIMER0_OVER                                                           08/05/2011 22:15:52 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE TIMER0_OVER
+OBJECT MODULE PLACED IN timer0_over.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE timer0_over.c LARGE BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <stdio.h>
+   2          #include <reg52.h>
+   3          #include "TIMER0.H"
+   4          
+   5          void init_timer0();
+   6          unsigned int tick_count, timer0_flag,tick_count1,timer1_flag,sec,sec1;
+   7          
+   8          void init_timer0(void)
+   9          {
+  10   1              TMOD = 0x11; //mode 1 is selected for timer0 and timer1
+  11   1      
+  12   1              // 1ms delay
+  13   1              TH0 = 0xFC;   //as per 11.059MHZ clock
+  14   1              TL0 = 0x2B;
+  15   1              timer0_flag = 0;
+  16   1              
+  17   1              ET0 = 1;
+  18   1              EA = 1;
+  19   1              TR0 = 1;
+  20   1              tick_count = sec = 0;
+  21   1      }
+  22          
+  23          void timer0(void) interrupt 1
+  24          {
+  25   1              TR0 = 0;
+  26   1              TH0 = 0xFC;
+  27   1              TL0 = 0x2B;
+  28   1      //      TR0 = 1;
+  29   1      
+  30   1              tick_count++;
+  31   1      
+  32   1              if(tick_count == 450)   // for creating 1sec delay, call 1ms 
+  33   1                      timer0_flag = 1;        // delay approx. 900 times.
+  34   1      }
+  35          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     94    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     12    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

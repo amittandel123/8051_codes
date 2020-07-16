@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"Keypad_Alphanumeric.obj" 
+TO "Keypad_Alphanumeric" 
+RAMSIZE(256) 

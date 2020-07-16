@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"LCD_Display.obj" 
+TO "LCD_Display" 
+RAMSIZE(256) 

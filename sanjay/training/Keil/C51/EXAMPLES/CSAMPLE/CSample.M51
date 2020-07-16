@@ -1,0 +1,305 @@
+BL51 BANKED LINKER/LOCATER V5.11                                                        09/01/2006  16:14:36  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.11, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE CSAMPLE1.obj, CSAMPLE2.obj, CSAMPLE3.obj TO CSample REGFILE (.\CSample.ORC) IXREF RAMSIZE (256)
+>>  PRECEDE (?DT?CSAMPLE3)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  CSAMPLE1.obj (CSAMPLE1)
+  CSAMPLE2.obj (CSAMPLE2)
+  CSAMPLE3.obj (CSAMPLE3)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CSTPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?IMUL)
+  C:\KEIL\C51\LIB\C51S.LIB (PRINTF)
+  C:\KEIL\C51\LIB\C51S.LIB (GETCHAR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?PLDIIDATA)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CCASE)
+  C:\KEIL\C51\LIB\C51S.LIB (PUTCHAR)
+  C:\KEIL\C51\LIB\C51S.LIB (_GETKEY)
+
+
+LINK MAP OF MODULE:  CSample (CSAMPLE1)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0019H     UNIT         ?DT?CSAMPLE3
+            BIT     0021H.0   0001H.2   UNIT         _BIT_GROUP_
+            BIT     0022H.2   0000H.1   UNIT         ?BI?GETCHAR
+                    0022H.3   0000H.5                *** GAP ***
+            DATA    0023H     0040H     UNIT         _DATA_GROUP_
+            DATA    0063H     0001H     UNIT         ?DT?GETCHAR
+            IDATA   0064H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     035CH     UNIT         ?PR?PRINTF?PRINTF
+            CODE    0B5CH     00B5H     UNIT         ?PR?_ATOI?CSAMPLE2
+            CODE    0C11H     00A0H     UNIT         ?C?LIB_CODE
+            CODE    0CB1H     0058H     UNIT         ?PR?MAIN?CSAMPLE1
+            CODE    0D09H     0050H     UNIT         ?CO?CSAMPLE1
+            CODE    0D59H     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
+            CODE    0D80H     001FH     UNIT         ?PR?_GETLINE?CSAMPLE2
+            CODE    0D9FH     001CH     UNIT         ?PR?GETNUMBER?CSAMPLE2
+            CODE    0DBBH     0011H     UNIT         ?PR?GETCHAR?GETCHAR
+            CODE    0DCCH     0010H     UNIT         ?CO?CSAMPLE2
+            CODE    0DDCH     000EH     UNIT         ?PR?_OUTPUT?CSAMPLE3
+            CODE    0DEAH     000EH     UNIT         ?CO?CSAMPLE3
+            CODE    0DF8H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0E04H     000AH     UNIT         ?PR?_GETKEY?_GETKEY
+BL51 BANKED LINKER/LOCATER V5.11                                                      09/01/2006  16:14:36  PAGE 2
+
+
+
+
+
+OVERLAY MAP OF MODULE:   CSample (CSAMPLE1)
+
+
+SEGMENT                           BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH     START    LENGTH
+------------------------------------------------------------------
+?C_C51STARTUP                  -----    -----      -----    -----
+  +--> ?PR?MAIN?CSAMPLE1
+
+?PR?MAIN?CSAMPLE1              0021H.0  0000H.1    0023H    0004H
+  +--> ?CO?CSAMPLE1
+  +--> ?PR?PRINTF?PRINTF
+  +--> ?PR?GETNUMBER?CSAMPLE2
+  +--> ?PR?GETCHAR?GETCHAR
+  +--> ?PR?_OUTPUT?CSAMPLE3
+
+?PR?PRINTF?PRINTF              0021H.1  0001H.1    004FH    0014H
+  +--> ?PR?PUTCHAR?PUTCHAR
+
+?PR?GETNUMBER?CSAMPLE2         -----    -----      0027H    0028H
+  +--> ?CO?CSAMPLE2
+  +--> ?PR?PRINTF?PRINTF
+  +--> ?PR?_GETLINE?CSAMPLE2
+  +--> ?PR?_ATOI?CSAMPLE2
+
+?PR?_GETLINE?CSAMPLE2          -----    -----      004FH    0003H
+  +--> ?PR?GETCHAR?GETCHAR
+
+?PR?GETCHAR?GETCHAR            -----    -----      -----    -----
+  +--> ?PR?_GETKEY?_GETKEY
+  +--> ?PR?PUTCHAR?PUTCHAR
+
+?PR?_ATOI?CSAMPLE2             0021H.1  0000H.1    004FH    0005H
+
+?PR?_OUTPUT?CSAMPLE3           -----    -----      -----    -----
+  +--> ?CO?CSAMPLE3
+  +--> ?PR?PRINTF?PRINTF
+
+
+
+SYMBOL TABLE OF MODULE:  CSample (CSAMPLE1)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        CSAMPLE1
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0CB1H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:008DH         PUBLIC        TH1
+  -------         PROC          MAIN
+  -------         DO            
+BL51 BANKED LINKER/LOCATER V5.11                                                      09/01/2006  16:14:36  PAGE 3
+
+
+  D:0023H         SYMBOL        number1
+  D:0025H         SYMBOL        number2
+  B:0021H.0       SYMBOL        operation
+  -------         ENDDO         
+  C:0CB1H         LINE#         13
+  C:0CB1H         LINE#         17
+  C:0CB4H         LINE#         18
+  C:0CB7H         LINE#         19
+  C:0CBAH         LINE#         20
+  C:0CBDH         LINE#         22
+  C:0CC6H         LINE#         24
+  C:0CC6H         LINE#         25
+  C:0CCDH         LINE#         26
+  C:0CD4H         LINE#         27
+  C:0CDDH         LINE#         28
+  C:0CE9H         LINE#         29
+  C:0D06H         LINE#         31
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        CSAMPLE1
+
+  -------         MODULE        CSAMPLE2
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0B5CH         PUBLIC        _atoi
+  C:0D80H         PUBLIC        _getline
+  C:0D9FH         PUBLIC        getnumber
+  -------         PROC          _GETLINE
+  D:004FH         SYMBOL        line
+  C:0D80H         LINE#         9
+  C:0D86H         LINE#         10
+  C:0D9EH         LINE#         11
+  -------         ENDPROC       _GETLINE
+  -------         PROC          _ATOI
+  D:004FH         SYMBOL        line
+  -------         DO            
+  B:0021H.1       SYMBOL        sign
+  D:0052H         SYMBOL        number
+  -------         ENDDO         
+  C:0B5CH         LINE#         13
+  C:0B62H         LINE#         18
+  C:0B86H         LINE#         21
+  C:0B88H         LINE#         22
+  C:0BB3H         LINE#         25
+  C:0BD1H         LINE#         26
+  C:0BFEH         LINE#         28
+  C:0C10H         LINE#         29
+  -------         ENDPROC       _ATOI
+  -------         PROC          GETNUMBER
+  -------         DO            
+  D:0027H         SYMBOL        line
+  -------         ENDDO         
+  C:0D9FH         LINE#         31
+  C:0D9FH         LINE#         34
+  C:0DA8H         LINE#         35
+  C:0DB1H         LINE#         36
+  C:0DBAH         LINE#         37
+  -------         ENDPROC       GETNUMBER
+  -------         ENDMOD        CSAMPLE2
+BL51 BANKED LINKER/LOCATER V5.11                                                      09/01/2006  16:14:36  PAGE 4
+
+
+
+  -------         MODULE        CSAMPLE3
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0008H         PUBLIC        dummy_buffer
+  C:0DDCH         PUBLIC        _output
+  -------         PROC          _OUTPUT
+  D:0006H         SYMBOL        number
+  C:0DDCH         LINE#         11
+  C:0DDCH         LINE#         12
+  C:0DE9H         LINE#         13
+  -------         ENDPROC       _OUTPUT
+  -------         ENDMOD        CSAMPLE3
+
+  -------         MODULE        ?C?CLDPTR
+  C:0C11H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:0C2AH         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?IMUL
+  C:0C3CH         PUBLIC        ?C?IMUL
+  -------         ENDMOD        ?C?IMUL
+
+  -------         MODULE        PRINTF
+  D:004FH         PUBLIC        ?_PRINTF517?BYTE
+  D:004FH         PUBLIC        ?_PRINTF?BYTE
+  D:004FH         PUBLIC        ?_SPRINTF517?BYTE
+  D:004FH         PUBLIC        ?_SPRINTF?BYTE
+  C:0862H         PUBLIC        _PRINTF
+  C:0862H         PUBLIC        _PRINTF517
+  C:085CH         PUBLIC        _SPRINTF
+  C:085CH         PUBLIC        _SPRINTF517
+  -------         ENDMOD        PRINTF
+
+  -------         MODULE        GETCHAR
+  B:0022H.2       PUBLIC        ?C?CHARLOADED
+  D:0063H         PUBLIC        ?_UNGETCHAR?BYTE
+  C:0DBBH         PUBLIC        GETCHAR
+  -------         ENDMOD        GETCHAR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:0C4EH         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?PLDIIDATA
+  C:0C7BH         PUBLIC        ?C?PLDIIDATA
+  -------         ENDMOD        ?C?PLDIIDATA
+
+  -------         MODULE        ?C?CCASE
+  C:0C8BH         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+  -------         MODULE        PUTCHAR
+  C:0D59H         PUBLIC        _PUTCHAR
+  -------         ENDMOD        PUTCHAR
+BL51 BANKED LINKER/LOCATER V5.11                                                      09/01/2006  16:14:36  PAGE 5
+
+
+
+  -------         MODULE        _GETKEY
+  C:0E04H         PUBLIC        _GETKEY
+  -------         ENDMOD        _GETKEY
+
+
+
+FUNCTION REGISTER MASKS
+
+
+FUNCTION . . . . . . REG MASK
+-----------------------------
+
+_ATOI. . . . . . . . @0xf7ff
+
+
+
+INTER-MODULE CROSS-REFERENCE LISTING
+------------------------------------
+
+
+NAME . . . . . . . USAGE    MODULE NAMES
+----------------------------------------
+
+?C?CCASE . . . . . CODE;    ?C?CCASE  PRINTF  
+?C?CHARLOADED. . . BIT;     GETCHAR  
+?C?CLDOPTR . . . . CODE;    ?C?CLDOPTR  PRINTF  
+?C?CLDPTR. . . . . CODE;    ?C?CLDPTR  CSAMPLE2  PRINTF  
+?C?CSTPTR. . . . . CODE;    ?C?CSTPTR  CSAMPLE2  PRINTF  
+?C?IMUL. . . . . . CODE;    ?C?IMUL  CSAMPLE2  
+?C?PLDIIDATA . . . CODE;    ?C?PLDIIDATA  PRINTF  
+?C_START . . . . . CODE;    ** L51 GENERATED **  ?C_STARTUP  
+?C_STARTUP . . . . CODE;    ?C_STARTUP  CSAMPLE1  
+?_PRINTF517?BYTE . DATA;    PRINTF  
+?_PRINTF?BYTE. . . DATA;    PRINTF  CSAMPLE1  CSAMPLE2  CSAMPLE3  
+?_SPRINTF517?BYTE. DATA;    PRINTF  
+?_SPRINTF?BYTE . . DATA;    PRINTF  
+?_UNGETCHAR?BYTE . DATA;    GETCHAR  
+DUMMY_BUFFER . . . DATA;    CSAMPLE3  
+GETCHAR. . . . . . CODE;    GETCHAR  CSAMPLE1  CSAMPLE2  
+GETNUMBER. . . . . CODE;    CSAMPLE2  CSAMPLE1  
+MAIN . . . . . . . CODE;    CSAMPLE1  
+_ATOI. . . . . . . CODE;    CSAMPLE2  
+_GETKEY. . . . . . CODE;    _GETKEY  GETCHAR  
+_GETLINE . . . . . CODE;    CSAMPLE2  
+_OUTPUT. . . . . . CODE;    CSAMPLE3  CSAMPLE1  
+_PRINTF. . . . . . CODE;    PRINTF  CSAMPLE1  CSAMPLE2  CSAMPLE3  
+_PRINTF517 . . . . CODE;    PRINTF  
+_PUTCHAR . . . . . CODE;    PUTCHAR  GETCHAR  PRINTF  
+_SPRINTF . . . . . CODE;    PRINTF  
+_SPRINTF517. . . . CODE;    PRINTF  
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01D0H BYTE (22%) *
+******************************************************************************
+
+Program Size: data=100.3 xdata=0 code=1553
+BL51 BANKED LINKER/LOCATER V5.11                                                      09/01/2006  16:14:36  PAGE 6
+
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

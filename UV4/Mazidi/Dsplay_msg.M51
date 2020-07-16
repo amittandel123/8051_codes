@@ -1,0 +1,131 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/03/2011  14:33:29  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, Dsplay_msg.obj TO Dsplay_msg RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  Dsplay_msg.obj (DSPLAY_MSG)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?COPY)
+
+
+LINK MAP OF MODULE:  Dsplay_msg (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000DH     UNIT         _DATA_GROUP_
+            IDATA   0015H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     00F6H     UNIT         ?C?LIB_CODE
+            CODE    08F6H     0025H     UNIT         ?PR?MAIN?DSPLAY_MSG
+            CODE    091BH     000DH     UNIT         ?CO?DSPLAY_MSG
+            CODE    0928H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   Dsplay_msg (?C_STARTUP)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?DSPLAY_MSG
+
+?PR?MAIN?DSPLAY_MSG            0008H    000DH
+  +--> ?CO?DSPLAY_MSG
+
+
+
+SYMBOL TABLE OF MODULE:  Dsplay_msg (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0928H         SEGMENT       ?C_C51STARTUP
+  I:0015H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2011  14:33:29  PAGE 2
+
+
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:092BH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0928H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0928H         LINE#         133
+  C:092AH         LINE#         134
+  C:092BH         LINE#         135
+  C:092CH         LINE#         136
+  C:092EH         LINE#         185
+  C:0931H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        DSPLAY_MSG
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  C:08F6H         PUBLIC        main
+  C:091BH         SYMBOL        _?ix1000
+  B:00A0H.0       PUBLIC        en
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        msg
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:08F6H         LINE#         3
+  C:08F6H         LINE#         4
+  C:08F6H         LINE#         5
+  C:0909H         LINE#         7
+  C:090BH         LINE#         8
+  C:090BH         LINE#         9
+  C:0912H         LINE#         10
+  C:0914H         LINE#         11
+  C:0916H         LINE#         12
+  C:091AH         LINE#         13
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        DSPLAY_MSG
+
+  -------         MODULE        ?C?COPY
+  C:08D0H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2011  14:33:29  PAGE 3
+
+
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0041H BYTE ( 3%) *
+******************************************************************************
+
+Program Size: data=22.0 xdata=0 code=311
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

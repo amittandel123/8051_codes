@@ -1,0 +1,160 @@
+C51 COMPILER V9.03   LCD_SERIAL_SACHIN                                                     11/18/2011 14:52:42 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE LCD_SERIAL_SACHIN
+OBJECT MODULE PLACED IN LCD_Serial_Sachin.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LCD_Serial_Sachin.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <intrins.h>
+   3          #include <stdio.h>
+   4          
+   5          extern void transmit_N_Disp_data();
+   6          extern unsigned int serial_flag;
+   7          extern void initilise_serial();
+   8          
+   9          #define LCD_DATA_PORT P0
+  10          bit LCD_8_BIT = 1;
+  11          
+  12          sbit RS = P2^0;
+  13          sbit RW = P2^1;
+  14          sbit EN = P2^2;
+  15          
+  16          void display_data(unsigned char port_data);
+  17          void ClearDisplay(void);
+  18          void SendCommand(unsigned char comd);
+  19          void delay(unsigned int val);
+  20          void GenChar_at_CGRAM(unsigned char mData[]);
+  21          
+  22          void writeData_LCD(unsigned char mdata[], unsigned int counter)
+  23          {
+  24   1              unsigned char tmpdata;
+  25   1              unsigned int cnt;
+  26   1              if(LCD_8_BIT==1)
+  27   1              {       for(cnt=0;cnt < counter;cnt++)
+  28   2                      {
+  29   3                              display_data(mdata[cnt]);
+  30   3                              delay(5);
+  31   3                      }
+  32   2              }
+  33   1              else if(LCD_8_BIT==0)                           //4 bit
+  34   1              {
+  35   2                      for(cnt=0;cnt < counter;cnt++)
+  36   2                      {       
+  37   3                              tmpdata=mdata[cnt];
+  38   3                              display_data(tmpdata);
+  39   3                              delay(5);
+  40   3                              display_data(16*(tmpdata & 0x0F));
+  41   3                              delay(5);
+  42   3                      }
+  43   2              }
+  44   1      }
+  45          
+  46          void display_data(unsigned char port_data)
+  47          {
+  48   1              RS=1;                           // to select DDRAM Register i.e. data register
+  49   1              LCD_DATA_PORT=port_data;        // put data on port
+  50   1              EN=1;                           // to Enable the LCD processor
+  51   1              _nop_();
+  52   1              EN=0;                           // to disable the LCD processor
+  53   1      }
+  54          
+  55          
+C51 COMPILER V9.03   LCD_SERIAL_SACHIN                                                     11/18/2011 14:52:42 PAGE 2   
+
+  56          void initialise(void)
+  57          {
+  58   1              P1=0xFF;
+  59   1              LCD_DATA_PORT = 0xFF;
+  60   1              P3=0xFF;
+  61   1              EN=0;
+  62   1              RS=0;
+  63   1      }
+  64          
+  65          void delay(unsigned int val)
+  66          {
+  67   1              unsigned int u,v;
+  68   1              for(u=0;u<=val;u++)
+  69   1                      for(v=0;v<=100;v++);
+  70   1      }
+  71          
+  72          void SendCommand(unsigned char comd)
+  73          {
+  74   1              RS=0;                           // to select Command Register
+  75   1              LCD_DATA_PORT = comd;           // put command on PORT2
+  76   1              EN=1;                           // to Enable the LCD processor
+  77   1              _nop_();
+  78   1              EN=0;                           // to disable the LCD processor
+  79   1      }       
+  80          
+  81          void ClearDisplay(void)
+  82          {
+  83   1              SendCommand(0x01);              // clear display
+  84   1              delay(5);
+  85   1      
+  86   1              SendCommand(0x02);              //send cursor to home location
+  87   1              delay(5);
+  88   1      }
+  89          
+  90          void init_LCD(void)
+  91          {
+  92   1              unsigned char Command;
+  93   1              Command=0x38;
+  94   1      
+  95   1              delay(5);
+  96   1              SendCommand(Command);
+  97   1      
+  98   1              delay(5);
+  99   1              SendCommand(Command);
+ 100   1      
+ 101   1      
+ 102   1              delay(5);
+ 103   1              SendCommand(0x0C);
+ 104   1      
+ 105   1              delay(5);
+ 106   1              ClearDisplay();
+ 107   1              delay(5);
+ 108   1      }
+ 109          
+ 110          void main(void)
+ 111          {
+ 112   1              initialise();
+ 113   1              initilise_serial();
+ 114   1              init_LCD();
+ 115   1      
+ 116   1              SendCommand(0x80);              // select line 1 on LCD
+ 117   1              delay(5);
+C51 COMPILER V9.03   LCD_SERIAL_SACHIN                                                     11/18/2011 14:52:42 PAGE 3   
+
+ 118   1      
+ 119   1              writeData_LCD("**** Sachin ****",16);
+ 120   1              delay(5);
+ 121   1                      
+ 122   1              while(1)
+ 123   1              {   
+ 124   2                      if(serial_flag == 1)
+ 125   2                      {
+ 126   3                              serial_flag = 0;
+ 127   3                              ES = 0;
+ 128   3                              transmit_N_Disp_data();
+ 129   3                              ES = 1;
+ 130   3                      }
+ 131   2              }
+ 132   1      }
+ 133          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    313    ----
+   CONSTANT SIZE    =     17    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

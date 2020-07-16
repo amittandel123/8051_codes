@@ -1,0 +1,49 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\Amit\E-Projects\8051Projects\Keypad Interface\Mobile Keypad\Keypad_Alphanumeric.uvproj
+Project File Date:  01/18/2012
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling Keypad_Alphanumeric.c...
+Keypad_Alphanumeric.c(54): warning C280: 'b': unreferenced local variable
+linking...
+BL51 BANKED LINKER/LOCATER V6.22 - SN: Eval Version
+COPYRIGHT KEIL ELEKTRONIK GmbH 1987 - 2009
+"STARTUP.obj",
+"Keypad_Alphanumeric.obj" 
+TO "Keypad_Alphanumeric" 
+RAMSIZE(256) 
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0827H BYTE (101%) *
+******************************************************************************
+Program Size: data=35.0 xdata=0 code=2216
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
+*** FATAL ERROR L250: CODE SIZE LIMIT IN RESTRICTED VERSION EXCEEDED
+    MODULE:  C:\KEIL\C51\LIB\C51S.LIB (-----)
+    LIMIT:   0800H BYTES
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling Keypad_Alphanumeric.c...
+Keypad_Alphanumeric.c(54): warning C280: 'b': unreferenced local variable
+linking...
+BL51 BANKED LINKER/LOCATER V6.22 - SN: Eval Version
+COPYRIGHT KEIL ELEKTRONIK GmbH 1987 - 2009
+"STARTUP.obj",
+"Keypad_Alphanumeric.obj" 
+TO "Keypad_Alphanumeric" 
+RAMSIZE(256) 
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0827H BYTE (101%) *
+******************************************************************************
+Program Size: data=35.0 xdata=0 code=2216
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
+*** FATAL ERROR L250: CODE SIZE LIMIT IN RESTRICTED VERSION EXCEEDED
+    MODULE:  C:\KEIL\C51\LIB\C51S.LIB (-----)
+    LIMIT:   0800H BYTES
+Target not created

@@ -1,0 +1,138 @@
+C51 COMPILER V7.06   KEY_4X4                                                               08/05/2011 21:04:38 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE KEY_4X4
+OBJECT MODULE PLACED IN .\KEY_4x4.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\KEYPAD_4X4\KEY_4x4.c LARGE BROWSE DEBUG OBJECTEXTEND PRINT(.\KEY_4x4.
+                    -lst) OBJECT(.\KEY_4x4.obj)
+
+stmt level    source
+
+   1          #include <intrins.h>
+   2          #include<reg51.h>
+   3          #include "Keydata.h"
+*** WARNING C318 IN LINE 3 OF ..\..\KEYPAD_4X4\KEY_4x4.c: can't open file 'Keydata.h'
+   4          #include "I2CDATA.H"
+*** WARNING C318 IN LINE 4 OF ..\..\KEYPAD_4X4\KEY_4x4.c: can't open file 'I2CDATA.H'
+   5          
+   6          sbit EN = P3^5;
+   7          
+   8          int prev_pressed_key=0, pressed_key=0;
+   9          void scan(x); 
+  10          
+  11          void init_serial()
+  12          {
+  13   1              TR1 = 0;
+  14   1              ES = 0;
+  15   1              EA = 0;
+  16   1              SCON  = 0x40;                   /* SCON: mode 1, 8-bit UART, disable rcvr */
+  17   1              TMOD = 0x20;               /* TMOD: timer 1, mode 2, 8-bit reload */
+  18   1              TH1   = 253;                /* TH1:  reload value for 9600 baud @ 11.059 MHz */
+  19   1              TR1   = 1;                  /* TR1:  timer 1 run */
+  20   1      
+  21   1              EA = 1;
+  22   1              ES = 1;
+  23   1              RI = 0;
+  24   1              TI = 0;
+  25   1      }
+  26          
+  27          
+  28          void printstr(unsigned char * mstr)
+  29          {
+  30   1              while(*mstr != '\0')
+  31   1              {
+  32   2                      SBUF = *mstr;
+  33   2                      mstr++;
+  34   2                      while(!TI);
+  35   2                      TI = 0;
+  36   2              }
+  37   1      }
+  38          
+  39          
+  40          void display(int num)
+  41          {
+  42   1              unsigned char mstr[8] = "KEY : ";
+  43   1              if (num<10)
+  44   1                      mstr[6] = num + 0x30;
+  45   1              else
+  46   1                      mstr[6] = num + 0x41 - 10;
+  47   1      
+  48   1              mstr[7] = '\0';
+  49   1              printstr(mstr);
+  50   1      }
+  51          
+  52          void initi_key(void)
+C51 COMPILER V7.06   KEY_4X4                                                               08/05/2011 21:04:38 PAGE 2   
+
+  53          {
+  54   1              P1 = 0xF8;
+  55   1              P2 = 0x00;
+  56   1              EN=0;
+  57   1              EA=0;
+  58   1              P0=0xFF;
+  59   1      }
+  60          
+  61          void scan (int x);
+  62          {
+*** ERROR C141 IN LINE 62 OF ..\..\KEYPAD_4X4\KEY_4X4.C: syntax error near '{'
+  63                  for(rw=0;rw<4;rw++)
+*** ERROR C141 IN LINE 63 OF ..\..\KEYPAD_4X4\KEY_4X4.C: syntax error near '=', expected ')'
+*** ERROR C129 IN LINE 63 OF ..\..\KEYPAD_4X4\KEY_4X4.C: missing ';' before '<'
+  64                                  {
+  65                                          P0 = ROWS[rw] + 0x0F;
+  66                                          KEY_VAL=P0;
+  67                                          if((KEY_VAL & 0x0F)!= 0x0F)
+  68                                          {
+  69                                                  for(cl=0;cl<4;cl++)
+  70                                                  {
+  71                                                          if((KEY_VAL & 0x0F) == COLS[cl])
+  72                                                          {
+  73                                                                  pressed_key = ((cl*4)+(rw+1));
+  74                                                                  x=pressed_key;
+  75                                                                  P0 = 0xFF;
+  76                                                                  while(P0 != 0xFF);
+  77                                                                  break;
+  78                  
+  79                  
+  80                  
+  81          }
+  82                  
+  83           /*void main(void)
+  84          {
+  85                  int rw, cl;
+  86                  unsigned char KEY_VAL=0;
+  87                  unsigned char ROWS[4] = {0xE0,0xD0,0xB0,0x70};
+  88                  unsigned char COLS[4] = {0x0E,0x0D,0x0B,0x07};
+  89          
+  90                  initi_key();
+  91                  init_serial();
+  92          
+  93                  while(1)
+  94                  {
+  95                          for(rw=0;rw<4;rw++)
+  96                          {
+  97                                  P0 = ROWS[rw] + 0x0F;
+  98                                  KEY_VAL=P0;
+  99                                  if((KEY_VAL & 0x0F)!= 0x0F)
+ 100                                  {
+ 101                                          for(cl=0;cl<4;cl++)
+ 102                                          {
+ 103                                                  if((KEY_VAL & 0x0F) == COLS[cl])
+ 104                                                  {
+ 105                                                          pressed_key = ((cl*4)+(rw+1));
+ 106                                                          
+ 107                                                          P0 = 0xFF;
+ 108                                                          while(P0 != 0xFF);
+ 109                                                          break;
+ 110                                                  }
+ 111                                          }
+C51 COMPILER V7.06   KEY_4X4                                                               08/05/2011 21:04:38 PAGE 3   
+
+ 112                                  }
+ 113                          }
+ 114                  }
+ 115          }   */
+ 116          
+ 117          
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  3 ERROR(S)

@@ -1,0 +1,48 @@
+C51 COMPILER V9.05   MAIN                                                                  12/05/2017 09:49:41 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          void T0M1Delay(void);
+   3          
+   4          sbit LED = P2^0;
+   5          
+   6          void main(void)
+   7          {
+   8   1        while(1)
+   9   1        {
+  10   2          LED = ~LED;
+  11   2          T0M1Delay();
+  12   2        }
+  13   1      }
+  14          
+  15          void T0M1Delay()
+  16          {
+  17   1        TMOD = 0x01;  //Timer 0, mode 1
+  18   1        TL0 = 0xFD;
+  19   1        TH0 = 0x4B;
+  20   1        TR0 = 1;      // Turn ON timer
+  21   1        while(TF0 == 0);  // wait for TF0 to roll over
+  22   1        TR0 = 0;      // Turn OFF Timer
+  23   1        TF0 = 0;      // reset TF0  
+  24   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     26    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

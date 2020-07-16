@@ -1,0 +1,382 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        07/23/2012  18:47:51  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\STARTUP.obj, Melody_Tone.obj TO Melody_Tone RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\STARTUP.obj (?C_STARTUP)
+  Melody_Tone.obj (MELODY_TONE)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?UIDIV)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?SLDIV)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?ULDIV)
+
+
+LINK MAP OF MODULE:  Melody_Tone (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0028H     UNIT         ?DT?MELODY_TONE
+            DATA    0030H     0004H     UNIT         _DATA_GROUP_
+            IDATA   0034H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     07F2H                  *** GAP ***
+            CODE    0800H     0226H     UNIT         ?PR?ADAMSFAMILY?MELODY_TONE
+            CODE    0A26H     0140H     UNIT         ?PR?LOONEYTOONS?MELODY_TONE
+            CODE    0B66H     0123H     UNIT         ?C?LIB_CODE
+            CODE    0C89H     009FH     UNIT         ?PR?_MELODYTEMPO?MELODY_TONE
+            CODE    0D28H     0044H     UNIT         ?C?LDIV
+            CODE    0D6CH     0025H     UNIT         ?PR?_MELODYPLAY?MELODY_TONE
+            CODE    0D91H     001FH     UNIT         ?PR?_DELAY_MS?MELODY_TONE
+            CODE    0DB0H     001CH     UNIT         ?PR?MAIN?MELODY_TONE
+            CODE    0DCCH     000DH     UNIT         ?PR?_PLAYNOTE?MELODY_TONE
+            CODE    0DD9H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0DE5H     0009H     UNIT         ?PR?ENDNOTE?MELODY_TONE
+            CODE    0DEEH     0005H     UNIT         ?PR?TIMER0?MELODY_TONE
+
+
+
+OVERLAY MAP OF MODULE:   Melody_Tone (?C_STARTUP)
+
+
+SEGMENT                                DATA_GROUP 
+  +--> CALLED SEGMENT                START    LENGTH
+----------------------------------------------------
+?C_C51STARTUP                        -----    -----
+  +--> ?PR?MAIN?MELODY_TONE
+
+?PR?MAIN?MELODY_TONE                 -----    -----
+  +--> ?PR?ADAMSFAMILY?MELODY_TONE
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/23/2012  18:47:51  PAGE 2
+
+
+  +--> ?PR?_DELAY_MS?MELODY_TONE
+  +--> ?PR?LOONEYTOONS?MELODY_TONE
+
+?PR?ADAMSFAMILY?MELODY_TONE          -----    -----
+  +--> ?PR?_MELODYTEMPO?MELODY_TONE
+  +--> ?PR?_MELODYPLAY?MELODY_TONE
+
+?PR?_MELODYPLAY?MELODY_TONE          0030H    0002H
+  +--> ?PR?_PLAYNOTE?MELODY_TONE
+  +--> ?PR?_DELAY_MS?MELODY_TONE
+  +--> ?PR?ENDNOTE?MELODY_TONE
+
+?PR?_DELAY_MS?MELODY_TONE            0032H    0002H
+
+?PR?LOONEYTOONS?MELODY_TONE          -----    -----
+  +--> ?PR?_MELODYTEMPO?MELODY_TONE
+  +--> ?PR?_MELODYPLAY?MELODY_TONE
+
+
+
+UNRESOLVED EXTERNAL SYMBOLS:
+   _DELAY10MC
+
+
+
+SYMBOL TABLE OF MODULE:  Melody_Tone (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0DD9H         SEGMENT       ?C_C51STARTUP
+  I:0034H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0DDCH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0DD9H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0DD9H         LINE#         133
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/23/2012  18:47:51  PAGE 3
+
+
+  C:0DDBH         LINE#         134
+  C:0DDCH         LINE#         135
+  C:0DDDH         LINE#         136
+  C:0DDFH         LINE#         185
+  C:0DE2H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MELODY_TONE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:0A26H         PUBLIC        LooneyToons
+  D:0008H         PUBLIC        eighthN_us
+  B:00B0H.7       PUBLIC        P3_7
+  D:000AH         PUBLIC        twentyFourN
+  D:000CH         PUBLIC        sixteenN_us
+  D:000EH         PUBLIC        sixN
+  C:0DB0H         PUBLIC        main
+  C:0D74H         PUBLIC        _Melodyplay
+  D:0010H         PUBLIC        qtrN
+  C:0DE5H         PUBLIC        EndNote
+  C:0DCCH         PUBLIC        _PlayNote
+  D:0012H         PUBLIC        sixtyFourN
+  D:0014H         PUBLIC        twelveN_us
+  D:0016H         PUBLIC        thirtyTwoN
+  D:0018H         PUBLIC        halfN_us
+  D:0089H         PUBLIC        TMOD
+  D:001AH         PUBLIC        wholeN_us
+  B:00A8H.1       PUBLIC        ET0
+  B:0088H.5       PUBLIC        TF0
+  D:001CH         PUBLIC        eighthN
+  D:008CH         PUBLIC        TH0
+  C:0800H         PUBLIC        AdamsFamily
+  D:008AH         PUBLIC        TL0
+  C:0D91H         PUBLIC        _delay_ms
+  D:001EH         PUBLIC        sixteenN
+  C:0DEEH         PUBLIC        timer0
+  B:0088H.4       PUBLIC        TR0
+  D:0020H         PUBLIC        twentyFourN_us
+  D:0022H         PUBLIC        twelveN
+  D:0024H         PUBLIC        halfN
+  D:0026H         PUBLIC        sixN_us
+  D:0028H         PUBLIC        wholeN
+  D:002AH         PUBLIC        qtrN_us
+  C:0C89H         PUBLIC        _MelodyTempo
+  D:002CH         PUBLIC        sixtyFourN_us
+  D:002EH         PUBLIC        thirtyTwoN_us
+  -------         PROC          TIMER0
+  C:0DEEH         LINE#         42
+  C:0DEEH         LINE#         44
+  C:0DF0H         LINE#         45
+  C:0DF2H         LINE#         46
+  -------         ENDPROC       TIMER0
+  -------         PROC          _MELODYTEMPO
+  D:0006H         SYMBOL        Tempo
+  C:0C89H         LINE#         48
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/23/2012  18:47:51  PAGE 4
+
+
+  C:0C89H         LINE#         49
+  C:0C89H         LINE#         50
+  C:0CA1H         LINE#         51
+  C:0CB0H         LINE#         52
+  C:0CBBH         LINE#         53
+  C:0CC6H         LINE#         54
+  C:0CD7H         LINE#         55
+  C:0CE8H         LINE#         56
+  C:0CFAH         LINE#         57
+  C:0D09H         LINE#         58
+  C:0D18H         LINE#         59
+  C:0D27H         LINE#         60
+  -------         ENDPROC       _MELODYTEMPO
+  -------         PROC          _PLAYNOTE
+  D:0007H         SYMBOL        PitchH
+  D:0005H         SYMBOL        PitchL
+  C:0DCCH         LINE#         62
+  C:0DCCH         LINE#         63
+  C:0DCCH         LINE#         67
+  C:0DCEH         LINE#         68
+  C:0DD0H         LINE#         69
+  C:0DD2H         LINE#         70
+  C:0DD4H         LINE#         71
+  C:0DD6H         LINE#         72
+  C:0DD8H         LINE#         73
+  -------         ENDPROC       _PLAYNOTE
+  -------         PROC          ENDNOTE
+  C:0DE5H         LINE#         75
+  C:0DE5H         LINE#         76
+  C:0DE5H         LINE#         77
+  C:0DE7H         LINE#         78
+  C:0DE9H         LINE#         79
+  C:0DEBH         LINE#         80
+  C:0DEDH         LINE#         81
+  -------         ENDPROC       ENDNOTE
+  -------         PROC          _DELAY_MS
+  D:0032H         SYMBOL        ms
+  C:0D91H         LINE#         83
+  C:0D95H         LINE#         84
+  C:0D95H         LINE#         85
+  C:0DA0H         LINE#         86
+  C:0DAFH         LINE#         87
+  -------         ENDPROC       _DELAY_MS
+  C:0D6EH         SYMBOL        L?0021
+  -------         PROC          L?0020
+  -------         ENDPROC       L?0020
+  C:0D6EH         SYMBOL        L?0021
+  -------         PROC          _MELODYPLAY
+  D:0002H         SYMBOL        Pitch
+  D:0030H         SYMBOL        interval
+  C:0D74H         LINE#         89
+  C:0D7CH         LINE#         90
+  C:0D7CH         LINE#         91
+  C:0D80H         LINE#         92
+  C:0D87H         LINE#         93
+  C:0D8EH         LINE#         94
+  -------         ENDPROC       _MELODYPLAY
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/23/2012  18:47:51  PAGE 5
+
+
+  -------         PROC          ADAMSFAMILY
+  C:0800H         LINE#         97
+  C:0800H         LINE#         98
+  C:0800H         LINE#         99
+  C:0807H         LINE#         100
+  C:0811H         LINE#         101
+  C:081CH         LINE#         102
+  C:0827H         LINE#         103
+  C:0832H         LINE#         104
+  C:083DH         LINE#         105
+  C:0848H         LINE#         106
+  C:0853H         LINE#         107
+  C:0858H         LINE#         108
+  C:0863H         LINE#         109
+  C:086EH         LINE#         110
+  C:0879H         LINE#         111
+  C:0884H         LINE#         112
+  C:088FH         LINE#         113
+  C:089AH         LINE#         114
+  C:08A5H         LINE#         115
+  C:08B0H         LINE#         116
+  C:08BBH         LINE#         117
+  C:08C6H         LINE#         118
+  C:08D1H         LINE#         119
+  C:08DCH         LINE#         120
+  C:08E7H         LINE#         121
+  C:08F2H         LINE#         122
+  C:08FDH         LINE#         123
+  C:0908H         LINE#         124
+  C:0913H         LINE#         125
+  C:091EH         LINE#         126
+  C:0929H         LINE#         127
+  C:0934H         LINE#         128
+  C:093FH         LINE#         129
+  C:094AH         LINE#         130
+  C:0955H         LINE#         131
+  C:0960H         LINE#         132
+  C:096BH         LINE#         133
+  C:0976H         LINE#         134
+  C:0981H         LINE#         135
+  C:098CH         LINE#         136
+  C:0997H         LINE#         137
+  C:09A2H         LINE#         138
+  C:09ADH         LINE#         139
+  C:09B8H         LINE#         140
+  C:09C3H         LINE#         141
+  C:09CEH         LINE#         142
+  C:09D9H         LINE#         143
+  C:09E4H         LINE#         144
+  C:09EFH         LINE#         145
+  C:09FAH         LINE#         146
+  C:0A05H         LINE#         147
+  C:0A10H         LINE#         148
+  C:0A1BH         LINE#         149
+  -------         ENDPROC       ADAMSFAMILY
+  -------         PROC          LOONEYTOONS
+  C:0A26H         LINE#         152
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/23/2012  18:47:51  PAGE 6
+
+
+  C:0A26H         LINE#         153
+  C:0A26H         LINE#         154
+  C:0A2DH         LINE#         155
+  C:0A38H         LINE#         156
+  C:0A3BH         LINE#         157
+  C:0A46H         LINE#         158
+  C:0A51H         LINE#         159
+  C:0A5CH         LINE#         160
+  C:0A67H         LINE#         161
+  C:0A72H         LINE#         162
+  C:0A7DH         LINE#         163
+  C:0A80H         LINE#         164
+  C:0A8BH         LINE#         165
+  C:0A96H         LINE#         166
+  C:0AA1H         LINE#         167
+  C:0AACH         LINE#         168
+  C:0AB7H         LINE#         169
+  C:0AC2H         LINE#         170
+  C:0ACDH         LINE#         171
+  C:0AD8H         LINE#         172
+  C:0AE3H         LINE#         173
+  C:0AEEH         LINE#         174
+  C:0AF9H         LINE#         175
+  C:0B04H         LINE#         176
+  C:0B0FH         LINE#         177
+  C:0B1AH         LINE#         178
+  C:0B25H         LINE#         179
+  C:0B30H         LINE#         180
+  C:0B3BH         LINE#         181
+  C:0B46H         LINE#         182
+  C:0B51H         LINE#         183
+  C:0B5CH         LINE#         184
+  -------         ENDPROC       LOONEYTOONS
+  -------         PROC          MAIN
+  C:0DB0H         LINE#         187
+  C:0DB0H         LINE#         188
+  C:0DB0H         LINE#         189
+  C:0DB3H         LINE#         190
+  C:0DB6H         LINE#         191
+  C:0DB6H         LINE#         192
+  C:0DB6H         LINE#         193
+  C:0DB9H         LINE#         194
+  C:0DC0H         LINE#         195
+  C:0DC3H         LINE#         196
+  C:0DCAH         LINE#         206
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MELODY_TONE
+
+  -------         MODULE        ?C?UIDIV
+  C:0B66H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+  -------         MODULE        ?C?SLDIV
+  C:0D28H         PUBLIC        ?C?SLDIV
+  -------         ENDMOD        ?C?SLDIV
+
+  -------         MODULE        ?C?ULDIV
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/23/2012  18:47:51  PAGE 7
+
+
+  C:0BF7H         PUBLIC        ?C?ULDIV
+  -------         ENDMOD        ?C?ULDIV
+
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _DELAY10MC
+    MODULE:  Melody_Tone.obj (MELODY_TONE)
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _DELAY10MC
+    MODULE:  Melody_Tone.obj (MELODY_TONE)
+    ADDRESS: 0DA3H
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0492H BYTE (57%) *
+******************************************************************************
+
+Program Size: data=53.0 xdata=0 code=1529
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)

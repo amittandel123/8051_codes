@@ -1,0 +1,129 @@
+C51 COMPILER V7.20   MAIN                                                                  09/01/2006 16:51:29 PAGE 1   
+
+
+C51 COMPILER V7.20, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN MAIN.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE MAIN.C OMF2 VARBANKING(1) DEBUG
+
+line level    source
+
+   1          #include <89c51rd2.H>              // SFR definition header file
+*** WARNING C318 IN LINE 1 OF MAIN.C: can't open file '89c51rd2.H'
+   2          #include <stdio.h>                 // prototype declarations for I/O functions
+   3          #include <eeprom.h>                // include EEPROM variables
+   4          
+   5          // on-chip xdata RAM (XRAM) variables are defined with memory type 'far'
+   6          struct xsample  {
+   7            char carray[20];
+   8            int  iarray[20];
+   9            long larray[20];
+  10          };
+  11          
+  12          struct xsample far xsample1;  // reserve space for xsample1 struct
+  13          struct xsample far xsample2;  // reserve space for xsample2 struct
+  14          char * far         xtxt_ptr;  // pointer in XRAM space
+  15          
+  16          
+  17          // off-chip xdata RAM variables are defined with memory type 'xdata'
+  18          char xdata array[0x1000];     // 0x1000 bytes in xdata space
+  19          
+  20          #ifdef MONITOR51                         /* Debugging with Monitor-51 needs   */
+              char code reserve [3] _at_ 0x23;         /* space for serial interrupt if     */
+              #endif                                   /* Stop Exection with Serial Intr.   */
+  23          
+  24          
+  25          /*
+  26           *  This routine stores some values into the EEPROM for testing
+  27           */
+  28          void store_eeprom (void)  {
+  29   1        unsigned char i;
+  30   1      
+  31   1        for (i = 0; i < 20; i++)  {
+  32   2          esample1.carray[i] = i;               // Store some values to show how it works
+  33   2          esample2.carray[i] = i + 10;
+  34   2          esample1.iarray[i] = 0xFF00+i;
+  35   2          esample2.iarray[i] = 0xFE00+i;
+  36   2          esample1.larray[i] = 0xABCDEF00+i;
+  37   2          esample2.larray[i] = 0x12345600+i;
+  38   2        }
+  39   1        etxt_ptr = "Store External EEPROM Done";      // Pointer to Text in ROM
+  40   1      }
+  41          
+  42          
+  43          /*
+  44           *  This routine stores some values into on-chip XRAM for testing
+  45           */
+  46          void store_xram (void)  {
+  47   1        unsigned char i;
+  48   1      
+  49   1        for (i = 0; i < 20; i++)  {
+  50   2          xsample1.carray[i] = i + 40;                // Store some values to show how it works
+  51   2          xsample2.carray[i] = i + 80;
+  52   2          xsample1.iarray[i] = 0x0F00+i;
+  53   2          xsample2.iarray[i] = 0x0E00+i;
+  54   2          xsample1.larray[i] = 0x45678900+i;
+C51 COMPILER V7.20   MAIN                                                                  09/01/2006 16:51:29 PAGE 2   
+
+  55   2          xsample2.larray[i] = 0xFEDCBA00+i;
+  56   2        }
+  57   1        xtxt_ptr = "Store External XRAM Done";         // Pointer to Text in ROM
+  58   1      }
+  59           
+  60          
+  61          /*------------------------------------------------
+  62          The main C function.  Program execution starts
+  63          here after stack initialization.
+  64          ------------------------------------------------*/
+  65          
+  66          void main (void) {
+  67   1        unsigned char i;
+  68   1      /*------------------------------------------------
+  69   1      Setup the serial port for 1200 baud at 16MHz.
+  70   1      ------------------------------------------------*/
+  71   1        EETIM = 5 * 40;             // EETIM: 5 * 40 MHz in normal mode
+*** ERROR C202 IN LINE 71 OF MAIN.C: 'EETIM': undefined identifier
+  72   1      
+  73   1      #ifndef MONITOR51
+  74   1        SCON  = 0x50;               // SCON: mode 1, 8-bit UART, enable rcvr
+*** ERROR C202 IN LINE 74 OF MAIN.C: 'SCON': undefined identifier
+  75   1        TMOD |= 0x20;               // TMOD: timer 1, mode 2, 8-bit reload
+*** ERROR C202 IN LINE 75 OF MAIN.C: 'TMOD': undefined identifier
+  76   1        TH1   = 221;                // TH1:  reload value for 1200 baud @ 16MHz
+*** ERROR C202 IN LINE 76 OF MAIN.C: 'TH1': undefined identifier
+  77   1        TR1   = 1;                  // TR1:  timer 1 run
+*** ERROR C202 IN LINE 77 OF MAIN.C: 'TR1': undefined identifier
+  78   1        TI    = 1;                  // TI:   set TI to send first char of UART
+*** ERROR C202 IN LINE 78 OF MAIN.C: 'TI': undefined identifier
+  79   1      #endif
+  80   1      
+  81   1        esample1.carray[0] = 4;
+  82   1        xsample1.carray[0] = 8;
+  83   1        array[0] = 12;
+  84   1      
+  85   1        
+  86   1        store_eeprom ();            // store some values in EEPROM
+  87   1        store_xram ();              // store some values in on-chip XRAM
+  88   1      
+  89   1                                    // Read Back Values from EEPROM
+  90   1        for (i = 0; i < 20; i++)  {
+  91   2          printf ("\n%bd %bd %bd %x %x", i, esample1.carray[i],
+  92   2                                            esample2.carray[i],
+  93   2                                            esample1.iarray[i],
+  94   2                                            esample2.iarray[i]);
+  95   2        }
+  96   1        printf ("\n%s", etxt_ptr);
+  97   1      
+  98   1                                    // Read Back Values from on-chip XRAM
+  99   1        for (i = 0; i < 20; i++)  {
+ 100   2          printf ("\n%bd %bd %bd %x %x", i, xsample1.carray[i],
+ 101   2                                            xsample2.carray[i],
+ 102   2                                            xsample1.iarray[i],
+ 103   2                                            xsample2.iarray[i]);
+ 104   2        }
+ 105   1        printf ("\n%s", xtxt_ptr);
+ 106   1      
+ 107   1        while (1);
+ 108   1      }
+ 109          
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  6 ERROR(S)

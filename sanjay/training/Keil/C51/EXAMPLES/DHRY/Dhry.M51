@@ -1,0 +1,80 @@
+BL51 BANKED LINKER/LOCATER V5.11                                                        09/01/2006  16:36:45  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.11, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE README.obj TO Dhry IXREF
+
+
+MEMORY MODEL: LARGE
+
+
+INPUT MODULES INCLUDED:
+  README.obj (README)
+  C:\KEIL\C51\LIB\C51L.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  Dhry (README)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     000CH     UNIT         ?C_C51STARTUP
+            CODE    000FH     0003H     UNIT         ?PR?MAIN?README
+
+
+
+OVERLAY MAP OF MODULE:   Dhry (README)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?README
+
+
+
+SYMBOL TABLE OF MODULE:  Dhry (README)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        README
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:000FH         PUBLIC        main
+  -------         PROC          MAIN
+  C:000FH         LINE#         10
+  C:000FH         LINE#         12
+  C:000FH         LINE#         14
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        README
+
+
+
+INTER-MODULE CROSS-REFERENCE LISTING
+BL51 BANKED LINKER/LOCATER V5.11                                                      09/01/2006  16:36:45  PAGE 2
+
+
+------------------------------------
+
+
+NAME . . . . USAGE    MODULE NAMES
+----------------------------------
+
+?C_START . . CODE;    ** L51 GENERATED **  ?C_STARTUP  
+?C_STARTUP . CODE;    ?C_STARTUP  README  
+MAIN . . . . CODE;    README  
+
+******************************************************************************
+* RESTRICTED VERSION WITH 1000H BYTE CODE SIZE LIMIT; USED: 0004H BYTE ( 0%) *
+******************************************************************************
+
+Program Size: data=9.0 xdata=0 code=18
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

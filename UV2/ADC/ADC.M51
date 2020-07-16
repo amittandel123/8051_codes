@@ -1,0 +1,231 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/16/2012  20:24:28  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\STARTUP.obj, ADC.obj TO ADC RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\STARTUP.obj (?C_STARTUP)
+  ADC.obj (ADC)
+
+
+LINK MAP OF MODULE:  ADC (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0003H     UNIT         ?DT?ADC
+            IDATA   000BH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     0015H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+                    0026H     07DAH                  *** GAP ***
+            CODE    0800H     004DH     UNIT         ?PR?TIMER?ADC
+            CODE    084DH     0020H     UNIT         ?PR?MAIN?ADC
+            CODE    086DH     0014H     UNIT         ?PR?RDADC0804?ADC
+            CODE    0881H     000CH     UNIT         ?C_C51STARTUP
+            CODE    088DH     0009H     UNIT         ?PR?SEND?ADC
+            CODE    0896H     0006H     UNIT         ?PR?SERIAL?ADC
+
+
+
+OVERLAY MAP OF MODULE:   ADC (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?ADC
+
+
+
+UNRESOLVED EXTERNAL SYMBOLS:
+   RDADC
+   SETOUT
+
+
+
+SYMBOL TABLE OF MODULE:  ADC (?C_STARTUP)
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/16/2012  20:24:28  PAGE 2
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0881H         SEGMENT       ?C_C51STARTUP
+  I:000BH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0884H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0881H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0881H         LINE#         133
+  C:0883H         LINE#         134
+  C:0884H         LINE#         135
+  C:0885H         LINE#         136
+  C:0887H         LINE#         185
+  C:088AH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        ADC
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  C:0896H         PUBLIC        serial
+  B:00A8H.7       PUBLIC        EA
+  B:00A8H.4       PUBLIC        ES
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:0800H         PUBLIC        timer
+  C:084DH         PUBLIC        main
+  D:0008H         PUBLIC        adc
+  C:088DH         PUBLIC        send
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0009H         PUBLIC        sec
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/16/2012  20:24:28  PAGE 3
+
+
+  D:008DH         PUBLIC        TH1
+  C:086DH         PUBLIC        rdadc0804
+  B:00B0H.5       PUBLIC        en
+  B:00B0H.7       PUBLIC        rd
+  B:0088H.4       PUBLIC        TR0
+  B:0088H.6       PUBLIC        TR1
+  B:00B0H.6       PUBLIC        wt
+  D:000AH         PUBLIC        sec1
+  -------         PROC          TIMER
+  C:0800H         LINE#         25
+  C:081DH         LINE#         27
+  C:0820H         LINE#         28
+  C:0822H         LINE#         29
+  C:0829H         LINE#         30
+  C:0829H         LINE#         31
+  C:082CH         LINE#         32
+  C:082FH         LINE#         33
+  C:0832H         LINE#         34
+  C:0832H         LINE#         35
+  -------         ENDPROC       TIMER
+  -------         PROC          MAIN
+  C:084DH         LINE#         37
+  C:084DH         LINE#         38
+  C:084DH         LINE#         39
+  C:084FH         LINE#         40
+  C:0851H         LINE#         41
+  C:0854H         LINE#         42
+  C:0857H         LINE#         43
+  C:085AH         LINE#         44
+  C:085CH         LINE#         45
+  C:085EH         LINE#         46
+  C:0860H         LINE#         47
+  C:0862H         LINE#         48
+  C:0864H         LINE#         49
+  C:0866H         LINE#         50
+  C:0869H         LINE#         51
+  C:086BH         LINE#         52
+  C:086BH         LINE#         53
+  C:086BH         LINE#         55
+  -------         ENDPROC       MAIN
+  -------         PROC          SEND
+  C:088DH         LINE#         58
+  C:088DH         LINE#         59
+  C:088DH         LINE#         60
+  C:088FH         LINE#         61
+  C:0892H         LINE#         62
+  C:0895H         LINE#         63
+  -------         ENDPROC       SEND
+  -------         PROC          RDADC0804
+  C:086DH         LINE#         65
+  C:086DH         LINE#         66
+  C:086DH         LINE#         67
+  C:086FH         LINE#         68
+  C:0870H         LINE#         69
+  C:0871H         LINE#         70
+  C:0872H         LINE#         71
+  C:0873H         LINE#         72
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/16/2012  20:24:28  PAGE 4
+
+
+  C:0875H         LINE#         73
+  C:0876H         LINE#         74
+  C:0877H         LINE#         75
+  C:087AH         LINE#         76
+  C:087BH         LINE#         77
+  C:087DH         LINE#         78
+  C:087EH         LINE#         79
+  C:0880H         LINE#         80
+  -------         ENDPROC       RDADC0804
+  -------         PROC          SERIAL
+  C:0896H         LINE#         82
+  C:0896H         LINE#         84
+  C:0899H         LINE#         85
+  C:089BH         LINE#         86
+  -------         ENDPROC       SERIAL
+  -------         ENDMOD        ADC
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SEND?ADC
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?RDADC0804?ADC
+
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  RDADC
+    MODULE:  ADC.obj (ADC)
+
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  SETOUT
+    MODULE:  ADC.obj (ADC)
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  RDADC
+    MODULE:  ADC.obj (ADC)
+    ADDRESS: 082AH
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  SETOUT
+    MODULE:  ADC.obj (ADC)
+    ADDRESS: 082DH
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00A5H BYTE ( 8%) *
+******************************************************************************
+
+Program Size: data=12.0 xdata=0 code=165
+LINK/LOCATE RUN COMPLETE.  6 WARNING(S),  0 ERROR(S)

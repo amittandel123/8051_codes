@@ -1,0 +1,113 @@
+C51 COMPILER V9.03   DIGITAL_HOUR_CLOCK                                                    11/19/2011 14:08:36 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE DIGITAL_HOUR_CLOCK
+OBJECT MODULE PLACED IN Digital_Hour_Clock.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Digital_Hour_Clock.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          // Program to demonstrate the principle of digital clock. this digital clock displays two minute digits an
+             -d two second digits
+   2          
+   3          #include<reg51.h>
+   4           sbit dig_ctrl_4=P1^0;   //Declaring control pins of the seven segments
+   5           sbit dig_ctrl_3=P1^1;
+   6           sbit dig_ctrl_2=P1^2;
+   7           sbit dig_ctrl_1=P1^3;
+   8           unsigned char dig_disp=0;
+   9           int min2;
+  10           int min1;
+  11           int sec2;
+  12           int sec1;
+  13           char digi_val[10]={0x40,0xF9,0x24,0x30,0x19,0x12,0x02,0xF8,0x00,0x10};
+  14          
+  15          void delay()    //Function to provide a time delay of approx. 1 second. using Timer 1.
+  16          {
+  17   1          int i;
+  18   1          for(i=0;i<20;i++)
+  19   1          {
+  20   2               TL1=0xFD;
+  21   2               TH1=0x4B;
+  22   2               TR1=1;
+  23   2               while(TF1==0);
+  24   2               TR1=0;
+  25   2               TF1=0;
+  26   2          }
+  27   1      }
+  28          
+  29          void display() interrupt 1        //Function to display the number using seven segmnet multiplexing. For m
+             -ore details refer seven segment multiplexing.
+  30          {
+  31   1          TL0=0x36;        //Reloading Timer0
+  32   1          TH0=0xf6;
+  33   1          P2=0xFF;
+  34   1          dig_ctrl_1 = dig_ctrl_3 = dig_ctrl_2 = dig_ctrl_4 = 0;
+  35   1          dig_disp++;
+  36   1          dig_disp=dig_disp%4;
+  37   1         
+  38   1          switch(dig_disp)
+  39   1          {
+  40   2              case 0:
+  41   2              P2=digi_val[sec1];
+  42   2              dig_ctrl_1 = 1;
+  43   2              break;
+  44   2         
+  45   2              case 1:
+  46   2              P2=    digi_val[sec2];
+  47   2              dig_ctrl_2 = 1;
+  48   2              break;
+  49   2         
+  50   2              case 2:
+  51   2              P2=    digi_val[min1];
+  52   2              dig_ctrl_3 = 1;
+  53   2              break;
+C51 COMPILER V9.03   DIGITAL_HOUR_CLOCK                                                    11/19/2011 14:08:36 PAGE 2   
+
+  54   2         
+  55   2              case 3:
+  56   2              P2=    digi_val[min2];
+  57   2              dig_ctrl_4 = 1;
+  58   2              break;
+  59   2          }
+  60   1      }
+  61          
+  62          void main()
+  63          {
+  64   1          TMOD=0x11;        //Intialize Timer 0
+  65   1          TL0=0x36;
+  66   1          TH0=0xF6;
+  67   1          IE=0x82;        // Enable Timer 0 interrupt
+  68   1          TR0=1;        //Start Timer 0
+  69   1          while(1)        //Start clock
+  70   1          {
+  71   2                min2=min1=sec2=sec1=0;
+  72   2                for(min2=0;min2<6;min2++)
+  73   2                {
+  74   3                     for(min1=0;min1<10;min1++)
+  75   3                     {
+  76   4                              for(sec2=0;sec2<6;sec2++)
+  77   4                              {
+  78   5                               for(sec1=0;sec1<10;sec1++)
+  79   5                               {
+  80   6                                      delay();
+  81   6                                       }
+  82   5                              }
+  83   4                     }
+  84   3                }
+  85   2           }
+  86   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    260    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     19    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

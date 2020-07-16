@@ -1,0 +1,7 @@
+COMMON {"C_root.obj"},
+BANK1 {"C_bank1.obj"},
+BANK2 {"C_bank2.obj"},
+BANK0 {"C_bank0.obj"},
+COMMON {"L51_bank.obj"} 
+TO "Bank_ex1" BankArea(0x8000,0xFFFF) 
+RAMSIZE(256) 

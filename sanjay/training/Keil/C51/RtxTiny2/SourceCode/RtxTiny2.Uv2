@@ -1,0 +1,256 @@
+### uVision2 Project, (C) Keil Software
+### Do not modify !
+
+Target (Non Banking), 0x0000 // Tools: 'MCS-51'
+Target (Code Banking), 0x0000 // Tools: 'MCS-51'
+
+Group (Source Files)
+Group (Documentation)
+
+File 1,2,<.\Version.a51><Version.a51>
+File 1,2,<.\Copyright.a51><Copyright.a51>
+File 1,2,<.\Conf_tny.a51><Conf_tny.a51>
+File 1,2,<.\Conf_tny_Banking.A51><Conf_tny_Banking.A51>
+File 1,2,<.\os_create.a51><os_create.a51>
+File 1,2,<.\os_delete.a51><os_delete.a51>
+File 1,2,<.\os_clear_signal.a51><os_clear_signal.a51>
+File 1,2,<.\os_send_signal.a51><os_send_signal.a51>
+File 1,2,<.\os_running_task.a51><os_running_task.a51>
+File 1,2,<.\os_set_ready.a51><os_set_ready.a51>
+File 1,2,<.\os_reset_interval.a51><os_reset_interval.a51>
+File 1,2,<.\os_wait.a51><os_wait.a51>
+File 2,5,<..\ReadMe.TXT><ReadMe.TXT>
+
+
+Options 1,0,0  // Target 'Non Banking'
+ Device (83/87C51FA)
+ Vendor (Intel)
+ Cpu (IRAM(0 - 0xFF) IROM(0-0x1FFF) CLOCK(33000000))
+ FlashUt ((null))
+ StupF ((null))
+ FlashDR ((null))
+ Rgf (REG51F.H)
+ Mem ()
+ C ()
+ A ()
+ RL ()
+ OH ()
+ UseEnv=0
+ EnvBin ()
+ EnvInc ()
+ EnvLib ()
+ EnvReg (ÿIntel\)
+ OrgReg (ÿIntel\)
+ TgStat=0
+ OutDir (.\)
+ OutName (RTX51TNY)
+ GenApp=0
+ GenLib=1
+ GenHex=0
+ Debug=0
+ Browse=0
+ LstDir (.\)
+ HexSel=0
+ MG32K=0
+ RunUsr 0 1 <CopyLib.BAT>
+ RunUsr 1 0 <>
+ SVCSID <>
+ MODEL5=0
+ RTOS5=0
+ ROMSZ5=2
+ DHOLD5=0
+ XHOLD5=0
+ T51FL=80
+ CBANKS5=0
+ XBANKS5=0
+ RCB51 { 0,0,0,0,0,255,255,0,0 }
+ RXB51 { 0,0,0,0,0,0,0,0,0 }
+ OCM51 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCR51 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ IRO51 { 1,0,0,0,0,0,32,0,0 }
+ IRA51 { 0,0,0,0,0,0,1,0,0 }
+ XRA51 { 0,0,0,0,0,0,0,0,0 }
+ C51FL=21630224
+ C51VA=0
+ C51MSC ()
+ C51DEF ()
+ C51UDF ()
+ INCC5 ()
+ AX51FL=4
+ AX51MSC ()
+ AX51SET ()
+ AX51RST ()
+ INCA5 ()
+ IncBld=1
+ AlwaysBuild=0
+ GenAsm=0
+ AsmAsm=0
+ PublicsOnly=0
+ StopCode=3
+ CustArgs ()
+ LibMods ()
+ BankNo=65535
+ LX51FL=292
+ LX51OVL ()
+ LX51MSC ()
+ LX51DWN ()
+ LX51LFI ()
+ LX51ASN ()
+ LX51RES ()
+ LX51CCL ()
+ LX51UCL ()
+ LX51CSC ()
+ LX51UCS ()
+ LX51COB ()
+ LX51XDB ()
+ LX51PDB ()
+ LX51BIB ()
+ LX51DAB ()
+ LX51IDB ()
+ LX51PRC ()
+ LX51STK ()
+ LX51COS ()
+ LX51XDS ()
+ LX51BIS ()
+ LX51DAS ()
+ LX51IDS ()
+  OPTDL (S8051.DLL)()(DP51.DLL)(-p51R)(S8051.DLL)()(TP51.DLL)(-p51R)
+  OPTDBG 509,0,()()()()()()()()()() ()()()()
+ FLASH1 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ FLASH2 ()
+ FLASH3 ()
+EndOpt
+
+Options 2,0,0  // Target 'Code Banking'
+ Device (83/87C51FA)
+ Vendor (Intel)
+ Cpu (IRAM(0 - 0xFF) IROM(0-0x1FFF) CLOCK(33000000))
+ FlashUt ((null))
+ StupF ((null))
+ FlashDR ((null))
+ Rgf (REG51F.H)
+ Mem ()
+ C ()
+ A ()
+ RL ()
+ OH ()
+ UseEnv=0
+ EnvBin ()
+ EnvInc ()
+ EnvLib ()
+ EnvReg (ÿIntel\)
+ OrgReg (ÿIntel\)
+ TgStat=0
+ OutDir (.\)
+ OutName (RTX51BT)
+ GenApp=0
+ GenLib=1
+ GenHex=0
+ Debug=0
+ Browse=0
+ LstDir (.\)
+ HexSel=0
+ MG32K=0
+ RunUsr 0 1 <CopyLib.bat>
+ RunUsr 1 0 <>
+ SVCSID <>
+ MODEL5=0
+ RTOS5=0
+ ROMSZ5=2
+ DHOLD5=0
+ XHOLD5=0
+ T51FL=80
+ CBANKS5=0
+ XBANKS5=0
+ RCB51 { 0,0,0,0,0,255,255,0,0 }
+ RXB51 { 0,0,0,0,0,0,0,0,0 }
+ OCM51 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCR51 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ IRO51 { 1,0,0,0,0,0,32,0,0 }
+ IRA51 { 0,0,0,0,0,0,1,0,0 }
+ XRA51 { 0,0,0,0,0,0,0,0,0 }
+ C51FL=21630224
+ C51VA=0
+ C51MSC ()
+ C51DEF ()
+ C51UDF ()
+ INCC5 ()
+ AX51FL=4
+ AX51MSC ()
+ AX51SET (CODE_BANKING=1)
+ AX51RST ()
+ INCA5 ()
+ IncBld=1
+ AlwaysBuild=0
+ GenAsm=0
+ AsmAsm=0
+ PublicsOnly=0
+ StopCode=3
+ CustArgs ()
+ LibMods ()
+ BankNo=65535
+ LX51FL=292
+ LX51OVL ()
+ LX51MSC ()
+ LX51DWN ()
+ LX51LFI ()
+ LX51ASN ()
+ LX51RES ()
+ LX51CCL ()
+ LX51UCL ()
+ LX51CSC ()
+ LX51UCS ()
+ LX51COB ()
+ LX51XDB ()
+ LX51PDB ()
+ LX51BIB ()
+ LX51DAB ()
+ LX51IDB ()
+ LX51PRC ()
+ LX51STK ()
+ LX51COS ()
+ LX51XDS ()
+ LX51BIS ()
+ LX51DAS ()
+ LX51IDS ()
+  OPTDL (S8051.DLL)()(DP51.DLL)(-p51R)(S8051.DLL)()(TP51.DLL)(-p51R)
+  OPTDBG 509,0,()()()()()()()()()() ()()()()
+ FLASH1 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ FLASH2 ()
+ FLASH3 ()
+EndOpt
+
+Options 1,1,4  // File 'Conf_tny_Banking.A51'
+ IncBld=0
+ AlwaysBuild=2
+ GenAsm=2
+ AsmAsm=2
+ PublicsOnly=2
+ StopCode=11
+ CustArgs ()
+ LibMods ()
+ BankNo=65535
+ AX51FL=170
+ AX51MSC ()
+ AX51SET ()
+ AX51RST ()
+ INCA5 ()
+EndOpt
+
+Options 2,1,3  // File 'Conf_tny.a51'
+ IncBld=0
+ AlwaysBuild=2
+ GenAsm=2
+ AsmAsm=2
+ PublicsOnly=2
+ StopCode=11
+ CustArgs ()
+ LibMods ()
+ BankNo=65535
+ AX51FL=170
+ AX51MSC ()
+ AX51SET ()
+ AX51RST ()
+ INCA5 ()
+EndOpt
+

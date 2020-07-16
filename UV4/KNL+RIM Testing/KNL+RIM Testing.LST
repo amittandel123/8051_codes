@@ -1,0 +1,88 @@
+C51 COMPILER V9.05   KNL_RIM_TESTING                                                       04/02/2013 10:52:41 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE KNL_RIM_TESTING
+OBJECT MODULE PLACED IN KNL+RIM Testing.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE KNL+RIM Testing.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg51.h>
+   2          sbit sensordrcls=P1^0;
+   3          sbit LED=P0^3;
+   4          unsigned int i,x;
+   5          void delay (unsigned int);
+   6          void main(void)
+   7          {
+   8   1              unsigned char mydata[]={0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
+   9   1              P2=0x00;                                /* Made all cylinder to home position*/
+  10   1              P0=0x00;                                /* Initially no input to LED and counter */ 
+  11   1              P1=0X00;                                /* Initially no input to sensors */
+  12   1              TMOD=0x01;                              /* Timer 0,Mode 1 */
+  13   1              TH0=0xFC;
+  14   1              TL0=0x67;                               /* Clear the sensor1 input */ 
+  15   1                                                                      
+  16   1              while(1)                                 /* Do it continiously */                                       
+  17   1              {          
+  18   2                      if(sensordrcls==1)       /* if the the door is closed   */
+  19   2                      {
+  20   3                      
+  21   3                              for(i=0;i<=5;i++)                        /*  Press the code "1234*Enter"  */
+  22   3                              {
+  23   4                                      P2=mydata[i];                    /* Cylinders will press the code  */
+  24   4                                      delay(50);                       /*Delay between each Key press*/
+  25   4                              }
+  26   3              
+  27   3                              if (sensordrcls==0)
+  28   3                              {               
+  29   4                                      i=i++;
+  30   4                                      P2=mydata[i];                 /* Close the door */
+  31   4                                      i=i+1;
+  32   4                                      delay(50);
+  33   4                                      P2=0x00;                                /* Cylinders back to original position */
+  34   4                                      P2=mydata[i];                    /* Increment the number of count*/    
+  35   4                                      delay(2);                        
+  36   4                                      P2=0x00;
+  37   4                                      delay(2);
+  38   4                               }
+  39   3                              else
+  40   3                              {
+  41   4                                      LED=1;
+  42   4                                      while(1);
+  43   4                              }
+  44   3                      
+  45   3                      }                         
+  46   2                      else
+  47   2                      {
+  48   3                              LED=1;
+  49   3                              while(1);
+  50   3                      }
+  51   2              }
+  52   1      }       
+  53          
+  54          void delay(unsigned int x)        /* Delay Subroutine*/
+  55          {     
+C51 COMPILER V9.05   KNL_RIM_TESTING                                                       04/02/2013 10:52:41 PAGE 2   
+
+  56   1              for(i=0;i<=x;i++)
+  57   1              {
+  58   2                      TR0=1;            /* Start the timer */ 
+  59   2                      while(TF0==0);    /* wait till overflow */ 
+  60   2                      TR0=0;            /* Stop the timer */ 
+  61   2                      TF0=0;
+  62   2              }
+  63   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    184    ----
+   CONSTANT SIZE    =      8    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

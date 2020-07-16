@@ -1,0 +1,415 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+D:\training\training\HW\Trials\LCD\LCD.uv2
+Project File Date:  08/03/2011
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+compiling main.c...
+assembling main.src...
+compiling common.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_GENCHAR_AT_CGRAM?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MULTI_CHAR_KEY?LCD
+Program Size: data=9.5 xdata=133 code=1531
+creating hex file from "LCD"...
+"LCD" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+compiling main.c...
+assembling main.src...
+compiling common.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_GENCHAR_AT_CGRAM?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MULTI_CHAR_KEY?LCD
+Program Size: data=9.5 xdata=133 code=1531
+creating hex file from "LCD"...
+"LCD" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+compiling main.c...
+assembling main.src...
+compiling common.c...
+compiling timer0_over.c...
+compiling KEY_4x4.c...
+compiling Transmit.c...
+compiling I2C_EEPROM.C...
+linking...
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  _PRINTSTR
+    MODULE:  .\Transmit.obj (TRANSMIT)
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  MAIN
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  _PRINT
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_GENCHAR_AT_CGRAM?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MULTI_CHAR_KEY?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITILISE?TIMER0_OVER
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INIT_SERIAL?KEY_4X4
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISPLAY?KEY_4X4
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITI_KEY?KEY_4X4
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITILISE_RS232?TRANSMIT
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_PRINT?TRANSMIT
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TRANSMIT_DATA?TRANSMIT
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MAIN?I2C_EEPROM
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  I2C_INITIALISE
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _I2C_READ
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  I2C_INITIALISE
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+    ADDRESS: 033EH
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _I2C_READ
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+    ADDRESS: 0391H
+*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
+    SYMBOL:  MAIN
+    MODULE:  C:\KEIL\C51\LIB\C51L.LIB (?C_INIT)
+    ADDRESS: 0454H
+Program Size: data=9.5 xdata=194 code=2325
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+compiling main.c...
+main.c(4): warning C318: can't open file 'key.H'
+assembling main.src...
+compiling common.c...
+compiling timer0_over.c...
+compiling KEY_4x4.c...
+compiling Transmit.c...
+compiling I2C_EEPROM.C...
+linking...
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  _PRINTSTR
+    MODULE:  .\Transmit.obj (TRANSMIT)
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  MAIN
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  _PRINT
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_GENCHAR_AT_CGRAM?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MULTI_CHAR_KEY?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITILISE?TIMER0_OVER
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INIT_SERIAL?KEY_4X4
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISPLAY?KEY_4X4
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITI_KEY?KEY_4X4
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITILISE_RS232?TRANSMIT
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_PRINT?TRANSMIT
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TRANSMIT_DATA?TRANSMIT
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MAIN?I2C_EEPROM
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  I2C_INITIALISE
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _I2C_READ
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  I2C_INITIALISE
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+    ADDRESS: 033EH
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _I2C_READ
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+    ADDRESS: 0391H
+*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
+    SYMBOL:  MAIN
+    MODULE:  C:\KEIL\C51\LIB\C51L.LIB (?C_INIT)
+    ADDRESS: 0454H
+Program Size: data=9.5 xdata=194 code=2325
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+compiling main.c...
+main.c(4): warning C318: can't open file 'key.H'
+assembling main.src...
+compiling common.c...
+compiling timer0_over.c...
+compiling KEY_4x4.c...
+..\..\KEYPAD_4X4\KEY_4x4.c(3): warning C318: can't open file 'key.h'
+compiling Transmit.c...
+compiling I2C_EEPROM.C...
+linking...
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  _PRINTSTR
+    MODULE:  .\Transmit.obj (TRANSMIT)
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  MAIN
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  _PRINT
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_GENCHAR_AT_CGRAM?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MULTI_CHAR_KEY?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITILISE?TIMER0_OVER
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INIT_SERIAL?KEY_4X4
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISPLAY?KEY_4X4
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITI_KEY?KEY_4X4
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITILISE_RS232?TRANSMIT
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_PRINT?TRANSMIT
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TRANSMIT_DATA?TRANSMIT
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MAIN?I2C_EEPROM
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  I2C_INITIALISE
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _I2C_READ
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  I2C_INITIALISE
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+    ADDRESS: 033EH
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _I2C_READ
+    MODULE:  .\I2C_EEPROM.obj (I2C_EEPROM)
+    ADDRESS: 0391H
+*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
+    SYMBOL:  MAIN
+    MODULE:  C:\KEIL\C51\LIB\C51L.LIB (?C_INIT)
+    ADDRESS: 0454H
+Program Size: data=9.5 xdata=194 code=2325
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+compiling main.c...
+main.c(4): warning C318: can't open file 'key.H'
+assembling main.src...
+compiling common.c...
+compiling timer0_over.c...
+compiling KEY_4x4.c...
+..\..\KEYPAD_4X4\KEY_4x4.c(3): warning C318: can't open file 'key.h'
+..\..\KEYPAD_4X4\KEY_4X4.C(61): error C141: syntax error near '{'
+..\..\KEYPAD_4X4\KEY_4X4.C(62): error C141: syntax error near '=', expected ')'
+..\..\KEYPAD_4X4\KEY_4X4.C(62): error C129: missing ';' before '<'
+compiling Transmit.c...
+compiling I2C_EEPROM.C...
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+compiling main.c...
+main.c(4): warning C318: can't open file 'key.H'
+assembling main.src...
+compiling common.c...
+compiling timer0_over.c...
+compiling KEY_4x4.c...
+..\..\KEYPAD_4X4\KEY_4x4.c(3): warning C318: can't open file 'key.h'
+..\..\KEYPAD_4X4\KEY_4X4.C(61): error C141: syntax error near '{'
+..\..\KEYPAD_4X4\KEY_4X4.C(62): error C141: syntax error near '=', expected ')'
+..\..\KEYPAD_4X4\KEY_4X4.C(62): error C129: missing ';' before '<'
+compiling Transmit.c...
+compiling I2C_EEPROM.C...
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+LCD.c(5): warning C318: can't open file 'Keydata.h'
+compiling main.c...
+main.c(4): warning C318: can't open file 'Keydata.h'
+assembling main.src...
+compiling common.c...
+compiling timer0_over.c...
+..\..\timer\timer0_over.c(3): warning C318: can't open file 'Keydata.h'
+compiling KEY_4x4.c...
+..\..\KEYPAD_4X4\KEY_4x4.c(3): warning C318: can't open file 'Keydata.h'
+..\..\KEYPAD_4X4\KEY_4X4.C(61): error C141: syntax error near '{'
+..\..\KEYPAD_4X4\KEY_4X4.C(62): error C141: syntax error near '=', expected ')'
+..\..\KEYPAD_4X4\KEY_4X4.C(62): error C129: missing ';' before '<'
+compiling Transmit.c...
+..\..\SERIAL\Transmit.c(4): warning C318: can't open file 'Keydata.h'
+compiling I2C_EEPROM.C...
+..\..\I2C\KEYDATA.H(6): error C127: '_printstr': invalid storage class
+..\..\I2C\KEYDATA.H(6): error C141: syntax error near 'extern'
+..\..\I2C\KEYDATA.H(7): error C127: '_display': invalid storage class
+..\..\I2C\KEYDATA.H(7): error C141: syntax error near 'extern'
+..\..\I2C\KEYDATA.H(8): error C127: 'initi_key': invalid storage class
+..\..\I2C\KEYDATA.H(8): error C141: syntax error near 'extern'
+..\..\I2C\KEYDATA.H(8): error C127: 'scan': invalid storage class
+..\..\I2C\I2C_EEPROM.C(4): error C141: syntax error near 'sbit'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+LCD.c(5): warning C318: can't open file 'Keydata.h'
+compiling main.c...
+main.c(4): warning C318: can't open file 'Keydata.h'
+assembling main.src...
+compiling common.c...
+compiling timer0_over.c...
+..\..\timer\timer0_over.c(3): warning C318: can't open file 'Keydata.h'
+compiling KEY_4x4.c...
+..\..\KEYPAD_4X4\KEY_4x4.c(3): warning C318: can't open file 'Keydata.h'
+..\..\KEYPAD_4X4\KEY_4X4.C(61): error C141: syntax error near '{'
+..\..\KEYPAD_4X4\KEY_4X4.C(62): error C141: syntax error near '=', expected ')'
+..\..\KEYPAD_4X4\KEY_4X4.C(62): error C129: missing ';' before '<'
+compiling Transmit.c...
+..\..\SERIAL\Transmit.c(4): warning C318: can't open file 'Keydata.h'
+compiling I2C_EEPROM.C...
+..\..\I2C\KEYDATA.H(6): error C127: '_printstr': invalid storage class
+..\..\I2C\KEYDATA.H(6): error C141: syntax error near 'extern'
+..\..\I2C\KEYDATA.H(7): error C127: '_display': invalid storage class
+..\..\I2C\KEYDATA.H(7): error C141: syntax error near 'extern'
+..\..\I2C\KEYDATA.H(8): error C127: 'initi_key': invalid storage class
+..\..\I2C\KEYDATA.H(8): error C141: syntax error near 'extern'
+..\..\I2C\KEYDATA.H(8): error C127: 'scan': invalid storage class
+..\..\I2C\I2C_EEPROM.C(4): error C141: syntax error near 'sbit'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+LCD.c(5): warning C318: can't open file 'Keydata.h'
+LCD.c(6): warning C318: can't open file 'I2CDATA.H'
+compiling main.c...
+main.c(4): warning C318: can't open file 'Keydata.h'
+assembling main.src...
+compiling common.c...
+common.c(3): warning C318: can't open file 'I2CDATA.H'
+compiling timer0_over.c...
+..\..\timer\timer0_over.c(3): warning C318: can't open file 'Keydata.h'
+..\..\timer\timer0_over.c(4): warning C318: can't open file 'I2CDATA.H'
+compiling KEY_4x4.c...
+..\..\KEYPAD_4X4\KEY_4x4.c(3): warning C318: can't open file 'Keydata.h'
+..\..\KEYPAD_4X4\KEY_4x4.c(4): warning C318: can't open file 'I2CDATA.H'
+..\..\KEYPAD_4X4\KEY_4X4.C(62): error C141: syntax error near '{'
+..\..\KEYPAD_4X4\KEY_4X4.C(63): error C141: syntax error near '=', expected ')'
+..\..\KEYPAD_4X4\KEY_4X4.C(63): error C129: missing ';' before '<'
+compiling Transmit.c...
+..\..\SERIAL\Transmit.c(4): warning C318: can't open file 'Keydata.h'
+..\..\SERIAL\Transmit.c(5): warning C318: can't open file 'I2CDATA.H'
+compiling I2C_EEPROM.C...
+..\..\I2C\KEYDATA.H(6): error C127: '_printstr': invalid storage class
+..\..\I2C\KEYDATA.H(6): error C141: syntax error near 'extern'
+..\..\I2C\KEYDATA.H(7): error C127: '_display': invalid storage class
+..\..\I2C\KEYDATA.H(7): error C141: syntax error near 'extern'
+..\..\I2C\KEYDATA.H(8): error C127: 'initi_key': invalid storage class
+..\..\I2C\KEYDATA.H(8): error C141: syntax error near 'extern'
+..\..\I2C\KEYDATA.H(8): error C127: 'scan': invalid storage class
+..\..\I2C\I2CDATA.H(4): error C127: 'initialise': invalid storage class
+..\..\I2C\I2CDATA.H(5): error C127: '_Print': invalid storage class
+..\..\I2C\I2C_EEPROM.C(5): error C141: syntax error near 'sbit'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+LCD.c(5): warning C318: can't open file 'Keydata.h'
+LCD.c(6): warning C318: can't open file 'I2CDATA.H'
+compiling main.c...
+main.c(4): warning C318: can't open file 'Keydata.h'
+assembling main.src...
+compiling common.c...
+common.c(3): warning C318: can't open file 'I2CDATA.H'
+compiling timer0_over.c...
+..\..\timer\timer0_over.c(3): warning C318: can't open file 'Keydata.h'
+..\..\timer\timer0_over.c(4): warning C318: can't open file 'I2CDATA.H'
+compiling KEY_4x4.c...
+..\..\KEYPAD_4X4\KEY_4x4.c(3): warning C318: can't open file 'Keydata.h'
+..\..\KEYPAD_4X4\KEY_4x4.c(4): warning C318: can't open file 'I2CDATA.H'
+..\..\KEYPAD_4X4\KEY_4X4.C(62): error C141: syntax error near '{'
+..\..\KEYPAD_4X4\KEY_4X4.C(63): error C141: syntax error near '=', expected ')'
+..\..\KEYPAD_4X4\KEY_4X4.C(63): error C129: missing ';' before '<'
+compiling Transmit.c...
+..\..\SERIAL\Transmit.c(4): warning C318: can't open file 'Keydata.h'
+..\..\SERIAL\Transmit.c(5): warning C318: can't open file 'I2CDATA.H'
+compiling I2C_EEPROM.C...
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+LCD.c(5): warning C318: can't open file 'Keydata.h'
+LCD.c(6): warning C318: can't open file 'I2CDATA.H'
+compiling main.c...
+main.c(4): warning C318: can't open file 'Keydata.h'
+assembling main.src...
+compiling common.c...
+common.c(3): warning C318: can't open file 'I2CDATA.H'
+compiling timer0_over.c...
+..\..\timer\timer0_over.c(3): warning C318: can't open file 'Keydata.h'
+..\..\timer\timer0_over.c(4): warning C318: can't open file 'I2CDATA.H'
+compiling KEY_4x4.c...
+..\..\KEYPAD_4X4\KEY_4x4.c(3): warning C318: can't open file 'Keydata.h'
+..\..\KEYPAD_4X4\KEY_4x4.c(4): warning C318: can't open file 'I2CDATA.H'
+..\..\KEYPAD_4X4\KEY_4X4.C(62): error C141: syntax error near '{'
+..\..\KEYPAD_4X4\KEY_4X4.C(63): error C141: syntax error near '=', expected ')'
+..\..\KEYPAD_4X4\KEY_4X4.C(63): error C129: missing ';' before '<'
+compiling Transmit.c...
+..\..\SERIAL\Transmit.c(4): warning C318: can't open file 'Keydata.h'
+..\..\SERIAL\Transmit.c(5): warning C318: can't open file 'I2CDATA.H'
+compiling I2C_EEPROM.C...
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+LCD.c(5): warning C318: can't open file 'Keydata.h'
+LCD.c(6): warning C318: can't open file 'I2CDATA.H'
+compiling main.c...
+main.c(4): warning C318: can't open file 'Keydata.h'
+assembling main.src...
+compiling common.c...
+common.c(3): warning C318: can't open file 'I2CDATA.H'
+compiling timer0_over.c...
+..\..\timer\timer0_over.c(3): warning C318: can't open file 'Keydata.h'
+..\..\timer\timer0_over.c(4): warning C318: can't open file 'I2CDATA.H'
+compiling KEY_4x4.c...
+..\..\KEYPAD_4X4\KEY_4x4.c(3): warning C318: can't open file 'Keydata.h'
+..\..\KEYPAD_4X4\KEY_4x4.c(4): warning C318: can't open file 'I2CDATA.H'
+..\..\KEYPAD_4X4\KEY_4X4.C(62): error C141: syntax error near '{'
+..\..\KEYPAD_4X4\KEY_4X4.C(63): error C141: syntax error near '=', expected ')'
+..\..\KEYPAD_4X4\KEY_4X4.C(63): error C129: missing ';' before '<'
+compiling Transmit.c...
+..\..\SERIAL\Transmit.c(4): warning C318: can't open file 'Keydata.h'
+..\..\SERIAL\Transmit.c(5): warning C318: can't open file 'I2CDATA.H'
+compiling I2C_EEPROM.C...
+Target not created
+</pre>
+</body>
+</html>

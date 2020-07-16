@@ -1,0 +1,530 @@
+C51 COMPILER V7.20   DES                                                                   09/01/2006 16:35:46 PAGE 1   
+
+
+C51 COMPILER V7.20, COMPILATION OF MODULE DES
+OBJECT MODULE PLACED IN Des.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Des.c LARGE OPTIMIZE(9,SPEED) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*--------------------------------------------------------------------------------
+   2          DES.C: DES Algorithm Program from the Book Applied Cryptography, Bruce Schneier
+   3          --------------------------------------------------------------------------------*/
+   4          
+   5          #define EN0   0      /* MODE == encrypt */
+   6          #define DE1   1      /* MODE == decrypt */
+   7          
+   8          #include <stdio.h>
+   9          #include <reg51.h>
+  10          
+  11          typedef struct {
+  12            unsigned long ek[32];
+  13           unsigned long dk[32];
+  14          } des_ctx;
+  15          
+  16          extern void deskey(unsigned char *, short);
+  17          /*                  hexkey[8]     MODE
+  18           * Sets the internal key register according to the hexadecimal
+  19           * key contained in the 8 bytes of hexkey, according to the DES,
+  20           * for encryption or decryption according to MODE.
+  21           */
+  22          
+  23          extern void usekey(unsigned long *);
+  24          /*                cookedkey[32]
+  25           * Loads the internal key register with the data in cookedkey.
+  26           */
+  27          
+  28          extern void cpkey(unsigned long *);
+  29          /*               cookedkey[32]
+  30           * Copies the contents of the internal key register into the storage
+  31           * located at &cookedkey[0].
+  32           */
+  33          
+  34          extern void des(unsigned char *, unsigned char *);
+  35          /*                from[8]         to[8]
+  36           * Encrypts/Decrypts (according to the key currently loaded in the
+  37           * internal key register) one block of eight bytes at address 'from'
+  38           * into the block at address 'to'.  They can be the same.
+  39           */
+  40          
+  41          static void scrunch(unsigned char *, unsigned long *);
+  42          static void unscrun(unsigned long *, unsigned char *);
+  43          static void desfunc(unsigned long *, unsigned long *);
+  44          static void cookey(unsigned long *);
+  45          
+  46          static unsigned long KnL[32] = { 0L };
+  47          static unsigned long KnR[32] = { 0L };
+  48          static unsigned long Kn3[32] = { 0L };
+  49          static unsigned char Df_Key[24] = {
+  50                 0x01,0x23,0x45,0x67,0x89,0xab,0xcd,0xef,
+  51                 0xfe,0xdc,0xba,0x98,0x76,0x54,0x32,0x10,
+  52                 0x89,0xab,0xcd,0xef,0x01,0x23,0x45,0x67 };
+  53          
+  54          static unsigned short bytebit[8]    = {
+  55                 0200, 0100, 040, 020, 010, 04, 02, 01 };
+C51 COMPILER V7.20   DES                                                                   09/01/2006 16:35:46 PAGE 2   
+
+  56          
+  57          static unsigned long bigbyte[24] = {
+  58                 0x800000L,    0x400000L,     0x200000L,    0x100000L,
+  59                 0x80000L,     0x40000L,      0x20000L,     0x10000L,
+  60                 0x8000L,      0x4000L,       0x2000L,      0x1000L,
+  61                 0x800L,              0x400L,               0x200L,              0x100L,
+  62                 0x80L,               0x40L,                0x20L,               0x10L,
+  63                 0x8L,         0x4L,          0x2L,         0x1L   };
+  64          
+  65          /* Use the key schedule specified in the Standard (ANSI X3.92-1981). */
+  66          
+  67          static unsigned char pc1[56] = {
+  68                 56, 48, 40, 32, 24, 16,  8,   0, 57, 49, 41, 33, 25, 17,
+  69                  9,  1, 58, 50, 42, 34, 26,  18, 10,  2, 59, 51, 43, 35,
+  70                 62, 54, 46, 38, 30, 22, 14,   6, 61, 53, 45, 37, 29, 21,
+  71                 13,  5, 60, 52, 44, 36, 28,  20, 12,  4, 27, 19, 11,  3 };
+  72          
+  73          static unsigned char totrot[16] = {
+  74                 1,2,4,6,8,10,12,14,15,17,19,21,23,25,27,28 };
+  75          
+  76          static unsigned char pc2[48] = {
+  77                 13, 16, 10, 23,  0,  4,       2, 27, 14,  5, 20,  9,
+  78                 22, 18, 11,  3, 25,  7,      15,  6, 26, 19, 12,  1,
+  79                 40, 51, 30, 36, 46, 54,      29, 39, 50, 44, 32, 47,
+  80                 43, 48, 38, 55, 33, 52,      45, 41, 49, 35, 28, 31 };
+  81          
+  82          void deskey(unsigned char *key, short edf)  {
+  83   1        /* Thanks to James Gillogly & Phil Karn! */
+  84   1        register int i, j, l, m, n;
+  85   1        unsigned char pc1m[56], pcr[56];
+  86   1        unsigned long kn[32];
+  87   1      
+  88   1        for ( j = 0; j < 56; j++ ) {
+  89   2          l = pc1[j];
+  90   2          m = l & 07;
+  91   2          pc1m[j] = (key[l >> 3] & bytebit[m]) ? 1 : 0;
+  92   2        }
+  93   1        for( i = 0; i < 16; i++ ) {
+  94   2          if( edf == DE1 ) m = (15 - i) << 1;
+  95   2          else             m = i << 1;
+  96   2          n = m + 1;
+  97   2          kn[m] = kn[n] = 0L;
+  98   2          for( j = 0; j < 28; j++ ) {
+  99   3            l = j + totrot[i];
+ 100   3            if( l < 28 ) pcr[j] = pc1m[l];
+ 101   3            else pcr[j] = pc1m[l - 28];
+ 102   3          }
+ 103   2          for( j = 28; j < 56; j++ ) {
+ 104   3            l = j + totrot[i];
+ 105   3            if( l < 56 ) pcr[j] = pc1m[l];
+ 106   3            else         pcr[j] = pc1m[l - 28];
+ 107   3          }
+ 108   2          for( j = 0; j < 24; j++ ) {
+ 109   3            if( pcr[pc2[j]] )    kn[m] |= bigbyte[j];
+ 110   3            if( pcr[pc2[j+24]] ) kn[n] |= bigbyte[j];
+ 111   3          }
+ 112   2        }
+ 113   1        cookey(kn);
+ 114   1      }
+ 115          
+ 116          static void cookey(unsigned long *raw1)  {
+ 117   1        register unsigned long *cook, *raw0;
+C51 COMPILER V7.20   DES                                                                   09/01/2006 16:35:46 PAGE 3   
+
+ 118   1        unsigned long dough[32];
+ 119   1        register int i;
+ 120   1      
+ 121   1        cook = dough;
+ 122   1        for( i = 0; i < 16; i++, raw1++ ) {
+ 123   2          raw0 = raw1++;
+ 124   2          *cook   = (*raw0 & 0x00fc0000L) << 6;
+ 125   2          *cook  |= (*raw0 & 0x00000fc0L) << 10;
+ 126   2          *cook  |= (*raw1 & 0x00fc0000L) >> 10;
+ 127   2          *cook++|= (*raw1 & 0x00000fc0L) >> 6;
+ 128   2          *cook   = (*raw0 & 0x0003f000L) << 12;
+ 129   2          *cook  |= (*raw0 & 0x0000003fL) << 16;
+ 130   2          *cook  |= (*raw1 & 0x0003f000L) >> 4;
+ 131   2          *cook++       |= (*raw1 & 0x0000003fL);
+ 132   2        }
+ 133   1        usekey(dough);
+ 134   1      }
+ 135          
+ 136          void cpkey(unsigned long *into)  {
+ 137   1        register unsigned long *from, *endp;
+ 138   1      
+ 139   1        from = KnL, endp = &KnL[32];
+ 140   1        while( from < endp ) *into++ = *from++;
+ 141   1      }
+ 142          
+ 143          void usekey(unsigned long *from)  {
+ 144   1        register unsigned long *to, *endp;
+ 145   1      
+ 146   1        to = KnL, endp = &KnL[32];
+ 147   1        while( to < endp ) *to++ = *from++;
+ 148   1      }
+ 149          
+ 150          #if 0
+              void des(unsigned char *inblock, unsigned char *outblock)  {
+                unsigned long work[2];
+              
+                scrunch(inblock, work);
+                desfunc(work, KnL);
+                unscrun(work, outblock);
+              }
+              #endif
+ 159          
+ 160          static void scrunch(unsigned char *outof, unsigned long *into)  {
+ 161   1        *into   = (*outof++ & 0xffL) << 24;
+ 162   1        *into  |= (*outof++ & 0xffL) << 16;
+ 163   1        *into  |= (*outof++ & 0xffL) << 8;
+ 164   1        *into++ |= (*outof++ & 0xffL);
+ 165   1        *into   = (*outof++ & 0xffL) << 24;
+ 166   1        *into  |= (*outof++ & 0xffL) << 16;
+ 167   1        *into  |= (*outof++ & 0xffL) << 8;
+ 168   1        *into  |= (*outof   & 0xffL);
+ 169   1      }
+ 170          
+ 171          static void unscrun(unsigned long *outof, unsigned char *into)  {
+ 172   1        *into++ = (*outof >> 24) & 0xffL;
+ 173   1        *into++ = (*outof >> 16) & 0xffL;
+ 174   1        *into++ = (*outof >>  8) & 0xffL;
+ 175   1        *into++ =  *outof++      & 0xffL;
+ 176   1        *into++ = (*outof >> 24) & 0xffL;
+ 177   1        *into++ = (*outof >> 16) & 0xffL;
+ 178   1        *into++ = (*outof >>  8) & 0xffL;
+ 179   1        *into   =  *outof     & 0xffL;
+C51 COMPILER V7.20   DES                                                                   09/01/2006 16:35:46 PAGE 4   
+
+ 180   1      }
+ 181          
+ 182          static unsigned long SP1[64] = {
+ 183            0x01010400L, 0x00000000L, 0x00010000L, 0x01010404L,
+ 184            0x01010004L, 0x00010404L, 0x00000004L, 0x00010000L,
+ 185            0x00000400L, 0x01010400L, 0x01010404L, 0x00000400L,
+ 186            0x01000404L, 0x01010004L, 0x01000000L, 0x00000004L,
+ 187            0x00000404L, 0x01000400L, 0x01000400L, 0x00010400L,
+ 188            0x00010400L, 0x01010000L, 0x01010000L, 0x01000404L,
+ 189            0x00010004L, 0x01000004L, 0x01000004L, 0x00010004L,
+ 190            0x00000000L, 0x00000404L, 0x00010404L, 0x01000000L,
+ 191            0x00010000L, 0x01010404L, 0x00000004L, 0x01010000L,
+ 192            0x01010400L, 0x01000000L, 0x01000000L, 0x00000400L,
+ 193            0x01010004L, 0x00010000L, 0x00010400L, 0x01000004L,
+ 194            0x00000400L, 0x00000004L, 0x01000404L, 0x00010404L,
+ 195            0x01010404L, 0x00010004L, 0x01010000L, 0x01000404L,
+ 196            0x01000004L, 0x00000404L, 0x00010404L, 0x01010400L,
+ 197            0x00000404L, 0x01000400L, 0x01000400L, 0x00000000L,
+ 198            0x00010004L, 0x00010400L, 0x00000000L, 0x01010004L };
+ 199          
+ 200          static unsigned long SP2[64] = {
+ 201            0x80108020L, 0x80008000L, 0x00008000L, 0x00108020L,
+ 202            0x00100000L, 0x00000020L, 0x80100020L, 0x80008020L,
+ 203            0x80000020L, 0x80108020L, 0x80108000L, 0x80000000L,
+ 204            0x80008000L, 0x00100000L, 0x00000020L, 0x80100020L,
+ 205            0x00108000L, 0x00100020L, 0x80008020L, 0x00000000L,
+ 206            0x80000000L, 0x00008000L, 0x00108020L, 0x80100000L,
+ 207            0x00100020L, 0x80000020L, 0x00000000L, 0x00108000L,
+ 208            0x00008020L, 0x80108000L, 0x80100000L, 0x00008020L,
+ 209            0x00000000L, 0x00108020L, 0x80100020L, 0x00100000L,
+ 210            0x80008020L, 0x80100000L, 0x80108000L, 0x00008000L,
+ 211            0x80100000L, 0x80008000L, 0x00000020L, 0x80108020L,
+ 212            0x00108020L, 0x00000020L, 0x00008000L, 0x80000000L,
+ 213            0x00008020L, 0x80108000L, 0x00100000L, 0x80000020L,
+ 214            0x00100020L, 0x80008020L, 0x80000020L, 0x00100020L,
+ 215            0x00108000L, 0x00000000L, 0x80008000L, 0x00008020L,
+ 216            0x80000000L, 0x80100020L, 0x80108020L, 0x00108000L };
+ 217          
+ 218          static unsigned long SP3[64] = {
+ 219            0x00000208L, 0x08020200L, 0x00000000L, 0x08020008L,
+ 220            0x08000200L, 0x00000000L, 0x00020208L, 0x08000200L,
+ 221            0x00020008L, 0x08000008L, 0x08000008L, 0x00020000L,
+ 222            0x08020208L, 0x00020008L, 0x08020000L, 0x00000208L,
+ 223            0x08000000L, 0x00000008L, 0x08020200L, 0x00000200L,
+ 224            0x00020200L, 0x08020000L, 0x08020008L, 0x00020208L,
+ 225            0x08000208L, 0x00020200L, 0x00020000L, 0x08000208L,
+ 226            0x00000008L, 0x08020208L, 0x00000200L, 0x08000000L,
+ 227            0x08020200L, 0x08000000L, 0x00020008L, 0x00000208L,
+ 228            0x00020000L, 0x08020200L, 0x08000200L, 0x00000000L,
+ 229            0x00000200L, 0x00020008L, 0x08020208L, 0x08000200L,
+ 230            0x08000008L, 0x00000200L, 0x00000000L, 0x08020008L,
+ 231            0x08000208L, 0x00020000L, 0x08000000L, 0x08020208L,
+ 232            0x00000008L, 0x00020208L, 0x00020200L, 0x08000008L,
+ 233            0x08020000L, 0x08000208L, 0x00000208L, 0x08020000L,
+ 234            0x00020208L, 0x00000008L, 0x08020008L, 0x00020200L };
+ 235          
+ 236          static unsigned long SP4[64] = {
+ 237            0x00802001L, 0x00002081L, 0x00002081L, 0x00000080L,
+ 238            0x00802080L, 0x00800081L, 0x00800001L, 0x00002001L,
+ 239            0x00000000L, 0x00802000L, 0x00802000L, 0x00802081L,
+ 240            0x00000081L, 0x00000000L, 0x00800080L, 0x00800001L,
+ 241            0x00000001L, 0x00002000L, 0x00800000L, 0x00802001L,
+C51 COMPILER V7.20   DES                                                                   09/01/2006 16:35:46 PAGE 5   
+
+ 242            0x00000080L, 0x00800000L, 0x00002001L, 0x00002080L,
+ 243            0x00800081L, 0x00000001L, 0x00002080L, 0x00800080L,
+ 244            0x00002000L, 0x00802080L, 0x00802081L, 0x00000081L,
+ 245            0x00800080L, 0x00800001L, 0x00802000L, 0x00802081L,
+ 246            0x00000081L, 0x00000000L, 0x00000000L, 0x00802000L,
+ 247            0x00002080L, 0x00800080L, 0x00800081L, 0x00000001L,
+ 248            0x00802001L, 0x00002081L, 0x00002081L, 0x00000080L,
+ 249            0x00802081L, 0x00000081L, 0x00000001L, 0x00002000L,
+ 250            0x00800001L, 0x00002001L, 0x00802080L, 0x00800081L,
+ 251            0x00002001L, 0x00002080L, 0x00800000L, 0x00802001L,
+ 252            0x00000080L, 0x00800000L, 0x00002000L, 0x00802080L };
+ 253          
+ 254          static unsigned long SP5[64] = {
+ 255            0x00000100L, 0x02080100L, 0x02080000L, 0x42000100L,
+ 256            0x00080000L, 0x00000100L, 0x40000000L, 0x02080000L,
+ 257            0x40080100L, 0x00080000L, 0x02000100L, 0x40080100L,
+ 258            0x42000100L, 0x42080000L, 0x00080100L, 0x40000000L,
+ 259            0x02000000L, 0x40080000L, 0x40080000L, 0x00000000L,
+ 260            0x40000100L, 0x42080100L, 0x42080100L, 0x02000100L,
+ 261            0x42080000L, 0x40000100L, 0x00000000L, 0x42000000L,
+ 262            0x02080100L, 0x02000000L, 0x42000000L, 0x00080100L,
+ 263            0x00080000L, 0x42000100L, 0x00000100L, 0x02000000L,
+ 264            0x40000000L, 0x02080000L, 0x42000100L, 0x40080100L,
+ 265            0x02000100L, 0x40000000L, 0x42080000L, 0x02080100L,
+ 266            0x40080100L, 0x00000100L, 0x02000000L, 0x42080000L,
+ 267            0x42080100L, 0x00080100L, 0x42000000L, 0x42080100L,
+ 268            0x02080000L, 0x00000000L, 0x40080000L, 0x42000000L,
+ 269            0x00080100L, 0x02000100L, 0x40000100L, 0x00080000L,
+ 270            0x00000000L, 0x40080000L, 0x02080100L, 0x40000100L };
+ 271          
+ 272          static unsigned long SP6[64] = {
+ 273            0x20000010L, 0x20400000L, 0x00004000L, 0x20404010L,
+ 274            0x20400000L, 0x00000010L, 0x20404010L, 0x00400000L,
+ 275            0x20004000L, 0x00404010L, 0x00400000L, 0x20000010L,
+ 276            0x00400010L, 0x20004000L, 0x20000000L, 0x00004010L,
+ 277            0x00000000L, 0x00400010L, 0x20004010L, 0x00004000L,
+ 278            0x00404000L, 0x20004010L, 0x00000010L, 0x20400010L,
+ 279            0x20400010L, 0x00000000L, 0x00404010L, 0x20404000L,
+ 280            0x00004010L, 0x00404000L, 0x20404000L, 0x20000000L,
+ 281            0x20004000L, 0x00000010L, 0x20400010L, 0x00404000L,
+ 282            0x20404010L, 0x00400000L, 0x00004010L, 0x20000010L,
+ 283            0x00400000L, 0x20004000L, 0x20000000L, 0x00004010L,
+ 284            0x20000010L, 0x20404010L, 0x00404000L, 0x20400000L,
+ 285            0x00404010L, 0x20404000L, 0x00000000L, 0x20400010L,
+ 286            0x00000010L, 0x00004000L, 0x20400000L, 0x00404010L,
+ 287            0x00004000L, 0x00400010L, 0x20004010L, 0x00000000L,
+ 288            0x20404000L, 0x20000000L, 0x00400010L, 0x20004010L };
+ 289          
+ 290          static unsigned long SP7[64] = {
+ 291            0x00200000L, 0x04200002L, 0x04000802L, 0x00000000L,
+ 292            0x00000800L, 0x04000802L, 0x00200802L, 0x04200800L,
+ 293            0x04200802L, 0x00200000L, 0x00000000L, 0x04000002L,
+ 294            0x00000002L, 0x04000000L, 0x04200002L, 0x00000802L,
+ 295            0x04000800L, 0x00200802L, 0x00200002L, 0x04000800L,
+ 296            0x04000002L, 0x04200000L, 0x04200800L, 0x00200002L,
+ 297            0x04200000L, 0x00000800L, 0x00000802L, 0x04200802L,
+ 298            0x00200800L, 0x00000002L, 0x04000000L, 0x00200800L,
+ 299            0x04000000L, 0x00200800L, 0x00200000L, 0x04000802L,
+ 300            0x04000802L, 0x04200002L, 0x04200002L, 0x00000002L,
+ 301            0x00200002L, 0x04000000L, 0x04000800L, 0x00200000L,
+ 302            0x04200800L, 0x00000802L, 0x00200802L, 0x04200800L,
+ 303            0x00000802L, 0x04000002L, 0x04200802L, 0x04200000L,
+C51 COMPILER V7.20   DES                                                                   09/01/2006 16:35:46 PAGE 6   
+
+ 304            0x00200800L, 0x00000000L, 0x00000002L, 0x04200802L,
+ 305            0x00000000L, 0x00200802L, 0x04200000L, 0x00000800L,
+ 306            0x04000002L, 0x04000800L, 0x00000800L, 0x00200002L };
+ 307          
+ 308          static unsigned long SP8[64] = {
+ 309            0x10001040L, 0x00001000L, 0x00040000L, 0x10041040L,
+ 310            0x10000000L, 0x10001040L, 0x00000040L, 0x10000000L,
+ 311            0x00040040L, 0x10040000L, 0x10041040L, 0x00041000L,
+ 312            0x10041000L, 0x00041040L, 0x00001000L, 0x00000040L,
+ 313            0x10040000L, 0x10000040L, 0x10001000L, 0x00001040L,
+ 314            0x00041000L, 0x00040040L, 0x10040040L, 0x10041000L,
+ 315            0x00001040L, 0x00000000L, 0x00000000L, 0x10040040L,
+ 316            0x10000040L, 0x10001000L, 0x00041040L, 0x00040000L,
+ 317            0x00041040L, 0x00040000L, 0x10041000L, 0x00001000L,
+ 318            0x00000040L, 0x10040040L, 0x00001000L, 0x00041040L,
+ 319            0x10001000L, 0x00000040L, 0x10000040L, 0x10040000L,
+ 320            0x10040040L, 0x10000000L, 0x00040000L, 0x10001040L,
+ 321            0x00000000L, 0x10041040L, 0x00040040L, 0x10000040L,
+ 322            0x10040000L, 0x10001000L, 0x10001040L, 0x00000000L,
+ 323            0x10041040L, 0x00041000L, 0x00041000L, 0x00001040L,
+ 324            0x00001040L, 0x00040040L, 0x10000000L, 0x10041000L };
+ 325          
+ 326          static void desfunc(unsigned long *block, unsigned long *keys)  {
+ 327   1        register unsigned long fval, work, right, leftt;
+ 328   1        register int round;
+ 329   1      
+ 330   1        leftt = block[0];
+ 331   1        right = block[1];
+ 332   1        work = ((leftt >> 4) ^ right) & 0x0f0f0f0fL;
+ 333   1        right ^= work;
+ 334   1        leftt ^= (work << 4);
+ 335   1        work = ((leftt >> 16) ^ right) & 0x0000ffffL;
+ 336   1        right ^= work;
+ 337   1        leftt ^= (work << 16);
+ 338   1        work = ((right >> 2) ^ leftt) & 0x33333333L;
+ 339   1        leftt ^= work;
+ 340   1        right ^= (work << 2);
+ 341   1        work = ((right >> 8) ^ leftt) & 0x00ff00ffL;
+ 342   1        leftt ^= work;
+ 343   1        right ^= (work << 8);
+ 344   1        right = ((right << 1) | ((right >> 31) & 1L)) & 0xffffffffL;
+ 345   1        work = (leftt ^ right) & 0xaaaaaaaaL;
+ 346   1        leftt ^= work;
+ 347   1        right ^= work;
+ 348   1        leftt = ((leftt << 1) | ((leftt >> 31) & 1L)) & 0xffffffffL;
+ 349   1      
+ 350   1        for( round = 0; round < 8; round++ ) {
+ 351   2          work  = (right << 28) | (right >> 4);
+ 352   2          work ^= *keys++;
+ 353   2          fval  = SP7[ work             & 0x3fL];
+ 354   2          fval |= SP5[(work >>  8) & 0x3fL];
+ 355   2          fval |= SP3[(work >> 16) & 0x3fL];
+ 356   2          fval |= SP1[(work >> 24) & 0x3fL];
+ 357   2          work  = right ^ *keys++;
+ 358   2          fval |= SP8[ work             & 0x3fL];
+ 359   2          fval |= SP6[(work >>  8) & 0x3fL];
+ 360   2          fval |= SP4[(work >> 16) & 0x3fL];
+ 361   2          fval |= SP2[(work >> 24) & 0x3fL];
+ 362   2          leftt ^= fval;
+ 363   2          work  = (leftt << 28) | (leftt >> 4);
+ 364   2          work ^= *keys++;
+ 365   2          fval  = SP7[ work             & 0x3fL];
+C51 COMPILER V7.20   DES                                                                   09/01/2006 16:35:46 PAGE 7   
+
+ 366   2          fval |= SP5[(work >>  8) & 0x3fL];
+ 367   2          fval |= SP3[(work >> 16) & 0x3fL];
+ 368   2          fval |= SP1[(work >> 24) & 0x3fL];
+ 369   2          work  = leftt ^ *keys++;
+ 370   2          fval |= SP8[ work             & 0x3fL];
+ 371   2          fval |= SP6[(work >>  8) & 0x3fL];
+ 372   2          fval |= SP4[(work >> 16) & 0x3fL];
+ 373   2          fval |= SP2[(work >> 24) & 0x3fL];
+ 374   2          right ^= fval;
+ 375   2        }
+ 376   1      
+ 377   1        right = (right << 31) | (right >> 1);
+ 378   1        work = (leftt ^ right) & 0xaaaaaaaaL;
+ 379   1        leftt ^= work;
+ 380   1        right ^= work;
+ 381   1        leftt = (leftt << 31) | (leftt >> 1);
+ 382   1        work = ((leftt >> 8) ^ right) & 0x00ff00ffL;
+ 383   1        right ^= work;
+ 384   1        leftt ^= (work << 8);
+ 385   1        work = ((leftt >> 2) ^ right) & 0x33333333L;
+ 386   1        right ^= work;
+ 387   1        leftt ^= (work << 2);
+ 388   1        work = ((right >> 16) ^ leftt) & 0x0000ffffL;
+ 389   1        leftt ^= work;
+ 390   1        right ^= (work << 16);
+ 391   1        work = ((right >> 4) ^ leftt) & 0x0f0f0f0fL;
+ 392   1        leftt ^= work;
+ 393   1        right ^= (work << 4);
+ 394   1        *block++ = right;
+ 395   1        *block = leftt;
+ 396   1      }
+ 397          
+ 398          /* Validation sets:
+ 399           *
+ 400           * Single-length key, single-length plaintext -
+ 401           * Key    : 0123 4567 89ab cdef
+ 402           * Plain  : 0123 4567 89ab cde7
+ 403           * Cipher : c957 4425 6a5e d31d
+ 404           *
+ 405           **********************************************************************/
+ 406          
+ 407          void des_key(des_ctx *dc, unsigned char *key){
+ 408   1        deskey(key,EN0);
+ 409   1        cpkey(dc->ek);
+ 410   1        deskey(key,DE1);
+ 411   1        cpkey(dc->dk);
+ 412   1      }
+ 413          
+ 414          /* Encrypt several blocks in ECB mode.  Caller is responsible for
+ 415             short blocks. */
+ 416          void des_enc(des_ctx *dc, unsigned char *Data, int blocks){
+ 417   1        unsigned long work[2];
+ 418   1        int i;
+ 419   1        unsigned char *cp;
+ 420   1      
+ 421   1        cp = Data;
+ 422   1        for(i=0;i<blocks;i++){
+ 423   2          scrunch(cp,work);
+ 424   2          desfunc(work,dc->ek);
+ 425   2          unscrun(work,cp);
+ 426   2          cp+=8;
+ 427   2        }
+C51 COMPILER V7.20   DES                                                                   09/01/2006 16:35:46 PAGE 8   
+
+ 428   1      }
+ 429          
+ 430          void des_dec(des_ctx *dc, unsigned char *Data, int blocks){
+ 431   1        unsigned long work[2];
+ 432   1        int i;
+ 433   1        unsigned char *cp;
+ 434   1      
+ 435   1        cp = Data;
+ 436   1        for(i=0;i<blocks;i++){
+ 437   2          scrunch(cp,work);
+ 438   2          desfunc(work,dc->dk);
+ 439   2          unscrun(work,cp);
+ 440   2          cp+=8;
+ 441   2        }
+ 442   1      }
+ 443          
+ 444          void main(void){
+ 445   1        des_ctx dc;
+ 446   1        int i;
+ 447   1        unsigned long Data[10];
+ 448   1        char *cp,key[8] = {0x01,0x23,0x45,0x67,0x89,0xab,0xcd,0xef};
+ 449   1        char x[8] = {0x01,0x23,0x45,0x67,0x89,0xab,0xcd,0xe7};
+ 450   1      
+ 451   1      /*------------------------------------------------
+ 452   1      Setup the serial port for 1200 baud at 16MHz.
+ 453   1      ------------------------------------------------*/
+ 454   1          SCON  = 0x50;               /* SCON: mode 1, 8-bit UART, enable rcvr */
+ 455   1          TMOD |= 0x20;       /* TMOD: timer 1, mode 2, 8-bit reload */
+ 456   1          TH1   = 221;        /* TH1:  reload value for 1200 baud @ 16MHz */
+ 457   1          TR1   = 1;          /* TR1:  timer 1 run */
+ 458   1          TI    = 1;          /* TI:   set TI to send first char of UART */
+ 459   1      
+ 460   1      
+ 461   1      
+ 462   1        cp = x;
+ 463   1      
+ 464   1        des_key(&dc,key);
+ 465   1        des_enc(&dc,cp,1);
+ 466   1        printf("Enc(0..7,0..7) = ");
+ 467   1        for(i=0;i<8;i++) printf("%02x ", ((unsigned int) cp[i])&0x00ff);
+ 468   1        printf("\n");
+ 469   1      
+ 470   1        des_dec(&dc,cp,1);
+ 471   1      
+ 472   1        printf("Dec(above,0..7) = ");
+ 473   1        for(i=0;i<8;i++) printf("%02x ",((unsigned int)cp[i])&0x00ff);
+ 474   1        printf("\n");
+ 475   1      
+ 476   1        cp = (char *) Data;
+ 477   1        for(i=0;i<10;i++) Data[i]=i;
+ 478   1      
+ 479   1        des_enc(&dc,cp,5); /* Enc 5 blocks. */
+ 480   1        for(i=0;i<10;i+=2) printf("Block %01d = %08lx %08lx.\n",
+ 481   1                                   i/2,Data[i],Data[i+1]);
+ 482   1      
+ 483   1        des_dec(&dc,cp,1);
+ 484   1        des_dec(&dc,cp+8,4);
+ 485   1        for(i=0;i<10;i+=2) printf("Block %01d = %08lx %08lx.\n",
+ 486   1                                   i/2,Data[i],Data[i+1]);
+ 487   1        while (1);
+ 488   1      
+ 489   1      }
+C51 COMPILER V7.20   DES                                                                   09/01/2006 16:35:46 PAGE 9   
+
+ 490          
+ 491          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   4859    ----
+   CONSTANT SIZE    =     88    ----
+   XDATA SIZE       =   2688     810
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

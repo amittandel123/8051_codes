@@ -1,0 +1,29 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+D:\training\training\HW\I2C\I2C.uv2
+Project File Date:  08/02/2011
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling EEPROM_24C256.C...
+compiling I2C.C...
+compiling I2C_EEPROM.C...
+compiling Transmit.c...
+linking...
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  _PRINT
+    MODULE:  .\Transmit.obj (TRANSMIT)
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_WRITE?EEPROM_24C256
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITILISE_RS232?TRANSMIT
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_PRINT?TRANSMIT
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TRANSMIT_DATA?TRANSMIT
+Program Size: data=52.1 xdata=0 code=848
+Target not created

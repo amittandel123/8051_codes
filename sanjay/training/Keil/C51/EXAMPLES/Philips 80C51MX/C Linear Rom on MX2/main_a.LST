@@ -1,0 +1,105 @@
+CX51 COMPILER V7.20   MAIN_A                                                               09/01/2006 16:07:05 PAGE 1   
+
+
+CX51 COMPILER V7.20, COMPILATION OF MODULE MAIN_A
+OBJECT MODULE PLACED IN main_a.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\CX51.EXE main_a.c LARGE OBJECTADVANCED ROM(HUGE) OPTIMIZE(9,SPEED) DEBUG CODE
+
+line level    source
+
+   1          /*
+   2           * MAIN APPLICATION SECTION
+   3           */
+   4          #pragma USERCLASS (ECODE=APPL)  // application code will be in ECODE_APPL
+   5          
+   6          #include <reg51m.h>
+   7          /*
+   8          extern unsigned char stsys;             //system status: 0-boot, 1-application
+   9          extern unsigned char t2_ind;    //t2 interrupt ISR indication: 0-none, 1-happened
+  10          
+  11          extern void int_on(void);
+  12          extern void int_off(void);
+  13          
+  14          void t2_ini_app(void);
+  15          */
+  16          void main(void)
+  17          {
+  18   1      /*      int_off();
+  19   1              t2_ini_app();
+  20   1              int_on();
+  21   1              while(1)
+  22   1                      {
+  23   1                      if (t2_ind == 1)
+  24   1                              {
+  25   1                              t2_ind = 0;
+  26   1                              P3 = 0x00;
+  27   1                              P3 = 0xFF;
+  28   1                              P3 = 0x00;
+  29   1                              P3 = 0xFF;
+  30   1                              P3 = 0x00;
+  31   1                              P3 = 0xFF;
+  32   1                              P3 = 0x00;
+  33   1                              P3 = 0xFF;
+  34   1                              P3 = 0x00;
+  35   1                              P3 = 0xFF;
+  36   1                              }
+  37   1                      }
+  38   1      */
+  39   1              while(1);
+  40   1      }
+  41          
+  42          /*
+  43          void t2_ini_app(void)
+  44          {
+  45                  ET2 = 0;
+  46                  T2MOD = 0x00;                   //T2 is in 16 bit autoreload mode
+  47                  T2CON = 0x00;
+  48                  RCAP2L = 0x98;                  //genereating interrupts on 16 ms|22.1184 MHz clock
+  49                  RCAP2H = 0x19;
+  50                  TL2 = RCAP2L;
+  51                  TH2 = RCAP2H;
+  52                  ET2 = 1;
+  53                  TR2 = 1;                                //T2 is on
+  54          }
+  55          
+CX51 COMPILER V7.20   MAIN_A                                                               09/01/2006 16:07:05 PAGE 2   
+
+  56          void t2_isr_app(void)
+  57          {
+  58                  P1 = 0x00;                              //signal t2 ISR activity (bootloader)
+  59                  P1 = 0xFF;
+  60                  t2_ind = 1;
+  61          }
+  62          
+  63          */
+CX51 COMPILER V7.20   MAIN_A                                                               09/01/2006 16:07:05 PAGE 3   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION main (BEGIN)
+                                           ; SOURCE LINE # 16
+                                           ; SOURCE LINE # 17
+             ?C0001:
+                                           ; SOURCE LINE # 39
+                 R     xJMP    ?C0001
+             ; FUNCTION main (END)
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      3    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+CX51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

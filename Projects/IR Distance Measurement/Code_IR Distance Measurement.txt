@@ -1,0 +1,115 @@
+//Program to interface IR sensor using ADC 0804. Set Vref =1.5v for ADC 0804
+
+#include<reg51.h>
+#define port P3
+#define adc_input P1
+#define dataport P0
+#define sec 100
+sbit rs = port^0;
+sbit rw = port^1;
+sbit e = port^2;
+
+sbit wr= port^3;
+sbit rd= port^4;
+sbit intr= port^5;
+
+int test_final=0 ,shift=0;
+
+void delay(unsigned int msec ) // Time delay function
+{
+int i ,j ;
+for(i=0;i<msec;i++)
+  for(j=0; j<1275; j++);
+}
+
+void lcd_cmd(unsigned char item) // Function to send command to LCD
+{
+dataport = item;
+rs= 0;
+rw=0;
+e=1;
+delay(1);
+e=0;
+return;
+}
+
+void lcd_data(unsigned char item)  // Function to send data to LCD
+{
+dataport = item;
+rs= 1;
+rw=0;
+e=1;
+delay(1);
+e=0;
+return;
+}
+
+void lcd_data_string(unsigned char *str) // Function to send string to LCD
+{
+int i=0;
+while(str[i]!='\0')
+{
+  lcd_data(str[i]);
+  i++;
+  delay(1);
+}
+return;
+}
+
+void convert()
+{
+int s;
+lcd_cmd(0x81);
+delay(2);
+lcd_data_string("output:");
+s=test_final/100;
+test_final=test_final%100;
+lcd_cmd(0x8a);
+if(s!=0)
+lcd_data(s+48);
+else
+lcd_cmd(0x06);
+s=test_final/10;
+test_final=test_final%10;
+lcd_data(s+48);
+lcd_data(test_final+48);
+lcd_data(' ');
+if(shift>16)
+{
+lcd_cmd(0xc0+(shift-1));
+lcd_data_string("       ");
+shift=0; 
+}
+lcd_cmd(0xc0+(shift-1));
+lcd_data(' ');
+lcd_cmd(0xc0+shift);
+lcd_data_string("CALIBRATE IT");
+delay(30);
+}
+
+void main()
+{
+adc_input=0xff;
+lcd_cmd(0x38);  //2 Line, 5X7 Matrix
+lcd_cmd(0x0c);  //Display On, Cursor Blink
+delay(2);
+lcd_cmd(0x01);  // Clear Screen
+delay(2);
+lcd_cmd(0x81);  // Setting cursor to first position of first line
+delay(2);
+while(1)
+{
+  shift++;
+  delay(1);
+  rd=1;
+  wr=0;
+  delay(1);
+  wr=1;
+  while(intr==1);
+  rd=0;
+  test_final=adc_input;
+  delay(1);
+  intr=1;
+  convert();
+}
+}

@@ -1,0 +1,77 @@
+C51 COMPILER V7.06   LCD                                                                   01/24/2012 14:09:26 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN LCD.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LCD.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          
+   3          #define LCD_Port P1
+   4          sbit RS = P2^0;
+   5          sbit RW = P2^1;
+   6          sbit EN = P2^2;
+   7          void LCD_Init();
+   8          void LCD_Command(unsigned char cmnd);
+   9          void LCD_Display(unsigned char num);
+  10          void Delay(unsigned char del);
+  11          
+  12          void LCD_Display(unsigned char num)
+  13          {
+  14   1              P1=0xFF;
+  15   1              P2=0xFF;
+  16   1              LCD_Init();
+  17   1              RS=1;
+  18   1              RW=0;
+  19   1              EN=1;
+  20   1              LCD_Port=num;
+  21   1              Delay(10);
+  22   1              EN=0;
+  23   1      }
+  24          
+  25          void LCD_Init()
+  26          {
+  27   1              LCD_Command(0x38);              // To select 2 lines with 5X7 matrix
+  28   1              Delay(10);
+  29   1              LCD_Command(0x0E);              // Display ON, Cursor blinking
+  30   1              Delay(10);
+  31   1              LCD_Command(0x06);              // Increment cursor(rightward)
+  32   1              Delay(10);
+  33   1              LCD_Command(0x01);              // Clear Display
+  34   1              Delay(10);
+  35   1      }
+  36          
+  37          void LCD_Command(unsigned char cmnd)
+  38          {
+  39   1              RS=0;
+  40   1              RW=0;
+  41   1              EN=1;
+  42   1              LCD_Port=cmnd;
+  43   1              Delay(10);
+  44   1              EN=0;
+  45   1      }
+  46          void Delay(unsigned char del)
+  47          {
+  48   1              unsigned char u,v;
+  49   1              for(u=0;u<del;u++)
+  50   1                      for(v=0;v<1275;v++);
+  51   1      }
+  52          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V7.06   LCD                                                                   01/24/2012 14:09:26 PAGE 2   
+
+   CODE SIZE        =    110    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

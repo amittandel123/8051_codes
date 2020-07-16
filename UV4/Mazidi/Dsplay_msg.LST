@@ -1,0 +1,36 @@
+C51 COMPILER V9.03   DSPLAY_MSG                                                            11/03/2011 12:15:02 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE DSPLAY_MSG
+OBJECT MODULE PLACED IN Dsplay_msg.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Dsplay_msg.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg51.h>
+   2          sbit en=P2^0;
+   3          void main()
+   4          {
+   5   1              unsigned char msg[] = "Happy Diwali";
+   6   1              unsigned char i;
+   7   1              for(i=0;i<12;i++)
+   8   1              {
+   9   2                      P1= msg[i];
+  10   2                      en=1;
+  11   2                      en=0;
+  12   2              }
+  13   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     37    ----
+   CONSTANT SIZE    =     13    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      13
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

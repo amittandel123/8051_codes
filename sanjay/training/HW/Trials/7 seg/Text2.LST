@@ -1,0 +1,48 @@
+C51 COMPILER V7.06   TEXT2                                                                 08/01/2011 19:06:49 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE TEXT2
+OBJECT MODULE PLACED IN Text2.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Text2.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          
+   3          #define DISP_PORT P0
+   4          #define CNTRL_PORT P1
+   5          unsigned int i;
+   6          unsigned char mData;
+   7          
+   8          void main(void)
+   9          {
+  10   1              mData = 0xFE;
+  11   1              CNTRL_PORT=0xF0;
+  12   1      
+  13   1              while(1)
+  14   1              {
+  15   2                      DISP_PORT = ~mData;
+  16   2                      for(i=0;i<30000;i++);
+  17   2      
+  18   2                      if (mData == 0x00)
+  19   2                              mData = 0xFF;
+  20   2      
+  21   2                      mData = mData<<1;
+  22   2              }
+  23   1      }
+  24          
+  25          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     47    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

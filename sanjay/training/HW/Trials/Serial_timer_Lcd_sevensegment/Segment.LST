@@ -1,0 +1,205 @@
+C51 COMPILER V7.06   SEGMENT                                                               08/05/2011 22:15:52 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE SEGMENT
+OBJECT MODULE PLACED IN Segment.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Segment.c LARGE BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #include<stdio.h>
+   3          #include "SEVENSEG.H"
+   4          
+   5          #define DATA_PORT P2
+   6          #define CNTRL_PORT P1
+   7          
+   8          unsigned char val[4]= "8051";
+   9          
+  10          void init_sevenSeg(void)
+  11          {
+  12   1              DATA_PORT = 0xFF;
+  13   1              CNTRL_PORT= 0xFF;
+  14   1      }
+  15          
+  16          void display_string(void)
+  17          {
+  18   1              unsigned int x;
+  19   1      
+  20   1              for(x=0;x<4;x++)
+  21   1              {
+  22   2                      DATA_PORT=0xFF;
+  23   2                      P1 = ~(1<<x);
+  24   2                      look_uptable(val[x]);
+  25   2              }
+  26   1      }
+  27          
+  28          void look_uptable(unsigned char display_val)
+  29          {
+  30   1              unsigned int i;
+  31   1              switch(display_val)
+  32   1              {
+  33   2                      case '0':DATA_PORT=~0x3F;
+  34   2                              break;
+  35   2                      
+  36   2                      case '1':DATA_PORT=~0x06;
+  37   2                              break;
+  38   2                      
+  39   2                      case '2':DATA_PORT=~0x5B;
+  40   2                              break;
+  41   2                      
+  42   2                      case '3':DATA_PORT=~0x4F;
+  43   2                              break;
+  44   2                      
+  45   2                      case '4':DATA_PORT=~0x66;
+  46   2                              break;
+  47   2                      
+  48   2                      case '5':DATA_PORT=~0x6D;
+  49   2                              break;
+  50   2                      
+  51   2                      case '6':DATA_PORT=~0x7D;
+  52   2                              break;
+  53   2                      
+  54   2                      case '7':DATA_PORT=~0x07;
+  55   2                              break;
+C51 COMPILER V7.06   SEGMENT                                                               08/05/2011 22:15:52 PAGE 2   
+
+  56   2                      
+  57   2                      case '8':DATA_PORT=~0x7F;
+  58   2                              break;
+  59   2                      
+  60   2                      case '9':DATA_PORT=~0x6F;
+  61   2                              break;
+  62   2                      
+  63   2                      case 'A':
+  64   2                      case 'a':
+  65   2                              DATA_PORT=~0x77;
+  66   2                              break;
+  67   2                      case 'B':
+  68   2                      case 'b':
+  69   2                              DATA_PORT=~0x7C;
+  70   2                              break;
+  71   2                      case 'C':
+  72   2                      case 'c':
+  73   2                              DATA_PORT=~0x39;
+  74   2                              break;
+  75   2                      case 'D':
+  76   2                      case 'd':
+  77   2                              DATA_PORT=~0x5E;
+  78   2                              break;
+  79   2                      case 'E':
+  80   2                      case 'e':
+  81   2                              DATA_PORT=~0x79;
+  82   2                              break;
+  83   2                      case 'F':
+  84   2                      case 'f':
+  85   2                              DATA_PORT=~0x71;
+  86   2                              break;
+  87   2                      case 'G':
+  88   2                      case 'g':
+  89   2                              DATA_PORT=~0x6F;
+  90   2                              break;
+  91   2                      case 'H':
+  92   2                      case 'h':
+  93   2                              DATA_PORT=~0x74;
+  94   2                              break;
+  95   2                      case 'I':
+  96   2                      case 'i':
+  97   2                              DATA_PORT=~0x30;
+  98   2                              break;
+  99   2                      case 'J':
+ 100   2                      case 'j':
+ 101   2                              DATA_PORT=~0x0E;
+ 102   2                              break;
+ 103   2                      case 'K':
+ 104   2                      case 'k':
+ 105   2                              DATA_PORT=~0x70;
+ 106   2                              break;
+ 107   2                      case 'L':
+ 108   2                      case 'l':
+ 109   2                              DATA_PORT=~0x38;
+ 110   2                              break;
+ 111   2                      case 'M':
+ 112   2                      case 'm':
+ 113   2                              DATA_PORT=~0x55;
+ 114   2                              break;
+ 115   2                      case 'N':
+ 116   2                      case 'n':
+ 117   2                              DATA_PORT=~0x54;
+C51 COMPILER V7.06   SEGMENT                                                               08/05/2011 22:15:52 PAGE 3   
+
+ 118   2                              break;
+ 119   2                      case 'O':
+ 120   2                      case 'o':
+ 121   2                              DATA_PORT=~0x5C;
+ 122   2                              break;
+ 123   2                      case 'P':
+ 124   2                      case 'p':
+ 125   2                              DATA_PORT=~0x73;
+ 126   2                              break;
+ 127   2                      case 'Q':
+ 128   2                      case 'q':
+ 129   2                              DATA_PORT=~0x6B;
+ 130   2                              break;
+ 131   2                      case 'R':
+ 132   2                      case 'r':
+ 133   2                              DATA_PORT=~0x50;
+ 134   2                              break;
+ 135   2                      case 'S':
+ 136   2                      case 's':
+ 137   2                              DATA_PORT=~0x6D;
+ 138   2                              break;
+ 139   2                      case 'T':
+ 140   2                      case 't':
+ 141   2                              DATA_PORT=~0x78;
+ 142   2                              break;
+ 143   2                      case 'U':
+ 144   2                      case 'u':
+ 145   2                              DATA_PORT=~0x3E;
+ 146   2                              break;
+ 147   2                      case 'V':
+ 148   2                      case 'v':
+ 149   2                              DATA_PORT=~0x1C;
+ 150   2                              break;
+ 151   2                      case 'W':
+ 152   2                      case 'w':
+ 153   2                              DATA_PORT=~0x6A;
+ 154   2                              break;
+ 155   2                      case 'X':
+ 156   2                      case 'x':
+ 157   2                              DATA_PORT=~0x76;
+ 158   2                              break;
+ 159   2                      case 'Y':
+ 160   2                      case 'y':
+ 161   2                              DATA_PORT=~0x6E;        
+ 162   2                              break;
+ 163   2                      case 'Z':
+ 164   2                      case 'z':
+ 165   2                              DATA_PORT=~0x5B;
+ 166   2                              break;
+ 167   2                      case '!':
+ 168   2                              DATA_PORT=~0x40;
+ 169   2                              break;
+ 170   2                      
+ 171   2                      default :
+ 172   2                              DATA_PORT=~0x00;        
+ 173   2              }
+ 174   1              for(i=0;i<200;i++);
+ 175   1      }
+ 176          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V7.06   SEGMENT                                                               08/05/2011 22:15:52 PAGE 4   
+
+   CODE SIZE        =    482    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      4       2
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

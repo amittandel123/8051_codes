@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"Serial_Switch.obj" 
+TO "Serial_Switch" 
+RAMSIZE(256) 

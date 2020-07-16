@@ -1,0 +1,107 @@
+C51 COMPILER V7.06   RS232_0_9                                                             08/01/2011 22:30:01 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE RS232_0_9
+OBJECT MODULE PLACED IN .\rs232_1_9\rs232_0_9.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE rs232_1_9\rs232_0_9.c BROWSE DEBUG OBJECTEXTEND PRINT(.\rs232_0_9.lst) OBJE
+                    -CT(.\rs232_1_9\rs232_0_9.obj)
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          
+   3          unsigned char lookup(char x);
+   4          #define DISP_PORT P0
+   5          #define CNTRL_PORT P1
+   6          
+   7          void SelectSegment(unsigned int);
+   8          void diplay(void);
+   9          void Delay(void);
+  10          unsigned char ARY[] = {"1234"};
+  11          unsigned int cnt=0;
+  12          unsigned int n = 0;
+  13          
+  14          extern void initilise_rs232();
+  15          extern unsigned char data_temp,  serial_flag;
+  16          extern void transmit_data();
+  17          
+  18          void main()
+  19          {
+  20   1              unsigned int n = 0;
+  21   1              initilise_rs232();
+  22   1              while(1)
+  23   1              {
+  24   2                      if(serial_flag == 1)
+  25   2                      {
+  26   3                              serial_flag = 0;
+  27   3                              ES = 0;
+  28   3                              ARY[cnt] = data_temp;
+  29   3                              cnt = ++cnt % 4;
+  30   3                              transmit_data();
+  31   3                              ES = 1;
+  32   3                      }
+  33   2                      diplay();
+  34   2              }
+  35   1      
+  36   1      }
+  37          
+  38          void diplay(void)
+  39          {
+  40   1              DISP_PORT = 0xFF;
+  41   1              SelectSegment(n);
+  42   1              DISP_PORT = lookup(ARY[n]);
+  43   1              n = (++n) % 4;
+  44   1              Delay();
+  45   1      }
+  46          
+  47          void Delay(void)
+  48          {
+  49   1              unsigned int i;
+  50   1              for(i=0;i<20;i++);
+  51   1      //      for(i=0;i<20000;i++);
+  52   1      //      for(i=0;i<20000;i++);
+  53   1      //      for(i=0;i<20000;i++);
+  54   1      }
+C51 COMPILER V7.06   RS232_0_9                                                             08/01/2011 22:30:01 PAGE 2   
+
+  55          
+  56          void SelectSegment(unsigned int x)
+  57          {
+  58   1              CNTRL_PORT = ~(1<<x);
+  59   1      }
+  60                  
+  61          unsigned char lookup(char x)
+  62          {
+  63   1              unsigned char mDATA;
+  64   1              switch(x)
+  65   1              {
+  66   2                      case '0' : mDATA=~0x3f; break;
+  67   2                      case '1' : mDATA=~0x06; break;
+  68   2                      case '2' : mDATA=~0x5b; break;
+  69   2                      case '3' : mDATA=~0x4f; break;
+  70   2                      case '4' : mDATA=~0x66; break;
+  71   2                      case '5' : mDATA=~0x6d; break;
+  72   2                      case '6' : mDATA=~0x7d; break;
+  73   2                      case '7' : mDATA=~0x07; break;
+  74   2                      case '8' : mDATA=~0x7f; break;
+  75   2                      case '9' : mDATA=~0x67; break;
+  76   2                      default : mDATA=0x00;
+  77   2              }
+  78   1              return mDATA;
+  79   1      }
+  80          
+  81                  
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    217    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

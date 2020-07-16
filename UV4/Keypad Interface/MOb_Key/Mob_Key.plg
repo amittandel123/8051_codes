@@ -1,0 +1,16 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+D:\Amit\E-Projects\8051Projects\Keypad Interface\MOb_Key\Mob_Key.uv2
+Project File Date:  01/18/2012
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling Mob_Key.c...
+MOB_KEY.C(54): warning C280: 'b': unreferenced local variable
+linking...
+Program Size: data=35.0 xdata=0 code=2216
+"Mob_Key" - 0 Error(s), 1 Warning(s).

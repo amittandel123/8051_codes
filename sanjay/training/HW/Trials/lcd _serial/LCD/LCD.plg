@@ -1,0 +1,111 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+D:\training\training\HW\Trials\New Folder\LCD\LCD.uv2
+Project File Date:  08/01/2011
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+compiling main.c...
+TRANSMIT.H(7): error C127: '_printstr': invalid storage class
+TRANSMIT.H(7): error C141: syntax error near 'extern'
+MAIN.C(6): error C127: 'initilise_rs232': invalid storage class
+MAIN.C(6): error C141: syntax error near 'void'
+MAIN.C(7): error C127: 'board_init': invalid storage class
+MAIN.C(7): error C141: syntax error near '{'
+MAIN.C(8): error C127: 'initialise_LCD': invalid storage class
+MAIN.C(9): error C141: syntax error near '}'
+compiling common.c...
+compiling Transmit.c...
+TRANSMIT.H(7): error C127: '_printstr': invalid storage class
+TRANSMIT.H(7): error C141: syntax error near 'extern'
+TRANSMIT.C(7): error C127: 'initilise_rs232': invalid storage class
+TRANSMIT.C(7): error C141: syntax error near 'unsigned'
+TRANSMIT.C(7): error C136: 'data_temp': 'void' on variable
+TRANSMIT.C(7): error C127: 'data_temp': invalid storage class
+TRANSMIT.C(7): error C136: 'serial_flag': 'void' on variable
+TRANSMIT.C(7): error C127: 'serial_flag': invalid storage class
+TRANSMIT.C(27): error C132: 'initilise_rs232': not in formal parameter list
+TRANSMIT.C(27): error C141: syntax error near '{'
+TRANSMIT.C(28): error C136: 'TR1': 'void' on variable
+TRANSMIT.C(28): error C244: 'TR1': can't initialize, bad type or class
+TRANSMIT.C(28): error C136: 'TR1': 'void' on variable
+TRANSMIT.C(28): error C132: 'TR1': not in formal parameter list
+TRANSMIT.C(29): error C244: 'ES': can't initialize, bad type or class
+TRANSMIT.C(29): error C132: 'ES': not in formal parameter list
+TRANSMIT.C(30): error C244: 'EA': can't initialize, bad type or class
+TRANSMIT.C(30): error C132: 'EA': not in formal parameter list
+TRANSMIT.C(31): error C244: 'SCON': can't initialize, bad type or class
+TRANSMIT.C(31): error C132: 'SCON': not in formal parameter list
+TRANSMIT.C(32): error C244: 'TMOD': can't initialize, bad type or class
+TRANSMIT.C(32): error C132: 'TMOD': not in formal parameter list
+TRANSMIT.C(33): error C244: 'TH1': can't initialize, bad type or class
+TRANSMIT.C(33): error C132: 'TH1': not in formal parameter list
+TRANSMIT.C(34): error C244: 'TR1': can't initialize, bad type or class
+TRANSMIT.C(34): error C132: 'TR1': not in formal parameter list
+TRANSMIT.C(36): error C244: 'EA': can't initialize, bad type or class
+TRANSMIT.C(36): error C132: 'EA': not in formal parameter list
+TRANSMIT.C(37): error C244: 'ES': can't initialize, bad type or class
+TRANSMIT.C(37): error C132: 'ES': not in formal parameter list
+TRANSMIT.C(38): error C244: 'RI': can't initialize, bad type or class
+TRANSMIT.C(38): error C132: 'RI': not in formal parameter list
+TRANSMIT.C(39): error C244: 'TI': can't initialize, bad type or class
+TRANSMIT.C(39): error C132: 'TI': not in formal parameter list
+TRANSMIT.C(40): error C244: 'serial_flag': can't initialize, bad type or class
+TRANSMIT.C(40): error C132: 'serial_flag': not in formal parameter list
+TRANSMIT.C(42): error C141: syntax error near '}'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+compiling main.c...
+compiling common.c...
+compiling Transmit.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_GENCHAR_AT_CGRAM?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MULTI_CHAR_KEY?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITILISE_RS232?TRANSMIT
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TRANSMIT_DATA?TRANSMIT
+Program Size: data=9.5 xdata=153 code=1736
+creating hex file from "LCD"...
+"LCD" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+compiling main.c...
+compiling common.c...
+compiling Transmit.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_GENCHAR_AT_CGRAM?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MULTI_CHAR_KEY?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITILISE_RS232?TRANSMIT
+Program Size: data=9.5 xdata=145 code=1741
+creating hex file from "LCD"...
+"LCD" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling LCD.c...
+compiling main.c...
+compiling common.c...
+compiling Transmit.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_GENCHAR_AT_CGRAM?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MULTI_CHAR_KEY?LCD
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITILISE_RS232?TRANSMIT
+Program Size: data=9.5 xdata=145 code=1741
+creating hex file from "LCD"...
+"LCD" - 0 Error(s), 3 Warning(s).

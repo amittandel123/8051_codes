@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"Dsplay_msg.obj" 
+TO "Dsplay_msg" 
+RAMSIZE(256) 

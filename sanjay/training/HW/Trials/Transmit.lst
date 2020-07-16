@@ -1,0 +1,181 @@
+C51 COMPILER V7.06   TRANSMIT                                                              08/01/2011 22:30:01 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE TRANSMIT
+OBJECT MODULE PLACED IN .\rs232_1_9\Transmit.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\SERIAL\Transmit.c BROWSE DEBUG OBJECTEXTEND PRINT(.\Transmit.lst) OBJECT
+                    -(.\rs232_1_9\Transmit.obj)
+
+stmt level    source
+
+   1          /******************************************************************************
+   2          
+   3            *  Analyse            : Receive data through serial port and display that received data
+   4                                                            on terminal.                                                                    
+   5                                                                                                                                                                          
+   6            *  Purpose            : In this program, the serial interrupt is enabled to receive 
+   7                                                            data through serial port. So whenever the data is transmitted 
+   8                                                            through serial port,which goes its SBUF generates serial 
+   9                                                            interrupt and enters into its ISR routine, where data came 
+  10                                                            in SBUF will be stored in temp. variable and serial_flag
+  11                                                                  will be set. 
+  12                  
+  13                                                            The main function checking this flag contineously and while 
+  14                                                            this flag is set, it reset the above flag and executes the
+  15                                                            function transmit_data in     which data will be received in 
+  16                                                            SBUF thr. Serial port to display it on terminal with message 
+  17                                                            " You have pressed --".
+  18          
+  19          */
+  20          #include<reg51.h>
+  21          #include <stdio.h>
+  22          #include <intrins.h>
+  23          
+  24          //#include "lcd.h"
+  25          //#include "port.h"
+  26          //#include "varflag.h"
+  27          
+  28          unsigned char data_temp,  serial_flag;
+  29          // add lcd.c and varflag.c to run this program.
+  30          
+  31          
+  32          void initilise();
+  33           void transmit_data();
+  34          //sbit LED = P1^6;
+  35          
+  36          
+  37          /******************************************************************************
+  38          
+  39            *  Function        :  initialise().                                                                     
+             -            
+  40                                                                                                                                                                          
+  41            *  Purpose         : Initialises ports, port pins of display, flags and enable 
+  42                                                          interrupt for serial port required in the program.
+  43                                        
+  44            * Parameters       : None.    
+  45            
+  46            * Globals Used     : None.
+  47                            
+  48            * Return           : None.
+  49                                          
+  50          *******************************************************************************/
+  51          
+  52          void initilise_rs232()
+  53          {
+C51 COMPILER V7.06   TRANSMIT                                                              08/01/2011 22:30:01 PAGE 2   
+
+  54   1              TR1 = 0;
+  55   1              ES = 0;
+  56   1              EA = 0;
+  57   1              SCON  = 0x50;                   /* SCON: mode 1, 8-bit UART, enable rcvr */
+  58   1              TMOD = 0x20;               /* TMOD: timer 1, mode 2, 8-bit reload */
+  59   1              TH1   = 253;                /* TH1:  reload value for 9600 baud @ 11.059 MHz */
+  60   1              TR1   = 1;                  /* TR1:  timer 1 run */
+  61   1      
+  62   1              EA = 1;
+  63   1              ES = 1;
+  64   1              RI = 0;
+  65   1              TI = 0;
+  66   1              serial_flag = 0;
+  67   1      
+  68   1      }
+  69          
+  70          /******************************************************************************
+  71          
+  72            *  Function        : serial_intr(void) interrupt 4                                                      
+             -                        
+  73                                                                                                                                                                          
+  74            *  Purpose         : ISR routine for serial interrupt.
+  75                                        
+  76            * Parameters       : None.    
+  77            
+  78            * Globals Used     : None.
+  79                            
+  80            * Return           : None.
+  81                                          
+  82          *******************************************************************************/
+  83          
+  84          
+  85          void serial_intr(void) interrupt 4
+  86          {
+  87   1              if(RI)
+  88   1              {
+  89   2                      RI = 0;
+  90   2                      serial_flag = 1;
+  91   2                      data_temp = SBUF;
+  92   2              }
+  93   1              else if (TI)
+  94   1              {
+  95   2                      TI = 0;
+  96   2              }
+  97   1      }
+  98          
+  99          /******************************************************************************
+ 100          
+ 101            *  Function        : transmit_data()                                                                    
+             -        
+ 102                                                                                                                                                                          
+ 103            *  Purpose         : Send message "You have pressed " on terminal first through
+ 104                                                     serial port and then send the data available in temp. 
+ 105                                                     variable thr. serial port Next time data will be displayed
+ 106                                                     on next line.
+ 107                                        
+ 108            * Parameters       : None.    
+ 109            
+ 110            * Globals Used     : None.
+ 111                            
+ 112            * Return           : None.
+ 113                                          
+C51 COMPILER V7.06   TRANSMIT                                                              08/01/2011 22:30:01 PAGE 3   
+
+ 114          *******************************************************************************/
+ 115          
+ 116          void printstr(unsigned char * mstr)
+ 117          {
+ 118   1              while(*mstr != '\0')
+ 119   1              {
+ 120   2                      SBUF = *mstr;
+ 121   2                      mstr++;
+ 122   2                      while(!TI);
+ 123   2                      TI = 0;
+ 124   2              }
+ 125   1      }
+ 126          
+ 127          void transmit_data()
+ 128          {
+ 129   1              char name[] = "You have pressed ";
+ 130   1      
+ 131   1              ES = 0;
+ 132   1              TI=0;
+ 133   1              
+ 134   1      //      LED = 0;
+ 135   1              printstr(name);
+ 136   1      
+ 137   1              SBUF = data_temp;
+ 138   1              while(!TI);
+ 139   1              TI = 0;
+ 140   1      
+ 141   1              SBUF = 0x0D;                            // clear display of terminal.
+ 142   1              while(!TI);
+ 143   1              TI = 0;
+ 144   1      
+ 145   1              SBUF = 0x0A;                            // Puts cursor of terminal on next line.
+ 146   1              while(!TI);
+ 147   1              TI = 0;
+ 148   1              ES = 1;
+ 149   1      //      LED = 1;
+ 150   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    128    ----
+   CONSTANT SIZE    =     18    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2      18
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

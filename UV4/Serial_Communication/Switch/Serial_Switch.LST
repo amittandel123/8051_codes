@@ -1,0 +1,73 @@
+C51 COMPILER V9.03   SERIAL_SWITCH                                                         11/29/2011 13:53:52 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE SERIAL_SWITCH
+OBJECT MODULE PLACED IN Serial_Switch.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Serial_Switch.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          // Assume that a switch is connected to pin P2.0. Write a program to
+   2          // monitor the switch and perform the following:
+   3          //(a) If SW = 0, send the message “Hello” to the Serial #0 port
+   4          //(b) If SW = 1, send the message “Goodbye” to the Serial #1 port.
+   5          
+   6          #include<reg51.h>
+   7          sbit SW=P2^0;
+   8          void Init()
+   9          {
+  10   1              P2=0xFF;                //P2 as i/p port
+  11   1              TMOD=0x20;
+  12   1              TH1=0xFD;               // 9600 BAud rate
+  13   1              SCON=0x50;
+  14   1              TR1=1;                  // Start timer
+  15   1      
+  16   1      }
+  17          
+  18          void Transmit()
+  19          {
+  20   1              unsigned char x;
+  21   1              if(SW==0)
+  22   1              {
+  23   2                      unsigned char mdata[]=("Hello");
+  24   2                      for(x=0;x<5;x++)
+  25   2                      {
+  26   3                              SBUF=mdata[x];
+  27   3                              while(TI==0);
+  28   3                              TI=0;           
+  29   3                      }
+  30   2              }
+  31   1              else
+  32   1              {
+  33   2                      unsigned char mdata[]=("Goodbye");
+  34   2                      for(x=0;x<7;x++)
+  35   2                      {
+  36   3                              SBUF=mdata[x];
+  37   3                              while(TI==0);
+  38   3                              TI=0;           
+  39   3                      }
+  40   2              }
+  41   1              
+  42   1      }
+  43          
+  44          void main()
+  45          {
+  46   1              Init();
+  47   1              Transmit();
+  48   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    110    ----
+   CONSTANT SIZE    =     14    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V9.03   SERIAL_SWITCH                                                         11/29/2011 13:53:52 PAGE 2   
+
+   DATA SIZE        =   ----       9
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,92 @@
+C51 COMPILER V9.05   CODE                                                                  04/27/2017 18:06:30 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE CODE
+OBJECT MODULE PLACED IN code.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE code.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          /*  Name     : code.c
+   2           *  Purpose  : Main file for using timer1 of 8051.
+   3           *  Author   : M.Saeed Yasin
+   4           *  Date     : 08-06-12
+   5           *  Revision : None
+   6           */
+   7          #include<reg51.h>
+   8          
+   9          // Out Pin
+  10          sbit Out = P2^0;       // Pin P2.0 is named as Out
+  11          #define TRUE  1
+  12          #define FALSE 0
+  13          //Function declarations
+  14          void cct_init(void);
+  15          void InitTimer1(void);
+  16          unsigned int count;
+  17          unsigned char TimeUp = FALSE;
+  18          int main(void)
+  19          {
+  20   1        cct_init();            // Make all ports zero
+  21   1        InitTimer1();           // Start Timer1
+  22   1        while(1)                // Rest is done in Timer1 interrupt
+  23   1        {
+  24   2          if(TimeUp)
+  25   2          {
+  26   3            TimeUp = 0;
+  27   3            TH1 = 0x00;      // 
+  28   3            TL1 = 0x00;      // 
+  29   3            count++;
+  30   3            if(count == 140)
+  31   3            {
+  32   4              count = 0;
+  33   4              Out = ~Out;  // Toggle Out pin
+  34   4            }
+  35   3          }
+  36   2        }
+  37   1      }
+  38          
+  39          void cct_init(void)
+  40          {
+  41   1        P0 = 0x00;   
+  42   1        P1 = 0x00;   
+  43   1        P2 = 0x00;   
+  44   1        P3 = 0x00;  
+  45   1      }
+  46          
+  47          
+  48          void InitTimer1(void)
+  49          {
+  50   1        TMOD &= 0x0F;      /* Timer 1 mode 1 with software gate */
+  51   1        TMOD |= 0x10;      /* GATE0=0; C/T0#=0; M10=0; M00=1; */
+  52   1        
+  53   1        TH1 = 0x00;      // 
+  54   1        TL1 = 0x00;      // 
+  55   1        
+C51 COMPILER V9.05   CODE                                                                  04/27/2017 18:06:30 PAGE 2   
+
+  56   1        ET1 = 1;         // Enable Timer1 interrupts
+  57   1        EA  = 1;         // Global interrupt enable
+  58   1        TR1 = 1;         // Start Timer 1
+  59   1      }
+  60          
+  61          
+  62          void Timer1_ISR (void) interrupt 3   // 
+  63          {
+  64   1        TimeUp = TRUE;
+  65   1        TF1 = 0;     // Clear the interrupt flag
+  66   1      }
+  67          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     73    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

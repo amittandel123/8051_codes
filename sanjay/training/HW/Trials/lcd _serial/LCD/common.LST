@@ -1,0 +1,33 @@
+C51 COMPILER V7.06   COMMON                                                                08/01/2011 23:12:29 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE COMMON
+OBJECT MODULE PLACED IN common.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE common.c LARGE BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #include "COMMON.H"
+   3          
+   4          void delay(unsigned int val)
+   5          {
+   6   1              unsigned int u,v;
+   7   1              for(u=0;u<=val;u++)
+   8   1                      for(v=0;v<=100;v++);
+   9   1      }
+  10          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     32    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

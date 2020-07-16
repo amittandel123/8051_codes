@@ -1,0 +1,55 @@
+CX51 COMPILER V7.20   INT                                                                  09/01/2006 16:07:05 PAGE 1   
+
+
+CX51 COMPILER V7.20, COMPILATION OF MODULE INT
+OBJECT MODULE PLACED IN int.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\CX51.EXE int.c LARGE OBJECTADVANCED ROM(HUGE) OPTIMIZE(9,SPEED) DEBUG CODE
+
+line level    source
+
+   1          #include <reg51m.h>
+   2          /*
+   3          extern unsigned char stsys;             //system status: 0-boot, 1-application
+   4          
+   5          extern void t2_isr_load(void);
+   6          extern void t2_isr_app(void);
+   7          */
+   8          void timer2(void) interrupt 5 using 1 
+   9          {
+  10   1              TF2 = 0;
+  11   1      //      if (stsys == 0)
+  12   1      //              t2_isr_load();
+  13   1      //      else
+  14   1      //              t2_isr_app();
+  15   1      }
+CX51 COMPILER V7.20   INT                                                                  09/01/2006 16:07:05 PAGE 2   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION timer2 (BEGIN)
+                                           ; SOURCE LINE # 8
+                                           ; SOURCE LINE # 10
+                       CLR     TF2
+                                           ; SOURCE LINE # 15
+                       RETI    
+             ; FUNCTION timer2 (END)
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      8    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+CX51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

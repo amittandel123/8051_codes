@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"LeftShiftRemember.obj" 
+TO "LeftShiftRemember" 
+RAMSIZE(256) 

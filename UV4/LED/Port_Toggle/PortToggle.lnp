@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"PortToggle.obj" 
+TO "PortToggle" 
+RAMSIZE(256) 

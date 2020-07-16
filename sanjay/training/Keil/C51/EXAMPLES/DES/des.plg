@@ -1,0 +1,149 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+C:\Keil\C51\EXAMPLES\DES\DES.uv2
+Project File Date:  10/31/2000
+
+<h2>Output:</h2>
+Build target 'Simulator'
+compiling README.C...
+linking...
+Program Size: data=9.0 xdata=0 code=17
+"des" - 0 Error(s), 0 Warning(s).
+Build target 'Simulator'
+compiling README.C...
+linking...
+Program Size: data=9.0 xdata=0 code=17
+"des" - 0 Error(s), 0 Warning(s).
+Build target 'Simulator'
+compiling README.C...
+linking...
+Program Size: data=9.0 xdata=0 code=17
+creating hex file from "des"...
+"des" - 0 Error(s), 0 Warning(s).
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+compiling README.C...
+linking...
+Program Size: data=9.0 xdata=0 code=17
+creating hex file from "des"...
+"des" - 0 Error(s), 0 Warning(s).
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+Target has no object modules
+Target not created
+Build target 'Simulator'
+compiling Des.c...
+linking...
+BL51 BANKED LINKER/LOCATER V5.11 - SN: Eval Version
+COPYRIGHT KEIL ELEKTRONIK GmbH 1987 - 2004
+"Des.obj" 
+TO "des" 
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 1E2EH BYTE (377%) *
+******************************************************************************
+Program Size: data=15.1 xdata=3411 code=9718
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
+*** FATAL ERROR L250: CODE SIZE LIMIT IN RESTRICTED VERSION EXCEEDED
+    MODULE:  C:\KEIL\C51\LIB\C51L.LIB (-----)
+    LIMIT:   0800H BYTES
+Target not created
+Build target 'Simulator'
+compiling README.C...
+linking...
+Program Size: data=9.0 xdata=0 code=17
+creating hex file from "des"...
+"des" - 0 Error(s), 0 Warning(s).

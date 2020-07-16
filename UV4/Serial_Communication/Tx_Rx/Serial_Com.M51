@@ -1,0 +1,163 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/29/2011  09:12:38  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, Serial_Com..obj TO Serial_Com RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  Serial_Com..obj (SERIAL_COM_)
+
+
+LINK MAP OF MODULE:  Serial_Com (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0017H     UNIT         ?PR?TRANSMIT?SERIAL_COM_
+            CODE    0817H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0823H     000CH     UNIT         ?PR?INI?SERIAL_COM_
+            CODE    082FH     000BH     UNIT         ?PR?MAIN?SERIAL_COM_
+            CODE    083AH     000AH     UNIT         ?PR?RECIEVE?SERIAL_COM_
+
+
+
+OVERLAY MAP OF MODULE:   Serial_Com (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?SERIAL_COM_
+
+?PR?MAIN?SERIAL_COM_
+  +--> ?PR?INI?SERIAL_COM_
+  +--> ?PR?RECIEVE?SERIAL_COM_
+  +--> ?PR?TRANSMIT?SERIAL_COM_
+
+
+
+SYMBOL TABLE OF MODULE:  Serial_Com (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0817H         SEGMENT       ?C_C51STARTUP
+  I:0008H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/29/2011  09:12:38  PAGE 2
+
+
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:081AH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0817H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0817H         LINE#         133
+  C:0819H         LINE#         134
+  C:081AH         LINE#         135
+  C:081BH         LINE#         136
+  C:081DH         LINE#         185
+  C:0820H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        SERIAL_COM_
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:082FH         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  C:0823H         PUBLIC        ini
+  D:008DH         PUBLIC        TH1
+  B:0088H.6       PUBLIC        TR1
+  C:083AH         PUBLIC        recieve
+  C:0800H         PUBLIC        transmit
+  -------         PROC          INI
+  C:0823H         LINE#         5
+  C:0823H         LINE#         6
+  C:0823H         LINE#         7
+  C:0826H         LINE#         8
+  C:0829H         LINE#         9
+  C:082CH         LINE#         10
+  C:082EH         LINE#         11
+  -------         ENDPROC       INI
+  -------         PROC          RECIEVE
+  -------         DO            
+  D:0007H         SYMBOL        value
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/29/2011  09:12:38  PAGE 3
+
+
+  -------         ENDDO         
+  C:083AH         LINE#         13
+  C:083AH         LINE#         14
+  C:083AH         LINE#         16
+  C:083DH         LINE#         17
+  C:083FH         LINE#         18
+  C:0841H         LINE#         19
+  C:0843H         LINE#         20
+  -------         ENDPROC       RECIEVE
+  -------         PROC          TRANSMIT
+  C:0800H         LINE#         22
+  C:0800H         LINE#         23
+  C:0800H         LINE#         24
+  C:0806H         LINE#         25
+  C:0809H         LINE#         26
+  C:080CH         LINE#         27
+  C:080EH         LINE#         28
+  C:0811H         LINE#         29
+  C:0814H         LINE#         30
+  C:0816H         LINE#         31
+  -------         ENDPROC       TRANSMIT
+  -------         PROC          MAIN
+  C:082FH         LINE#         33
+  C:082FH         LINE#         34
+  C:082FH         LINE#         35
+  C:082FH         LINE#         36
+  C:082FH         LINE#         37
+  C:0832H         LINE#         38
+  C:0835H         LINE#         39
+  C:0838H         LINE#         40
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        SERIAL_COM_
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0047H BYTE ( 3%) *
+******************************************************************************
+
+Program Size: data=9.0 xdata=0 code=71
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,92 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\Amit\E-Projects\8051Projects\UV4\LED\Port_Toggle\PortToggle.uvproj
+Project File Date:  10/07/2011
+
+<h2>Output:</h2>
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling PortToggle.c...
+PortToggle.c(10): error C141: syntax error near '='
+PortToggle.c(11): error C141: syntax error near '='
+PortToggle.c(12): error C141: syntax error near '='
+PortToggle.c(13): error C141: syntax error near '='
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling PortToggle.c...
+PortToggle.c(10): error C141: syntax error near '='
+PortToggle.c(11): error C141: syntax error near '='
+PortToggle.c(12): error C141: syntax error near '='
+PortToggle.c(13): error C141: syntax error near '='
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling PortToggle.c...
+PortToggle.c(11): error C141: syntax error near '='
+PortToggle.c(12): error C141: syntax error near '='
+PortToggle.c(13): error C141: syntax error near '='
+PortToggle.c(14): error C141: syntax error near '='
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling PortToggle.c...
+PortToggle.c(12): error C141: syntax error near '='
+PortToggle.c(13): error C141: syntax error near '='
+PortToggle.c(14): error C141: syntax error near '='
+PortToggle.c(15): error C141: syntax error near '='
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling PortToggle.c...
+PortToggle.c(18): error C141: syntax error near '='
+PortToggle.c(19): error C141: syntax error near '='
+PortToggle.c(20): error C141: syntax error near '='
+PortToggle.c(21): error C141: syntax error near '='
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling PortToggle.c...
+PortToggle.c(18): error C141: syntax error near '='
+PortToggle.c(19): error C141: syntax error near '='
+PortToggle.c(20): error C141: syntax error near '='
+PortToggle.c(21): error C141: syntax error near '='
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling PortToggle.c...
+PortToggle.c(18): error C141: syntax error near '='
+PortToggle.c(19): error C141: syntax error near '='
+PortToggle.c(20): error C141: syntax error near '='
+PortToggle.c(21): error C141: syntax error near '='
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling PortToggle.c...
+PortToggle.c(5): error C141: syntax error near 'P2', expected '='
+PortToggle.c(6): error C141: syntax error near 'sbit', expected ';'
+PortToggle.c(7): error C141: syntax error near 'sbit', expected ';'
+PortToggle.c(8): error C141: syntax error near 'sbit', expected ';'
+PortToggle.c(10): error C141: syntax error near 'main', expected ';'
+PortToggle.c(18): error C202: 'led1': undefined identifier
+PortToggle.c(19): error C202: 'led2': undefined identifier
+PortToggle.c(20): error C202: 'led3': undefined identifier
+PortToggle.c(21): error C202: 'led4': undefined identifier
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling PortToggle.c...
+linking...
+Program Size: data=9.0 xdata=0 code=102
+creating hex file from "PortToggle"...
+"PortToggle" - 0 Error(s), 0 Warning(s).
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling PortToggle.c...
+linking...
+Program Size: data=9.0 xdata=0 code=102
+creating hex file from "PortToggle"...
+"PortToggle" - 0 Error(s), 0 Warning(s).

@@ -1,0 +1,248 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        07/30/2011  00:19:47  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\STARTUP.obj, timer0_over.obj TO project RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\STARTUP.obj (?C_STARTUP)
+  timer0_over.obj (TIMER0_OVER)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?UIDIV)
+
+
+LINK MAP OF MODULE:  project (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0010H     UNIT         ?DT?TIMER0_OVER
+            DATA    0018H     0004H     UNIT         _DATA_GROUP_
+            IDATA   001CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0007H     UNIT         ?C_INITSEG
+                    000AH     0001H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     008CH     UNIT         ?C_C51STARTUP
+            CODE    009AH     007DH     UNIT         ?PR?_LOOK_UPTABLE?TIMER0_OVER
+            CODE    0117H     0076H     UNIT         ?PR?MAIN?TIMER0_OVER
+            CODE    018DH     0055H     UNIT         ?C?LIB_CODE
+            CODE    01E2H     0033H     UNIT         ?PR?DISPLAY?TIMER0_OVER
+            CODE    0215H     002FH     UNIT         ?PR?TIMER0?TIMER0_OVER
+            CODE    0244H     0025H     UNIT         ?PR?INITILISE?TIMER0_OVER
+
+
+
+OVERLAY MAP OF MODULE:   project (?C_STARTUP)
+
+
+SEGMENT                                 DATA_GROUP 
+  +--> CALLED SEGMENT                 START    LENGTH
+-----------------------------------------------------
+?C_C51STARTUP                         -----    -----
+  +--> ?PR?MAIN?TIMER0_OVER
+  +--> ?C_INITSEG
+
+?PR?MAIN?TIMER0_OVER                  0018H    0002H
+  +--> ?PR?INITILISE?TIMER0_OVER
+  +--> ?PR?DISPLAY?TIMER0_OVER
+
+?PR?DISPLAY?TIMER0_OVER               001AH    0002H
+  +--> ?PR?_LOOK_UPTABLE?TIMER0_OVER
+
+BL51 BANKED LINKER/LOCATER V5.03                                                      07/30/2011  00:19:47  PAGE 2
+
+
+
+
+SYMBOL TABLE OF MODULE:  project (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:000EH         SEGMENT       ?C_C51STARTUP
+  I:001CH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0011H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:000EH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         92
+  C:000EH         LINE#         99
+  C:0010H         LINE#         100
+  C:0011H         LINE#         101
+  C:0012H         LINE#         102
+  C:0014H         LINE#         151
+  C:0017H         LINE#         155
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        TIMER0_OVER
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  B:00A8H.7       PUBLIC        EA
+  C:0117H         PUBLIC        main
+  D:0089H         PUBLIC        TMOD
+  D:0008H         PUBLIC        tick_count
+  D:000AH         PUBLIC        sec
+  D:000CH         PUBLIC        val
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  C:0244H         PUBLIC        initilise
+  D:008AH         PUBLIC        TL0
+  D:0010H         PUBLIC        timer0_flag
+  D:0012H         PUBLIC        timer1_flag
+BL51 BANKED LINKER/LOCATER V5.03                                                      07/30/2011  00:19:47  PAGE 3
+
+
+  C:0215H         PUBLIC        timer0
+  B:0088H.4       PUBLIC        TR0
+  C:009AH         PUBLIC        _look_uptable
+  D:0014H         PUBLIC        tick_count1
+  D:0016H         PUBLIC        sec1
+  C:01E2H         PUBLIC        display
+  -------         PROC          MAIN
+  -------         DO            
+  D:0002H         SYMBOL        i
+  D:0018H         SYMBOL        j
+  -------         ENDDO         
+  C:0117H         LINE#         11
+  C:0117H         LINE#         12
+  C:0117H         LINE#         14
+  C:011AH         LINE#         15
+  C:011AH         LINE#         16
+  C:011AH         LINE#         17
+  C:011DH         LINE#         18
+  C:0125H         LINE#         19
+  C:0125H         LINE#         20
+  C:0129H         LINE#         22
+  C:0131H         LINE#         23
+  C:013AH         LINE#         24
+  C:013FH         LINE#         25
+  C:0145H         LINE#         26
+  C:0155H         LINE#         27
+  C:0155H         LINE#         28
+  C:0164H         LINE#         29
+  C:0173H         LINE#         30
+  C:0183H         LINE#         31
+  -------         ENDPROC       MAIN
+  -------         PROC          INITILISE
+  C:0244H         LINE#         36
+  C:0244H         LINE#         37
+  C:0244H         LINE#         39
+  C:0247H         LINE#         42
+  C:024AH         LINE#         43
+  C:024DH         LINE#         44
+  C:0252H         LINE#         45
+  C:0254H         LINE#         46
+  C:0256H         LINE#         47
+  C:0258H         LINE#         48
+  C:0268H         LINE#         49
+  -------         ENDPROC       INITILISE
+  -------         PROC          TIMER0
+  C:0215H         LINE#         51
+  C:0219H         LINE#         53
+  C:021BH         LINE#         54
+  C:021EH         LINE#         55
+  C:0221H         LINE#         58
+  C:0229H         LINE#         60
+  C:0231H         LINE#         61
+  C:0231H         LINE#         62
+  C:0237H         LINE#         63
+  C:023DH         LINE#         64
+  C:023DH         LINE#         65
+  C:023FH         LINE#         66
+BL51 BANKED LINKER/LOCATER V5.03                                                      07/30/2011  00:19:47  PAGE 4
+
+
+  -------         ENDPROC       TIMER0
+  -------         PROC          DISPLAY
+  -------         DO            
+  D:001AH         SYMBOL        x
+  -------         ENDDO         
+  C:01E2H         LINE#         68
+  C:01E2H         LINE#         69
+  C:01E2H         LINE#         72
+  C:01E7H         LINE#         73
+  C:01E7H         LINE#         74
+  C:01EAH         LINE#         75
+  C:01FAH         LINE#         76
+  C:0203H         LINE#         77
+  C:0214H         LINE#         78
+  -------         ENDPROC       DISPLAY
+  -------         PROC          _LOOK_UPTABLE
+  D:0007H         SYMBOL        display_val
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:009AH         LINE#         80
+  C:009AH         LINE#         81
+  C:009AH         LINE#         83
+  C:00CEH         LINE#         84
+  C:00CEH         LINE#         85
+  C:00D1H         LINE#         86
+  C:00D3H         LINE#         88
+  C:00D6H         LINE#         89
+  C:00D8H         LINE#         91
+  C:00DBH         LINE#         92
+  C:00DDH         LINE#         94
+  C:00E0H         LINE#         95
+  C:00E2H         LINE#         97
+  C:00E5H         LINE#         98
+  C:00E7H         LINE#         100
+  C:00EAH         LINE#         101
+  C:00ECH         LINE#         103
+  C:00EFH         LINE#         104
+  C:00F1H         LINE#         106
+  C:00F4H         LINE#         107
+  C:00F6H         LINE#         109
+  C:00F9H         LINE#         110
+  C:00FBH         LINE#         112
+  C:00FEH         LINE#         113
+  C:0100H         LINE#         115
+  C:0100H         LINE#         116
+  C:0103H         LINE#         117
+  C:0103H         LINE#         118
+  C:0106H         LINE#         119
+  C:0106H         LINE#         120
+  C:0106H         LINE#         121
+  C:0116H         LINE#         122
+  -------         ENDPROC       _LOOK_UPTABLE
+  -------         ENDMOD        TIMER0_OVER
+
+  -------         MODULE        ?C?UIDIV
+  C:018DH         PUBLIC        ?C?UIDIV
+BL51 BANKED LINKER/LOCATER V5.03                                                      07/30/2011  00:19:47  PAGE 5
+
+
+  -------         ENDMOD        ?C?UIDIV
+
+Program Size: data=29.0 xdata=0 code=616
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

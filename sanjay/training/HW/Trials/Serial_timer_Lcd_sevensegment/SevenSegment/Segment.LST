@@ -1,0 +1,219 @@
+C51 COMPILER V7.06   SEGMENT                                                               07/29/2011 23:26:06 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE SEGMENT
+OBJECT MODULE PLACED IN Segment.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Segment.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #include<stdio.h>
+   3          
+   4          sbit LED_A=P0^0;
+   5          sbit LED_B=P0^1;
+   6          sbit LED_C=P0^2;
+   7          sbit LED_D=P0^3;
+   8          
+   9          
+  10          void initialise();
+  11          void display_string();
+  12          void look_uptable(unsigned char display_val);
+  13          unsigned char val[4]= "8051";
+  14          
+  15          void main()
+  16          {
+  17   1                      initialise();
+  18   1                      while(1)
+  19   1                      {
+  20   2                              display_string();
+  21   2                      }
+  22   1      }
+  23          
+  24          void initialise()
+  25          {
+  26   1              P2=0xFF;
+  27   1              P1=0xFF;
+  28   1      }
+  29          
+  30          void display_string()
+  31          {
+  32   1              unsigned int x;
+  33   1      
+  34   1              for(x=0;x<4;x++)
+  35   1              {
+  36   2                      P2=0xFF;
+  37   2                      P1 = ~(1<<x);
+  38   2                      look_uptable(val[x]);
+  39   2              }
+  40   1      }
+  41          
+  42          void look_uptable(unsigned char display_val)
+  43          {
+  44   1              int i;
+  45   1              switch(display_val)
+  46   1              {
+  47   2                      case '0':P2=~0x3F;
+  48   2                              break;
+  49   2                      
+  50   2                      case '1':P2=~0x06;
+  51   2                              break;
+  52   2                      
+  53   2                      case '2':P2=~0x5B;
+  54   2                              break;
+  55   2                      
+C51 COMPILER V7.06   SEGMENT                                                               07/29/2011 23:26:06 PAGE 2   
+
+  56   2                      case '3':P2=~0x4F;
+  57   2                              break;
+  58   2                      
+  59   2                      case '4':P2=~0x66;
+  60   2                              break;
+  61   2                      
+  62   2                      case '5':P2=~0x6D;
+  63   2                              break;
+  64   2                      
+  65   2                      case '6':P2=~0x7D;
+  66   2                              break;
+  67   2                      
+  68   2                      case '7':P2=~0x07;
+  69   2                              break;
+  70   2                      
+  71   2                      case '8':P2=~0x7F;
+  72   2                              break;
+  73   2                      
+  74   2                      case '9':P2=~0x6F;
+  75   2                              break;
+  76   2                      
+  77   2                      case 'A':
+  78   2                      case 'a':
+  79   2                              P2=~0x77;
+  80   2                              break;
+  81   2                      case 'B':
+  82   2                      case 'b':
+  83   2                              P2=~0x7C;
+  84   2                              break;
+  85   2                      case 'C':
+  86   2                      case 'c':
+  87   2                              P2=~0x39;
+  88   2                              break;
+  89   2                      case 'D':
+  90   2                      case 'd':
+  91   2                              P2=~0x5E;
+  92   2                              break;
+  93   2                      case 'E':
+  94   2                      case 'e':
+  95   2                              P2=~0x79;
+  96   2                              break;
+  97   2                      case 'F':
+  98   2                      case 'f':
+  99   2                              P2=~0x71;
+ 100   2                              break;
+ 101   2                      case 'G':
+ 102   2                      case 'g':
+ 103   2                              P2=~0x6F;
+ 104   2                              break;
+ 105   2                      case 'H':
+ 106   2                      case 'h':
+ 107   2                              P2=~0x74;
+ 108   2                              break;
+ 109   2                      case 'I':
+ 110   2                      case 'i':
+ 111   2                              P2=~0x30;
+ 112   2                              break;
+ 113   2                      case 'J':
+ 114   2                      case 'j':
+ 115   2                              P2=~0x0E;
+ 116   2                              break;
+ 117   2                      case 'K':
+C51 COMPILER V7.06   SEGMENT                                                               07/29/2011 23:26:06 PAGE 3   
+
+ 118   2                      case 'k':
+ 119   2                              P2=~0x70;
+ 120   2                              break;
+ 121   2                      case 'L':
+ 122   2                      case 'l':
+ 123   2                              P2=~0x38;
+ 124   2                              break;
+ 125   2                      case 'M':
+ 126   2                      case 'm':
+ 127   2                              P2=~0x55;
+ 128   2                              break;
+ 129   2                      case 'N':
+ 130   2                      case 'n':
+ 131   2                              P2=~0x54;
+ 132   2                              break;
+ 133   2                      case 'O':
+ 134   2                      case 'o':
+ 135   2                              P2=~0x5C;
+ 136   2                              break;
+ 137   2                      case 'P':
+ 138   2                      case 'p':
+ 139   2                              P2=~0x73;
+ 140   2                              break;
+ 141   2                      case 'Q':
+ 142   2                      case 'q':
+ 143   2                              P2=~0x6B;
+ 144   2                              break;
+ 145   2                      case 'R':
+ 146   2                      case 'r':
+ 147   2                              P2=~0x50;
+ 148   2                              break;
+ 149   2                      case 'S':
+ 150   2                      case 's':
+ 151   2                              P2=~0x6D;
+ 152   2                              break;
+ 153   2                      case 'T':
+ 154   2                      case 't':
+ 155   2                              P2=~0x78;
+ 156   2                              break;
+ 157   2                      case 'U':
+ 158   2                      case 'u':
+ 159   2                              P2=~0x3E;
+ 160   2                              break;
+ 161   2                      case 'V':
+ 162   2                      case 'v':
+ 163   2                              P2=~0x1C;
+ 164   2                              break;
+ 165   2                      case 'W':
+ 166   2                      case 'w':
+ 167   2                              P2=~0x6A;
+ 168   2                              break;
+ 169   2                      case 'X':
+ 170   2                      case 'x':
+ 171   2                              P2=~0x76;
+ 172   2                              break;
+ 173   2                      case 'Y':
+ 174   2                      case 'y':
+ 175   2                              P2=~0x6E;       
+ 176   2                              break;
+ 177   2                      case 'Z':
+ 178   2                      case 'z':
+ 179   2                              P2=~0x5B;
+C51 COMPILER V7.06   SEGMENT                                                               07/29/2011 23:26:06 PAGE 4   
+
+ 180   2                              break;
+ 181   2                      case '!':
+ 182   2                              P2=~0x40;
+ 183   2                              break;
+ 184   2                      
+ 185   2                      default :
+ 186   2                              P2=~0x00;       
+ 187   2              }
+ 188   1              for(i=0;i<200;i++);                                              
+ 189   1      }
+ 190          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    467    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

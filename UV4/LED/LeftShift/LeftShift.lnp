@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"LeftShift.obj" 
+TO "LeftShift" 
+RAMSIZE(256) 

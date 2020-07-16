@@ -1,0 +1,33 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+C:\Keil\C51\EXAMPLES\FarMemory\4MB Variables on Classic 8051\Far8051.uv2
+Project File Date:  04/15/2002
+
+<h2>Output:</h2>
+Build target '4MB Variables on Classic 8051'
+compiling MAIN.C...
+assembling L51_BANK.A51...
+compiling Variables.c...
+linking...
+LX51 LINKER/LOCATER V3.64 - SN: Eval Version
+COPYRIGHT KEIL ELEKTRONIK GmbH 1995 - 2004
+@Far8051.lnp COMMON {"MAIN.obj"},
+COMMON {"L51_BANK.obj"},
+COMMON {"Variables.obj"} 
+TO "Far8051" 
+BankArea (0x008000, 0x00FFFF) 
+CLASSES (XDATA (X:0x0-X:0x7FFF), CODE (C:0x0-C:0x7FFF), 
+HDATA (X:0x028000-X:0x02FFFF, X:0x038000-X:0x03FFFF, X:0x048000-X:0x04FFFF,X:0x058000-X:0x05FFFF, 
+                  X:0x068000-X:0x06FFFF, X:0x078000-X:0x07FFFF, X:0x088000-X:0x08FFFF) ,
+HCONST (B1:0x8000-B1:0xFFFF, B2:0x8000-B2:0xFFFF, B3:0x8000-B3:0xFFFF,B4:0x8000-B4:0xFFFF,
+                     B5:0x8000-B5:0xFFFF, B6:0x8000-B6:0xFFFF, B7:0x8000-B7:0xFFFF)) 
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 02EEH BYTE (3236%) *
+******************************************************************************
+Program Size: data=32.1 xdata=65537 const=65536 code=1815
+*** ERROR L250: CODE SIZE LIMIT IN RESTRICTED VERSION EXCEEDED
+    LIMIT:   0800H BYTES
+Target not created

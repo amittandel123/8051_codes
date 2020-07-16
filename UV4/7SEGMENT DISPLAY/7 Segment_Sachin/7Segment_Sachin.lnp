@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"7Segment_Sachin.obj" 
+TO "7Segment_Sachin" 
+RAMSIZE(256) 

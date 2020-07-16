@@ -1,0 +1,64 @@
+C51 COMPILER V9.03   SERIAL_COM_                                                           11/28/2011 14:28:09 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE SERIAL_COM_
+OBJECT MODULE PLACED IN Serial_Com..OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Serial_Com..c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          // Program to test serial communication of controller with PC using hyper terminal
+   2          
+   3          #include<reg51.h>
+   4          
+   5          void ini()     // Initialize Timer 1 for serial communication
+   6          {
+   7   1              TMOD=0x20;  //Timer1, mode 2, baud rate 9600 bps
+   8   1              TH1=0XFD; 
+   9   1              SCON=0x50;
+  10   1              TR1=1;
+  11   1      }
+  12          
+  13          void recieve()  //Function to receive serial data
+  14          {
+  15   1              unsigned char value;
+  16   1              while(RI==0);
+  17   1              value=SBUF;
+  18   1              P1=value;
+  19   1              RI=0;
+  20   1      }
+  21          
+  22          void transmit()  // Funtion to transmit serial data
+  23          {
+  24   1              P2=P1-32;
+  25   1              SBUF=P2;
+  26   1              while(TI==0);
+  27   1              TI=0;
+  28   1              SBUF=P1;
+  29   1              while(TI==0);
+  30   1              TI=0;
+  31   1      }
+  32          
+  33          void main()
+  34          {
+  35   1              while(1)
+  36   1              {
+  37   2                      ini();
+  38   2                      recieve();
+  39   2                      transmit();
+  40   2              }
+  41   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     56    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

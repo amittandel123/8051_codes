@@ -1,0 +1,245 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        08/14/2012  16:29:51  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\STARTUP.obj, Shift_Reg.obj TO Shift_Reg RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\STARTUP.obj (?C_STARTUP)
+  Shift_Reg.obj (SHIFT_REG)
+
+
+LINK MAP OF MODULE:  Shift_Reg (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0002H     UNIT         ?DT?SHIFT_REG
+            IDATA   000AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0048H     UNIT         ?PR?LED_ROW_WISE_ALL_ON?SHIFT_REG
+            CODE    0848H     0048H     UNIT         ?PR?LED_ROW_WISE_ALL_OFF?SHIFT_REG
+            CODE    0890H     0023H     UNIT         ?PR?LED_SINGLE_ALL_ON?SHIFT_REG
+            CODE    08B3H     0023H     UNIT         ?PR?LED_SINGLE_ALL_OFF?SHIFT_REG
+            CODE    08D6H     0020H     UNIT         ?PR?_DELAY?SHIFT_REG
+            CODE    08F6H     001CH     UNIT         ?PR?CLEAR?SHIFT_REG
+            CODE    0912H     0012H     UNIT         ?PR?MAIN?SHIFT_REG
+            CODE    0924H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0930H     0006H     UNIT         ?PR?PULSE?SHIFT_REG
+
+
+
+OVERLAY MAP OF MODULE:   Shift_Reg (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?SHIFT_REG
+
+?PR?MAIN?SHIFT_REG
+  +--> ?PR?CLEAR?SHIFT_REG
+  +--> ?PR?LED_SINGLE_ALL_ON?SHIFT_REG
+  +--> ?PR?_DELAY?SHIFT_REG
+
+?PR?CLEAR?SHIFT_REG
+  +--> ?PR?PULSE?SHIFT_REG
+
+?PR?LED_SINGLE_ALL_ON?SHIFT_REG
+  +--> ?PR?_DELAY?SHIFT_REG
+  +--> ?PR?PULSE?SHIFT_REG
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/14/2012  16:29:51  PAGE 2
+
+
+
+
+
+SYMBOL TABLE OF MODULE:  Shift_Reg (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0924H         SEGMENT       ?C_C51STARTUP
+  I:000AH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0927H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0924H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0924H         LINE#         133
+  C:0926H         LINE#         134
+  C:0927H         LINE#         135
+  C:0928H         LINE#         136
+  C:092AH         LINE#         185
+  C:092DH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        SHIFT_REG
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  C:0800H         PUBLIC        LED_Row_wise_All_ON
+  C:0930H         PUBLIC        Pulse
+  C:0890H         PUBLIC        LED_Single_All_ON
+  B:0090H.1       PUBLIC        DATA
+  C:0912H         PUBLIC        main
+  C:0848H         PUBLIC        LED_Row_wise_All_OFF
+  C:08B3H         PUBLIC        LED_Single_All_OFF
+  B:0090H.0       PUBLIC        CLK
+  D:0008H         PUBLIC        j
+  C:08F6H         PUBLIC        Clear
+  C:08D6H         PUBLIC        _Delay
+  -------         PROC          MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/14/2012  16:29:51  PAGE 3
+
+
+  C:0912H         LINE#         21
+  C:0912H         LINE#         22
+  C:0912H         LINE#         23
+  C:0915H         LINE#         24
+  C:0918H         LINE#         25
+  C:0918H         LINE#         26
+  C:0918H         LINE#         27
+  C:091BH         LINE#         29
+  C:0922H         LINE#         41
+  -------         ENDPROC       MAIN
+  -------         PROC          LED_SINGLE_ALL_ON
+  C:0890H         LINE#         44
+  C:0890H         LINE#         45
+  C:0890H         LINE#         46
+  C:0895H         LINE#         47
+  C:0895H         LINE#         48
+  C:0897H         LINE#         49
+  C:089EH         LINE#         50
+  C:08A1H         LINE#         51
+  C:08B2H         LINE#         52
+  -------         ENDPROC       LED_SINGLE_ALL_ON
+  -------         PROC          LED_SINGLE_ALL_OFF
+  C:08B3H         LINE#         54
+  C:08B3H         LINE#         55
+  C:08B3H         LINE#         56
+  C:08B8H         LINE#         57
+  C:08B8H         LINE#         58
+  C:08BAH         LINE#         59
+  C:08BDH         LINE#         60
+  C:08C4H         LINE#         61
+  C:08D5H         LINE#         62
+  -------         ENDPROC       LED_SINGLE_ALL_OFF
+  -------         PROC          LED_ROW_WISE_ALL_ON
+  C:0800H         LINE#         64
+  C:0800H         LINE#         65
+  C:0800H         LINE#         66
+  C:0805H         LINE#         67
+  C:0805H         LINE#         68
+  C:0807H         LINE#         69
+  C:080AH         LINE#         70
+  C:0812H         LINE#         71
+  C:0814H         LINE#         72
+  C:081CH         LINE#         73
+  C:081EH         LINE#         74
+  C:0826H         LINE#         75
+  C:0828H         LINE#         76
+  C:0830H         LINE#         77
+  C:0836H         LINE#         78
+  C:0847H         LINE#         79
+  -------         ENDPROC       LED_ROW_WISE_ALL_ON
+  -------         PROC          LED_ROW_WISE_ALL_OFF
+  C:0848H         LINE#         81
+  C:0848H         LINE#         82
+  C:0848H         LINE#         83
+  C:084DH         LINE#         84
+  C:084DH         LINE#         85
+  C:084FH         LINE#         86
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/14/2012  16:29:51  PAGE 4
+
+
+  C:0852H         LINE#         87
+  C:085AH         LINE#         88
+  C:085CH         LINE#         89
+  C:0864H         LINE#         90
+  C:0866H         LINE#         91
+  C:086EH         LINE#         92
+  C:0870H         LINE#         93
+  C:0878H         LINE#         94
+  C:087EH         LINE#         95
+  C:088FH         LINE#         96
+  -------         ENDPROC       LED_ROW_WISE_ALL_OFF
+  -------         PROC          CLEAR
+  C:08F6H         LINE#         98
+  C:08F6H         LINE#         99
+  C:08F6H         LINE#         100
+  C:08FBH         LINE#         101
+  C:08FBH         LINE#         102
+  C:08FDH         LINE#         103
+  C:0900H         LINE#         104
+  C:0911H         LINE#         105
+  -------         ENDPROC       CLEAR
+  -------         PROC          PULSE
+  C:0930H         LINE#         107
+  C:0930H         LINE#         108
+  C:0930H         LINE#         109
+  C:0932H         LINE#         110
+  C:0933H         LINE#         112
+  C:0935H         LINE#         113
+  -------         ENDPROC       PULSE
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        i
+  -------         DO            
+  D:0004H         SYMBOL        u
+  D:0002H         SYMBOL        v
+  -------         ENDDO         
+  C:08D6H         LINE#         115
+  C:08D6H         LINE#         116
+  C:08D6H         LINE#         118
+  C:08E0H         LINE#         119
+  C:08F5H         LINE#         120
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        SHIFT_REG
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LED_SINGLE_ALL_OFF?SHIFT_REG
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LED_ROW_WISE_ALL_ON?SHIFT_REG
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LED_ROW_WISE_ALL_OFF?SHIFT_REG
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0139H BYTE (15%) *
+******************************************************************************
+
+Program Size: data=11.0 xdata=0 code=313
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/14/2012  16:29:51  PAGE 5
+
+
+LINK/LOCATE RUN COMPLETE.  3 WARNING(S),  0 ERROR(S)

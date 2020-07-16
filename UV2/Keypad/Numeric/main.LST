@@ -1,0 +1,35 @@
+C51 COMPILER V7.06   MAIN                                                                  01/24/2012 14:09:26 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          
+   2          // Program for Interfacing Numeric Keypad with 8051
+   3          
+   4          #include<reg51.h>
+   5          #include "LCD.h"
+   6          #include "KEYPAD.h"
+   7          
+   8          void main()
+   9          {
+  10   1              Keypad();                       // Scan Keypad for Keypress
+  11   1      }
+  12          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      3    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

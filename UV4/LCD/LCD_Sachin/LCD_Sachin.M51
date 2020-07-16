@@ -1,0 +1,320 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/17/2011  17:25:38  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, LCD_Sachin.obj TO LCD_Sachin RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  LCD_Sachin.obj (LCD_SACHIN)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDOPTR)
+
+
+LINK MAP OF MODULE:  LCD_Sachin (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0008H     UNIT         _DATA_GROUP_
+                    0010H     0010H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         ?BI?LCD_SACHIN
+                    0020H.1   0000H.7                *** GAP ***
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     008DH     UNIT         ?PR?_WRITEDATA_LCD?LCD_SACHIN
+            CODE    088DH     008CH     UNIT         ?C_C51STARTUP
+            CODE    0919H     0033H     UNIT         ?PR?WRITECOMMAND_LCD?LCD_SACHIN
+            CODE    094CH     0033H     UNIT         ?PR?MAIN?LCD_SACHIN
+            CODE    097FH     002DH     UNIT         ?C?LIB_CODE
+            CODE    09ACH     0024H     UNIT         ?PR?_SENDCOMMAND?LCD_SACHIN
+            CODE    09D0H     0024H     UNIT         ?PR?_DELAY?LCD_SACHIN
+            CODE    09F4H     001FH     UNIT         ?CO?LCD_SACHIN
+            CODE    0A13H     0014H     UNIT         ?PR?CLEARDISPLAY?LCD_SACHIN
+            CODE    0A27H     0010H     UNIT         ?PR?INITIALISE?LCD_SACHIN
+            CODE    0A37H     0010H     UNIT         ?PR?_DISPLAY_DATA?LCD_SACHIN
+            CODE    0A47H     000CH     UNIT         ?PR?_SEND?LCD_SACHIN
+            CODE    0A53H     0003H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   LCD_Sachin (?C_STARTUP)
+
+
+SEGMENT                                   DATA_GROUP 
+  +--> CALLED SEGMENT                   START    LENGTH
+-------------------------------------------------------
+?C_C51STARTUP                           -----    -----
+  +--> ?PR?MAIN?LCD_SACHIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?LCD_SACHIN                     -----    -----
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/17/2011  17:25:38  PAGE 2
+
+
+  +--> ?PR?INITIALISE?LCD_SACHIN
+  +--> ?PR?WRITECOMMAND_LCD?LCD_SACHIN
+  +--> ?PR?_SENDCOMMAND?LCD_SACHIN
+  +--> ?PR?_DELAY?LCD_SACHIN
+  +--> ?CO?LCD_SACHIN
+  +--> ?PR?_WRITEDATA_LCD?LCD_SACHIN
+  +--> ?PR?CLEARDISPLAY?LCD_SACHIN
+
+?PR?WRITECOMMAND_LCD?LCD_SACHIN         0008H    0001H
+  +--> ?PR?_DELAY?LCD_SACHIN
+  +--> ?PR?_SENDCOMMAND?LCD_SACHIN
+  +--> ?PR?CLEARDISPLAY?LCD_SACHIN
+
+?PR?_SENDCOMMAND?LCD_SACHIN             0009H    0002H
+  +--> ?PR?_SEND?LCD_SACHIN
+  +--> ?PR?_DELAY?LCD_SACHIN
+
+?PR?_SEND?LCD_SACHIN                    -----    -----
+  +--> ?PR?_DELAY?LCD_SACHIN
+
+?PR?CLEARDISPLAY?LCD_SACHIN             -----    -----
+  +--> ?PR?_SENDCOMMAND?LCD_SACHIN
+  +--> ?PR?_DELAY?LCD_SACHIN
+
+?PR?_WRITEDATA_LCD?LCD_SACHIN           0008H    0008H
+  +--> ?PR?_DISPLAY_DATA?LCD_SACHIN
+  +--> ?PR?_DELAY?LCD_SACHIN
+
+?PR?_DISPLAY_DATA?LCD_SACHIN            -----    -----
+  +--> ?PR?_DELAY?LCD_SACHIN
+
+
+
+SYMBOL TABLE OF MODULE:  LCD_Sachin (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:088DH         SEGMENT       ?C_C51STARTUP
+  I:0021H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0890H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/17/2011  17:25:38  PAGE 3
+
+
+  D:0081H         SYMBOL        SP
+  C:088DH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:088DH         LINE#         133
+  C:088FH         LINE#         134
+  C:0890H         LINE#         135
+  C:0891H         LINE#         136
+  C:0893H         LINE#         185
+  C:0896H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        LCD_SACHIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0A47H         PUBLIC        _Send
+  C:09D4H         PUBLIC        _delay
+  B:00A0H.2       PUBLIC        EN
+  B:00A0H.0       PUBLIC        RS
+  C:094CH         PUBLIC        main
+  C:0919H         PUBLIC        writeCommand_LCD
+  B:00A0H.1       PUBLIC        RW
+  B:0020H.0       PUBLIC        LCD_8_BIT
+  C:0A27H         PUBLIC        initialise
+  C:0A13H         PUBLIC        ClearDisplay
+  C:09ACH         PUBLIC        _SendCommand
+  C:0800H         PUBLIC        _writeData_LCD
+  C:0A37H         PUBLIC        _display_data
+  -------         PROC          INITIALISE
+  C:0A27H         LINE#         12
+  C:0A27H         LINE#         13
+  C:0A27H         LINE#         14
+  C:0A2AH         LINE#         15
+  C:0A2DH         LINE#         16
+  C:0A30H         LINE#         17
+  C:0A32H         LINE#         18
+  C:0A34H         LINE#         19
+  C:0A36H         LINE#         20
+  -------         ENDPROC       INITIALISE
+  -------         PROC          WRITECOMMAND_LCD
+  -------         DO            
+  D:0008H         SYMBOL        Command
+  -------         ENDDO         
+  C:0919H         LINE#         22
+  C:0919H         LINE#         23
+  C:0919H         LINE#         25
+  C:091CH         LINE#         26
+  C:0921H         LINE#         27
+  C:0924H         LINE#         28
+  C:0927H         LINE#         29
+  C:092AH         LINE#         30
+  C:092FH         LINE#         31
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/17/2011  17:25:38  PAGE 4
+
+
+  C:0932H         LINE#         32
+  C:0937H         LINE#         33
+  C:093AH         LINE#         34
+  C:093FH         LINE#         35
+  C:0942H         LINE#         36
+  C:0945H         LINE#         37
+  -------         ENDPROC       WRITECOMMAND_LCD
+  -------         PROC          _SEND
+  D:0007H         SYMBOL        comd
+  C:0A47H         LINE#         40
+  C:0A47H         LINE#         41
+  C:0A47H         LINE#         42
+  C:0A49H         LINE#         43
+  C:0A4BH         LINE#         44
+  C:0A4DH         LINE#         45
+  C:0A50H         LINE#         46
+  C:0A52H         LINE#         47
+  -------         ENDPROC       _SEND
+  -------         PROC          _SENDCOMMAND
+  D:0009H         SYMBOL        comd
+  -------         DO            
+  D:000AH         SYMBOL        tmpcomd
+  -------         ENDDO         
+  C:09ACH         LINE#         48
+  C:09AEH         LINE#         49
+  C:09AEH         LINE#         51
+  C:09B1H         LINE#         52
+  C:09B4H         LINE#         53
+  C:09B4H         LINE#         54
+  C:09B4H         LINE#         55
+  C:09B4H         LINE#         56
+  C:09B6H         LINE#         57
+  C:09B9H         LINE#         58
+  C:09B9H         LINE#         59
+  C:09BEH         LINE#         60
+  C:09C1H         LINE#         61
+  C:09CCH         LINE#         62
+  C:09CFH         LINE#         63
+  C:09CFH         LINE#         64
+  -------         ENDPROC       _SENDCOMMAND
+  -------         PROC          CLEARDISPLAY
+  C:0A13H         LINE#         66
+  C:0A13H         LINE#         67
+  C:0A13H         LINE#         68
+  C:0A18H         LINE#         69
+  C:0A1BH         LINE#         70
+  C:0A20H         LINE#         71
+  -------         ENDPROC       CLEARDISPLAY
+  -------         PROC          _WRITEDATA_LCD
+  D:0008H         SYMBOL        mdata
+  D:000BH         SYMBOL        counter
+  -------         DO            
+  D:000DH         SYMBOL        tmpdata
+  D:000EH         SYMBOL        cnt
+  -------         ENDDO         
+  C:0800H         LINE#         74
+  C:080AH         LINE#         75
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/17/2011  17:25:38  PAGE 5
+
+
+  C:080AH         LINE#         78
+  C:080DH         LINE#         79
+  C:080DH         LINE#         80
+  C:081DH         LINE#         81
+  C:081DH         LINE#         82
+  C:0830H         LINE#         83
+  C:0837H         LINE#         84
+  C:0841H         LINE#         85
+  C:0841H         LINE#         86
+  C:0844H         LINE#         87
+  C:0844H         LINE#         88
+  C:0854H         LINE#         89
+  C:0854H         LINE#         90
+  C:0865H         LINE#         91
+  C:0869H         LINE#         92
+  C:0870H         LINE#         93
+  C:087BH         LINE#         94
+  C:0882H         LINE#         95
+  C:088CH         LINE#         96
+  C:088CH         LINE#         97
+  -------         ENDPROC       _WRITEDATA_LCD
+  -------         PROC          _DISPLAY_DATA
+  D:0007H         SYMBOL        port_data
+  C:0A37H         LINE#         99
+  C:0A37H         LINE#         100
+  C:0A37H         LINE#         101
+  C:0A39H         LINE#         102
+  C:0A3BH         LINE#         103
+  C:0A3DH         LINE#         104
+  C:0A44H         LINE#         105
+  C:0A46H         LINE#         106
+  -------         ENDPROC       _DISPLAY_DATA
+  C:09D0H         SYMBOL        L?0037
+  -------         PROC          L?0036
+  -------         ENDPROC       L?0036
+  C:09D0H         SYMBOL        L?0037
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        val
+  -------         DO            
+  D:0004H         SYMBOL        u
+  D:0002H         SYMBOL        v
+  -------         ENDDO         
+  C:09D4H         LINE#         108
+  C:09D4H         LINE#         109
+  C:09D4H         LINE#         111
+  C:09DEH         LINE#         112
+  C:09F3H         LINE#         113
+  -------         ENDPROC       _DELAY
+  -------         PROC          MAIN
+  C:094CH         LINE#         115
+  C:094CH         LINE#         116
+  C:094CH         LINE#         117
+  C:094FH         LINE#         118
+  C:0952H         LINE#         119
+  C:0957H         LINE#         120
+  C:095AH         LINE#         121
+  C:0967H         LINE#         122
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/17/2011  17:25:38  PAGE 6
+
+
+  C:096CH         LINE#         123
+  C:096FH         LINE#         124
+  C:097CH         LINE#         125
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        LCD_SACHIN
+
+  -------         MODULE        ?C?CLDOPTR
+  C:097FH         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01ABH BYTE (20%) *
+******************************************************************************
+
+Program Size: data=17.1 xdata=0 code=601
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

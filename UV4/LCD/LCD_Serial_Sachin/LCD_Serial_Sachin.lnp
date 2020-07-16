@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"LCD_Serial_Sachin.obj",
+"LCD_SerialTransmit_Sachin.obj" 
+TO "LCD_Serial_Sachin" 
+RAMSIZE(256) 

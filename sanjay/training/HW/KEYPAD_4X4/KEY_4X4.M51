@@ -1,0 +1,245 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        07/29/2011  01:22:48  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\STARTUP.obj, KEY_4x4.obj TO KEY_4X4 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\STARTUP.obj (?C_STARTUP)
+  KEY_4x4.obj (KEY_4X4)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?COPY)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+
+
+LINK MAP OF MODULE:  KEY_4X4 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0017H     UNIT         _DATA_GROUP_
+            DATA    001FH     0004H     UNIT         ?DT?KEY_4X4
+            IDATA   0023H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     010FH     UNIT         ?C?LIB_CODE
+            CODE    0112H     00B5H     UNIT         ?PR?MAIN?KEY_4X4
+            CODE    01C7H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0253H     003BH     UNIT         ?PR?_DISPLAY?KEY_4X4
+            CODE    028EH     001AH     UNIT         ?PR?INIT_SERIAL?KEY_4X4
+            CODE    02A8H     0016H     UNIT         ?PR?_PRINTSTR?KEY_4X4
+            CODE    02BEH     0010H     UNIT         ?CO?KEY_4X4
+            CODE    02CEH     000EH     UNIT         ?PR?INITIALISE?KEY_4X4
+            CODE    02DCH     0009H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   KEY_4X4 (?C_STARTUP)
+
+
+SEGMENT                           DATA_GROUP 
+  +--> CALLED SEGMENT           START    LENGTH
+-----------------------------------------------
+?C_C51STARTUP                   -----    -----
+  +--> ?PR?MAIN?KEY_4X4
+  +--> ?C_INITSEG
+
+?PR?MAIN?KEY_4X4                0008H    000DH
+  +--> ?CO?KEY_4X4
+  +--> ?PR?INITIALISE?KEY_4X4
+  +--> ?PR?INIT_SERIAL?KEY_4X4
+  +--> ?PR?_DISPLAY?KEY_4X4
+
+?PR?_DISPLAY?KEY_4X4            0015H    000AH
+BL51 BANKED LINKER/LOCATER V5.03                                                      07/29/2011  01:22:48  PAGE 2
+
+
+  +--> ?CO?KEY_4X4
+  +--> ?PR?_PRINTSTR?KEY_4X4
+
+
+
+SYMBOL TABLE OF MODULE:  KEY_4X4 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:01C7H         SEGMENT       ?C_C51STARTUP
+  I:0023H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:01CAH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:01C7H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         92
+  C:01C7H         LINE#         99
+  C:01C9H         LINE#         100
+  C:01CAH         LINE#         101
+  C:01CBH         LINE#         102
+  C:01CDH         LINE#         151
+  C:01D0H         LINE#         155
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        KEY_4X4
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  B:00B0H.5       PUBLIC        EN
+  B:00A8H.4       PUBLIC        ES
+  C:028EH         PUBLIC        init_serial
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  D:001FH         PUBLIC        pressed_key
+BL51 BANKED LINKER/LOCATER V5.03                                                      07/29/2011  01:22:48  PAGE 3
+
+
+  C:0112H         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  C:02CEH         PUBLIC        initialise
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  C:02BEH         SYMBOL        _?ix1000
+  C:02C6H         SYMBOL        _?ix1001
+  C:02CAH         SYMBOL        _?ix1002
+  D:0021H         PUBLIC        prev_pressed_key
+  D:008DH         PUBLIC        TH1
+  B:0088H.6       PUBLIC        TR1
+  C:0253H         PUBLIC        _display
+  C:02A8H         PUBLIC        _printstr
+  -------         PROC          INIT_SERIAL
+  C:028EH         LINE#         8
+  C:028EH         LINE#         9
+  C:028EH         LINE#         10
+  C:0290H         LINE#         11
+  C:0292H         LINE#         12
+  C:0294H         LINE#         13
+  C:0297H         LINE#         14
+  C:029AH         LINE#         15
+  C:029DH         LINE#         16
+  C:029FH         LINE#         18
+  C:02A1H         LINE#         19
+  C:02A3H         LINE#         20
+  C:02A5H         LINE#         21
+  C:02A7H         LINE#         22
+  -------         ENDPROC       INIT_SERIAL
+  -------         PROC          _PRINTSTR
+  D:0001H         SYMBOL        mstr
+  C:02A8H         LINE#         24
+  C:02A8H         LINE#         25
+  C:02A8H         LINE#         26
+  C:02ADH         LINE#         27
+  C:02ADH         LINE#         28
+  C:02AFH         LINE#         29
+  C:02B6H         LINE#         30
+  C:02B9H         LINE#         31
+  C:02BBH         LINE#         32
+  C:02BDH         LINE#         33
+  -------         ENDPROC       _PRINTSTR
+  -------         PROC          _DISPLAY
+  D:0015H         SYMBOL        num
+  -------         DO            
+  D:0017H         SYMBOL        mstr
+  -------         ENDDO         
+  C:0253H         LINE#         35
+  C:0257H         LINE#         36
+  C:0257H         LINE#         37
+  C:026AH         LINE#         38
+  C:0279H         LINE#         39
+  C:027FH         LINE#         41
+  C:0283H         LINE#         43
+  C:0286H         LINE#         44
+  -------         ENDPROC       _DISPLAY
+  -------         PROC          INITIALISE
+BL51 BANKED LINKER/LOCATER V5.03                                                      07/29/2011  01:22:48  PAGE 4
+
+
+  C:02CEH         LINE#         47
+  C:02CEH         LINE#         48
+  C:02CEH         LINE#         49
+  C:02D1H         LINE#         50
+  C:02D4H         LINE#         51
+  C:02D6H         LINE#         52
+  C:02D8H         LINE#         53
+  C:02DBH         LINE#         54
+  -------         ENDPROC       INITIALISE
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        rw
+  D:000AH         SYMBOL        cl
+  D:000CH         SYMBOL        KEY_VAL
+  D:000DH         SYMBOL        ROWS
+  D:0011H         SYMBOL        COLS
+  -------         ENDDO         
+  C:0112H         LINE#         56
+  C:0112H         LINE#         57
+  C:0112H         LINE#         59
+  C:0115H         LINE#         60
+  C:0126H         LINE#         61
+  C:0139H         LINE#         63
+  C:013CH         LINE#         64
+  C:013FH         LINE#         66
+  C:013FH         LINE#         67
+  C:013FH         LINE#         68
+  C:0144H         LINE#         69
+  C:0144H         LINE#         70
+  C:014EH         LINE#         71
+  C:0151H         LINE#         72
+  C:0159H         LINE#         73
+  C:0159H         LINE#         74
+  C:016BH         LINE#         75
+  C:016BH         LINE#         76
+  C:0179H         LINE#         77
+  C:0179H         LINE#         78
+  C:0197H         LINE#         79
+  C:019DH         LINE#         80
+  C:01A0H         LINE#         81
+  C:01A7H         LINE#         82
+  C:01A7H         LINE#         83
+  C:01A7H         LINE#         84
+  C:01B1H         LINE#         85
+  C:01B1H         LINE#         86
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        KEY_4X4
+
+  -------         MODULE        ?C?COPY
+  C:00D3H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+
+  -------         MODULE        ?C?CLDPTR
+  C:00F9H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+Program Size: data=36.0 xdata=0 code=741
+BL51 BANKED LINKER/LOCATER V5.03                                                      07/29/2011  01:22:48  PAGE 5
+
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

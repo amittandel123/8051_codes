@@ -1,0 +1,45 @@
+C51 COMPILER V9.06   LED_MESH                                                              04/23/2012 11:07:39 PAGE 1   
+
+
+C51 COMPILER V9.06, COMPILATION OF MODULE LED_MESH
+OBJECT MODULE PLACED IN LED_Mesh.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LED_Mesh.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          
+   2          
+   3          #include<reg51.h>
+   4          
+   5          void main(void)
+   6          {
+   7   1              unsigned int i;
+   8   1      
+   9   1              P1=0x02;
+  10   1              P2=0xFF;
+  11   1      
+  12   1              while(1);
+  13   1              {
+  14   2                      P1=0;
+  15   2                      P2=1;
+  16   2                      for(i=0;i<50000;i++);
+  17   2                      P1=1;
+  18   2                      P2=0;
+  19   2                      for(i=0;i<50000;i++);
+  20   2              }
+  21   1                      
+  22   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      8    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

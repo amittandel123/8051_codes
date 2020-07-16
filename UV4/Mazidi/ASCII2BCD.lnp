@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"ASCII2BCD.obj" 
+TO "ASCII2BCD" 
+RAMSIZE(256) 

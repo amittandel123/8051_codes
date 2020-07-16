@@ -1,0 +1,5 @@
+"main.obj",
+"POOL.obj" 
+TO "LargePool" 
+
+CLASSES ( EDATA(0x7F0000-0x7F03FF)) 

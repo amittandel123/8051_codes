@@ -1,0 +1,5 @@
+"LCD.obj",
+"main.obj",
+"Serial.obj" 
+TO "LCD_Serial" 
+RAMSIZE(256) 

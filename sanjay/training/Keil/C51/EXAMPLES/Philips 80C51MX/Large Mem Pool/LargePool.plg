@@ -1,0 +1,80 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+C:\Keil\C51\EXAMPLES\Philips 80C51MX\Large Mem Pool\LargePool.uv2
+Project File Date:  04/04/2002
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling main.c...
+compiling POOL.C...
+assembling POOL.src...
+linking...
+LX51 LINKER/LOCATER V3.64 - SN: Eval Version
+COPYRIGHT KEIL ELEKTRONIK GmbH 1995 - 2004
+@LARGEP~1.LNP "main.obj",
+"POOL.obj" 
+TO "LargePool" 
+CLASSES ( EDATA(0x7F0000-0x7F03FF)) 
+*** ERROR L210: I/O ERROR ON INPUT FILE:
+    EXCEPTION 0021H: PATH OR FILE NOT FOUND
+    FILE: C:\KEIL\C51\LIB\CX51FPS.LIB
+Target not created
+Build target 'Target 1'
+compiling main.c...
+compiling POOL.C...
+assembling POOL.src...
+linking...
+LX51 LINKER/LOCATER V3.64 - SN: Eval Version
+COPYRIGHT KEIL ELEKTRONIK GmbH 1995 - 2004
+@LARGEP~1.LNP "main.obj",
+"POOL.obj" 
+TO "LargePool" 
+CLASSES ( EDATA(0x7F0000-0x7F03FF)) 
+*** ERROR L210: I/O ERROR ON INPUT FILE:
+    EXCEPTION 0021H: PATH OR FILE NOT FOUND
+    FILE: C:\KEIL\C51\LIB\CX51FPS.LIB
+Target not created
+Build target 'Target 1'
+compiling main.c...
+compiling POOL.C...
+assembling POOL.src...
+linking...
+LX51 LINKER/LOCATER V3.64 - SN: Eval Version
+COPYRIGHT KEIL ELEKTRONIK GmbH 1995 - 2004
+@LARGEP~1.LNP "main.obj",
+"POOL.obj" 
+TO "LargePool" 
+CLASSES ( EDATA(0x7F0000-0x7F03FF)) 
+*** ERROR L210: I/O ERROR ON INPUT FILE:
+    EXCEPTION 0021H: PATH OR FILE NOT FOUND
+    FILE: C:\KEIL\C51\LIB\CX51FPS.LIB
+Target not created
+Build target 'Target 1'
+compiling main.c...
+MAIN.C(7): warning C280: 'p1': unreferenced local variable
+MAIN.C(8): warning C280: 'p2': unreferenced local variable
+compiling POOL.C...
+POOL.C(52): error C141: syntax error near '}'
+Target not created
+Build target 'Target 1'
+compiling main.c...
+compiling POOL.C...
+POOL.C(52): error C141: syntax error near '}'
+Target not created
+Build target 'Target 1'
+compiling main.c...
+compiling POOL.C...
+POOL.C(51): error C141: syntax error near 'return'
+POOL.C(52): error C141: syntax error near '}'
+Target not created
+Build target 'Target 1'
+compiling POOL.C...
+POOL.C(53): error C141: syntax error near '}'
+Target not created
+Build target 'Target 1'
+compiling POOL.C...
+POOL.C(54): error C141: syntax error near '}'
+Target not created

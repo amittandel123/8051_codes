@@ -1,0 +1,4 @@
+"Parag.obj",
+"LCD.obj" 
+TO "LCD_Parag" 
+RAMSIZE(256) 

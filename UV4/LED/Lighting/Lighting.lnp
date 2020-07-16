@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"Lighting.obj" 
+TO "Lighting" 
+RAMSIZE(256) 

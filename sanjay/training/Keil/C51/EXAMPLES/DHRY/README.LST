@@ -1,0 +1,60 @@
+C51 COMPILER V7.20   README                                                                09/01/2006 16:36:45 PAGE 1   
+
+
+C51 COMPILER V7.20, COMPILATION OF MODULE README
+OBJECT MODULE PLACED IN README.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE README.C LARGE OPTIMIZE(6,SPEED) BROWSE DEBUG OBJECTEXTEND CODE SYMBOLS
+
+line level    source
+
+   1          /****************************************************************************/
+   2          /*                                                                          */
+   3          /* This project exceedes the code size limits of the Evaluation Version     */
+   4          /* and cannot be modified/retranslated with the Evaluation Version.         */
+   5          /*                                                                          */
+   6          /* However you can debug a pre-compiled version with the uVision2 Debugger. */
+   7          /*                                                                          */
+   8          /****************************************************************************/
+   9          
+  10          void main ()  {
+  11   1        /* This is a dummy main routine */
+  12   1        while (1)  {
+  13   2          ;
+  14   2        }
+  15   1      }
+  16          
+C51 COMPILER V7.20   README                                                                09/01/2006 16:36:45 PAGE 2   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION main (BEGIN)
+                                           ; SOURCE LINE # 10
+0000         ?C0001:
+                                           ; SOURCE LINE # 12
+                                           ; SOURCE LINE # 14
+0000 80FE              SJMP    ?C0001
+0002 22                RET     
+             ; FUNCTION main (END)
+
+C51 COMPILER V7.20   README                                                                09/01/2006 16:36:45 PAGE 3   
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+main . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      3    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

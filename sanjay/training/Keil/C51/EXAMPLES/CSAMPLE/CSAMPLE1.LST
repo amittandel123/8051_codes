@@ -1,0 +1,145 @@
+C51 COMPILER V7.20   CSAMPLE1                                                              09/01/2006 16:14:35 PAGE 1   
+
+
+C51 COMPILER V7.20, COMPILATION OF MODULE CSAMPLE1
+OBJECT MODULE PLACED IN CSAMPLE1.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE CSAMPLE1.C HOLD(128,0,0) OPTIMIZE(6,SPEED) REGFILE(.\CSample.ORC) BROWSE DE
+                    -BUG OBJECTEXTEND CODE SYMBOLS
+
+line level    source
+
+   1          /*------------------------------------------------------------------------------
+   2          CSAMPLE1.C
+   3          
+   4          Copyright 1995-1999 Keil Software, Inc.
+   5          ------------------------------------------------------------------------------*/
+   6          
+   7          #include <reg51.h>                             /* define 8051 registers */
+   8          #include <stdio.h>                             /* define I/O functions */
+   9          
+  10          extern unsigned int getnumber (void);
+  11          extern void output (unsigned int);
+  12          
+  13          void main (void)  {                            /* main program */
+  14   1        unsigned int number1, number2;               /* define operation registers */
+  15   1        bit operation;                               /* define operation */
+  16   1      
+  17   1        SCON = 0x52;    /* SCON */                   /* setup serial port control */
+  18   1        TMOD = 0x20;    /* TMOD */                   /* hardware (2400 BAUD @12MHZ) */
+  19   1        TCON = 0x69;    /* TCON */
+  20   1        TH1 =  0xf3;    /* TH1 */
+  21   1      
+  22   1        printf ("\n\nC compiler demonstration program\n\n");
+  23   1      
+  24   1        while (1)  {                                 /* repeat forever */
+  25   2          number1 = getnumber ();                    /* read number1 */
+  26   2          number2 = getnumber ();                    /* read number2 */
+  27   2          printf ("Input operation: '+' (ADD) or '-' (SUB) ? ");
+  28   2          operation = (getchar () == '+');           /* get operation */
+  29   2          output (operation ? (number1 + number2)    /* perform operation */
+  30   2                            : (number1 - number2) );
+  31   2        }
+  32   1      }
+C51 COMPILER V7.20   CSAMPLE1                                                              09/01/2006 16:14:35 PAGE 2   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION main (BEGIN)
+                                           ; SOURCE LINE # 13
+                                           ; SOURCE LINE # 17
+0000 759852            MOV     SCON,#052H
+                                           ; SOURCE LINE # 18
+0003 758920            MOV     TMOD,#020H
+                                           ; SOURCE LINE # 19
+0006 758869            MOV     TCON,#069H
+                                           ; SOURCE LINE # 20
+0009 758DF3            MOV     TH1,#0F3H
+                                           ; SOURCE LINE # 22
+000C 7BFF              MOV     R3,#0FFH
+000E 7A00        R     MOV     R2,#HIGH ?SC_0
+0010 7900        R     MOV     R1,#LOW ?SC_0
+0012 120000      E     LCALL   _printf
+0015         ?C0001:
+                                           ; SOURCE LINE # 24
+                                           ; SOURCE LINE # 25
+0015 120000      E     LCALL   getnumber
+0018 8E00        R     MOV     number1,R6
+001A 8F00        R     MOV     number1+01H,R7
+                                           ; SOURCE LINE # 26
+001C 120000      E     LCALL   getnumber
+001F 8E00        R     MOV     number2,R6
+0021 8F00        R     MOV     number2+01H,R7
+                                           ; SOURCE LINE # 27
+0023 7BFF              MOV     R3,#0FFH
+0025 7A00        R     MOV     R2,#HIGH ?SC_37
+0027 7900        R     MOV     R1,#LOW ?SC_37
+0029 120000      E     LCALL   _printf
+                                           ; SOURCE LINE # 28
+002C 120000      E     LCALL   getchar
+002F BF2B03            CJNE    R7,#02BH,?C0003
+0032 D3                SETB    C
+0033 8001              SJMP    ?C0004
+0035         ?C0003:
+0035 C3                CLR     C
+0036         ?C0004:
+0036 9200        R     MOV     operation,C
+                                           ; SOURCE LINE # 29
+0038 30000C      R     JNB     operation,?C0005
+003B E500        R     MOV     A,number1+01H
+003D 2500        R     ADD     A,number2+01H
+003F FF                MOV     R7,A
+0040 E500        R     MOV     A,number1
+0042 3500        R     ADDC    A,number2
+0044 FE                MOV     R6,A
+0045 800B              SJMP    ?C0006
+0047         ?C0005:
+0047 C3                CLR     C
+0048 E500        R     MOV     A,number1+01H
+004A 9500        R     SUBB    A,number2+01H
+004C FF                MOV     R7,A
+004D E500        R     MOV     A,number1
+004F 9500        R     SUBB    A,number2
+0051 FE                MOV     R6,A
+0052         ?C0006:
+0052 120000      E     LCALL   _output
+                                           ; SOURCE LINE # 31
+C51 COMPILER V7.20   CSAMPLE1                                                              09/01/2006 16:14:35 PAGE 3   
+
+0055 80BE              SJMP    ?C0001
+0057 22                RET     
+             ; FUNCTION main (END)
+
+C51 COMPILER V7.20   CSAMPLE1                                                              09/01/2006 16:14:35 PAGE 4   
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+size_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
+_output. . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+main . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  number1. . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
+  number2. . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0002H  2
+  operation. . . . . . . . . . . . . .  AUTO     DATA   BIT      0000H  1
+SCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
+TMOD . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0089H  1
+TCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0088H  1
+TH1. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008DH  1
+getnumber. . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+getchar. . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+_printf. . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     88    ----
+   CONSTANT SIZE    =     80    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

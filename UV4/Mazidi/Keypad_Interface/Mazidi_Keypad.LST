@@ -1,0 +1,139 @@
+C51 COMPILER V9.03   MAZIDI_KEYPAD                                                         01/13/2012 15:46:31 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE MAZIDI_KEYPAD
+OBJECT MODULE PLACED IN Mazidi_Keypad.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Mazidi_Keypad.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /************************************************************************************************
+   2          Program to read the keypad & send the result to serial port.
+   3          Serial port configured for 9600baud, 8bit.
+   4          
+   5          ************************************************************************************************/
+   6          
+   7          #include<reg51.h>
+   8          
+   9          #define COL P2
+  10          #define ROW P1
+  11          
+  12          void MSDelay(unsigned int value);
+  13          void SerTX(unsigned char);
+  14          
+  15          unsigned char keypad[4][4]= { '0','1','2','3',
+  16                                                                    '4','5','6','7',
+  17                                                                    '8','9','A','B',
+  18                                                                    'C','D','E','F'
+  19                                                                  };
+  20          void main()
+  21          {
+  22   1              unsigned char colloc, rowloc;
+  23   1              TMOD=0x20;      // Timer 1, mode2
+  24   1              TH1=-3;         // 9600 baud rate
+  25   1              SCON=0x50;      // 8 bit, 1 stop bit
+  26   1              TR1=1;          // Start timer 1
+  27   1      
+  28   1              COL=0xFF;               // P2 as i/p
+  29   1              while(1)
+  30   1              {
+  31   2                      do
+  32   2                      {
+  33   3                              ROW=0x00;                               // Ground all rows at once
+  34   3                              colloc=COL;                             // Read column
+  35   3                              colloc=colloc & 0x0F;   // mask used bits
+  36   3                      }while(colloc != 0x0F);         // Chck until all keys released
+  37   2      
+  38   2                      do
+  39   2                      {
+  40   3                              do
+  41   3                              {
+  42   4                                      MSDelay(5);             
+  43   4                                      colloc=COL;                     // See if any key is pressed
+  44   4                                      colloc=colloc&0x0F;     // Mask unused bits
+  45   4                              }while(colloc==0x0F);   // Keep checking for keypress
+  46   3      
+  47   3                              MSDelay(5);
+  48   3                              colloc=COL;                             // Read columns
+  49   3                              colloc &= 0x0F;                 // Mask unused bits
+  50   3                      }while(colloc==0x0F);           // Wait for keypress
+  51   2      
+  52   2                      while(1)
+  53   2                      {
+  54   3                              ROW=0xFE;                               // Ground Row 0
+  55   3                              colloc=COL;                             // Read columns
+C51 COMPILER V9.03   MAZIDI_KEYPAD                                                         01/13/2012 15:46:31 PAGE 2   
+
+  56   3                              colloc &= 0x0F;                 // Mask unused bits
+  57   3                              if(colloc != 0x0F)              
+  58   3                              {
+  59   4                                      rowloc = 0;                     // Save row location
+  60   4                                      break;                          // Exit while loop
+  61   4                              }
+  62   3      
+  63   3                              ROW=0xFD;                               // Ground Row 1
+  64   3                              colloc=COL;                             // Read columns
+  65   3                              colloc &= 0x0F;                 // Mask unused bits
+  66   3                              if(colloc != 0x0F)              
+  67   3                              {
+  68   4                                      rowloc = 1;                     // Save row location
+  69   4                                      break;                          // Exit while loop
+  70   4                              }
+  71   3      
+  72   3                              ROW=0xFB;                               // Ground Row 2
+  73   3                              colloc=COL;                             // Read columns
+  74   3                              colloc &= 0x0F;                 // Mask unused bits
+  75   3                              if(colloc != 0x0F)              
+  76   3                              {
+  77   4                                      rowloc = 2;                     // Save row location
+  78   4                                      break;                          // Exit while loop
+  79   4                              }
+  80   3      
+  81   3                              ROW=0xF7;                               // Ground Row 3
+  82   3                              colloc=COL;                             // Read columns
+  83   3                              colloc &= 0x0F;                 // Mask unused bits
+  84   3                              rowloc = 3;                             // Save row location
+  85   3                              break;                                  // Exit while loop
+  86   3                              
+  87   3                      }
+  88   2                      if(colloc==0x0E)
+  89   2                              SerTX(keypad[rowloc][0]);
+  90   2                      else if(colloc==0x0D)
+  91   2                              SerTX(keypad[rowloc][1]);
+  92   2                      else if(colloc==0x0B)
+  93   2                              SerTX(keypad[rowloc][2]);
+  94   2                      else
+  95   2                              SerTX(keypad[rowloc][3]);
+  96   2              }
+  97   1      }                                                                       // End of Main()
+  98          
+  99          void SerTX(unsigned char x)
+ 100          {
+ 101   1              SBUF=x;                         // Put value in buffer
+ 102   1              while(TI==0);           // Wait to transmit last bit
+ 103   1              TI=0;                           // Clear busy flag
+ 104   1      }
+ 105          
+ 106          void MSDelay(unsigned int value)
+ 107          {
+ 108   1              unsigned int u, v;
+ 109   1              for(u=0;u<1275;u++)
+ 110   1                      for(v=0;v<value;v++);
+ 111   1      }
+ 112          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    247    ----
+   CONSTANT SIZE    =   ----    ----
+C51 COMPILER V9.03   MAZIDI_KEYPAD                                                         01/13/2012 15:46:31 PAGE 3   
+
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     16       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,11 @@
+"main_a.obj",
+"int.obj",
+"Start_mx.obj" 
+TO "loadapp" 
+
+CODE 
+CLASSES (HDATA (0x0-0x7FFFF), 
+EDATA(0x7F0000-0x7F03FF), 
+ECODE (0x800000-0x83FFFF), HCONST (0x800000-0x83FFFF) , 
+ECODE_APPL(0x870000-0x87FFFF)
+) 

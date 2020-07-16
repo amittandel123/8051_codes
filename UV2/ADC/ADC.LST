@@ -1,0 +1,120 @@
+C51 COMPILER V9.06   ADC                                                                   05/16/2012 20:24:28 PAGE 1   
+
+
+C51 COMPILER V9.06, COMPILATION OF MODULE ADC
+OBJECT MODULE PLACED IN ADC.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ADC.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*
+   2          The Interface of ADC0804 with microcontroller 8051
+   3          10:15:00 PM  code, data communication, example program, in c51, keil, PC interface, rs232, The Interface o
+             -f ADC0804 with microcontroller 8051  2 comments
+   4          
+   5          This is example program written keil c51 for the interface of adc0804 single channel adc (analog to digita
+             -l converter) with microcontroller at89s51, which is very much equivelant to at89c51. the only difference is their way of
+             - code burning in ROM. Any microcontroller of 8051 family can be used here forexample, at89c51, at89c52, at89c2051 or fro
+             -m intel also.
+   6          The analog voltages are converted by using ADC0804 and then their digital equivalent ranging from 0 to 255
+             - is read out at P0 of microcontroller. This digital value of analog voltage (0v to 5v) is then send to computer (PC) thr
+             -ough serial communication through RS232 with standred null modem protocol on 9600 baud rate. The scanning of port for ne
+             -w value and then sending of data to PC is repeated 6 times in a sec.
+   7          the example source code in c for microcontroller is as below.
+   8          */
+   9          
+  10          #include<reg51.h>
+  11          #include<intrins.h>
+  12          
+  13          unsigned char sec1,sec,adc;
+  14          void rdadc0804(void);
+  15          void send(void);
+  16          sbit en = P3^5;
+  17          sbit wt = P3^6;
+  18          sbit rd = P3^7;
+  19          
+  20          void send(void);
+  21          void rdadc0804(void);
+  22          void timer(void);
+  23          void serial(void);
+  24          
+  25          void timer(void) interrupt 1
+  26          {
+  27   1              TH0 = 0xdc;
+  28   1              sec1++;
+  29   1              if(sec1>=10)
+  30   1              {
+  31   2                      rdadc();
+*** WARNING C206 IN LINE 31 OF ADC.c: 'rdadc': missing function-prototype
+  32   2                      setout();
+*** WARNING C206 IN LINE 32 OF ADC.c: 'setout': missing function-prototype
+  33   2                      sec1=0;
+  34   2              }
+  35   1      }
+  36          
+  37          void main()
+  38          {
+  39   1              EA = 1;
+  40   1              ET0 = 1;
+  41   1              SCON = 0x52;
+  42   1              TMOD = 0x21;
+  43   1              TH1 = 0xfd; // 9600 baud rate
+  44   1              TR1 = 1;
+  45   1              TR0 = 1;
+  46   1              ES = 1;
+C51 COMPILER V9.06   ADC                                                                   05/16/2012 20:24:28 PAGE 2   
+
+  47   1              wt = 1;
+  48   1              rd = 1;
+  49   1              en = 1;
+  50   1              adc = 0;
+  51   1              P0 = 0x00;
+  52   1              while(1)
+  53   1              {
+  54   2                      ;
+  55   2              }
+  56   1      }
+  57          
+  58          void send(void)
+  59          {
+  60   1              TI = 0;
+  61   1              SBUF = adc;
+  62   1              while(!TI){;}
+  63   1      }
+  64          
+  65          void rdadc0804(void)
+  66          {
+  67   1              wt = 0;
+  68   1              _nop_();
+  69   1              _nop_();
+  70   1              _nop_();
+  71   1              _nop_();
+  72   1              rd = 0;
+  73   1              _nop_();
+  74   1              _nop_();
+  75   1              adc = P1;
+  76   1              _nop_();
+  77   1              rd = 1;
+  78   1              _nop_();
+  79   1              wt = 1;
+  80   1      }
+  81          
+  82          void serial(void) interrupt 4
+  83          {
+  84   1              if(RI) 
+  85   1                      RI=0;
+  86   1      } 
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    144    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

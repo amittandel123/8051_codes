@@ -1,0 +1,66 @@
+### uVision2 Project, (C) Keil Software
+### Do not modify !
+
+ cExt (*.c)
+ aExt (*.a*; *.src)
+ oExt (*.obj)
+ lExt (*.lib)
+ tExt (*.txt)
+ pExt (*.plm)
+ CppX (*.cpp)
+ DaveTm { 0,0,0,0,0,0,0,0 }
+
+Target (Simulator: Large Model), 0x0000 // Tools: 'MCS-51'
+Target (Philips 80C51MX), 0x0000 // Tools: 'MCS-51'
+GRPOPT 1,(Source Code),1,0,0
+GRPOPT 2,(Documentation),1,0,0
+
+OPTFFF 1,1,1,0,0,0,0,0,<.\DHRY.C><DHRY.C> 
+OPTFFF 1,2,1,0,0,0,0,0,<.\TIME.C><TIME.C> 
+OPTFFF 2,3,5,0,0,0,0,0,<.\ABSTRACT.TXT><ABSTRACT.TXT> 
+
+
+TARGOPT 1, (Simulator: Large Model)
+ CLK51=12000000
+  OPTTT 1,0,1,0
+  OPTHX 0,65535,0,0,0
+  OPTLX 120,65,8,<.\>
+  OPTOX 16
+  OPTLT 1,1,1,0,1,1,1,1,1,0,1,0
+  OPTXL 1,1,1,1,1,1,1,1,1
+  OPTFL 1,0,1
+  OPTBL 0,(Data Sheet)<DATASHTS\INTEL\80XXBH.PDF>
+  OPTBL 1,(Add on databooks)<DATASHTS\ADDBOOKS.PDF>
+  OPTBL 2,(Instruction Set Manual)<DATASHTS\INTEL\ISM51.PDF>
+  OPTDL (S8051.DLL)()(DP51.DLL)(-p51)(S8051.DLL)()(TP51.DLL)(-p51)
+  OPTDBG 509,0,()()()()()()()()()() ()()()()
+  OPTMM 1,0,(c:0x11b1)
+  OPTSY 0,0,(*)
+  OPTDF 0x91
+  OPTLE <>
+  OPTLC <>
+EndOpt
+
+TARGOPT 2, (Philips 80C51MX)
+ CLK51=24000000
+  OPTTT 1,0,1,0
+  OPTHX 0,65535,0,0,0
+  OPTLX 120,65,8,<.\>
+  OPTOX 16
+  OPTLT 1,1,1,0,1,1,1,1,1,0,1,0
+  OPTXL 1,1,1,1,1,1,1,1,1
+  OPTFL 1,0,0
+  OPTBL 0,(Data Sheet)<DATASHTS\PHILIPS\8XC52_54.PDF>
+  OPTBL 1,(Add on databooks)<DATASHTS\ADDBOOKS.PDF>
+  OPTBL 2,(Programmer's Guide & Instruction Set Manual)<DATASHTS\PHILIPS\UPROGGUI.PDF>
+  OPTDL (S51MX.DLL)()(DP51.DLL)(-p51M)(S51MX.DLL)()(TP51.DLL)(-p51M)
+  OPTDBG 48126,0,()()()()()()()()()() ()()()()
+  OPTBB 0,0,12,1,8390961,0,0,0,0,1,<TIME.C>()(\TIME\12)
+  OPTBB 1,0,15,1,8391028,0,0,0,0,1,<TIME.C>()(\TIME\15)
+  OPTMM 1,0,(c:0x11b1)
+  OPTSY 0,0,(*)
+  OPTDF 0x95
+  OPTLE <>
+  OPTLC <>
+EndOpt
+

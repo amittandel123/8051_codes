@@ -1,0 +1,100 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+F:\training\HW\timer\timer.uv2
+Project File Date:  07/27/2011
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling timer0_over.c...
+timer0_over.c(3): warning C318: can't open file 'lcd.h'
+timer0_over.c(4): warning C318: can't open file 'varflag.h'
+timer0_over.c(5): warning C318: can't open file 'port.h'
+TIMER0_OVER.C(18): error C202: 'timer0_flag': undefined identifier
+TIMER0_OVER.C(20): error C202: 'timer0_flag': undefined identifier
+TIMER0_OVER.C(21): error C202: 'tick_count': undefined identifier
+TIMER0_OVER.C(22): error C202: 'sec': undefined identifier
+TIMER0_OVER.C(23): error C202: 'sec': undefined identifier
+TIMER0_OVER.C(25): error C202: 'timer1_flag': undefined identifier
+TIMER0_OVER.C(26): error C202: 'tick_count1': undefined identifier
+TIMER0_OVER.C(27): error C202: 'sec1': undefined identifier
+TIMER0_OVER.C(28): error C202: 'sec1': undefined identifier
+TIMER0_OVER.C(33): error C202: 'sec': undefined identifier
+TIMER0_OVER.C(36): error C202: 'sec': undefined identifier
+TIMER0_OVER.C(36): error C202: 'sec1': undefined identifier
+TIMER0_OVER.C(55): error C202: 'T2CON': undefined identifier
+TIMER0_OVER.C(56): error C202: 'TH2': undefined identifier
+TIMER0_OVER.C(57): error C202: 'TL2': undefined identifier
+TIMER0_OVER.C(58): error C202: 'RCAP2H': undefined identifier
+TIMER0_OVER.C(59): error C202: 'RCAP2L': undefined identifier
+TIMER0_OVER.C(60): error C202: 'TR2': undefined identifier
+TIMER0_OVER.C(70): error C202: 'timer1_flag': undefined identifier
+TIMER0_OVER.C(75): error C202: 'timer0_flag': undefined identifier
+TIMER0_OVER.C(81): error C202: 'tick_count': undefined identifier
+TIMER0_OVER.C(91): error C202: 'tick_count': undefined identifier
+TIMER0_OVER.C(93): error C202: 'tick_count': undefined identifier
+TIMER0_OVER.C(94): error C202: 'timer0_flag': undefined identifier
+TIMER0_OVER.C(103): error C202: 'tick_count1': undefined identifier
+TIMER0_OVER.C(105): error C202: 'tick_count1': undefined identifier
+TIMER0_OVER.C(106): error C202: 'timer1_flag': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling timer0_over.c...
+timer0_over.c(3): warning C318: can't open file 'lcd.h'
+timer0_over.c(4): warning C318: can't open file 'varflag.h'
+timer0_over.c(5): warning C318: can't open file 'port.h'
+TIMER0_OVER.C(22): error C202: 'sec': undefined identifier
+TIMER0_OVER.C(23): error C202: 'sec': undefined identifier
+TIMER0_OVER.C(27): error C202: 'sec1': undefined identifier
+TIMER0_OVER.C(28): error C202: 'sec1': undefined identifier
+TIMER0_OVER.C(33): error C202: 'sec': undefined identifier
+TIMER0_OVER.C(36): error C202: 'sec': undefined identifier
+TIMER0_OVER.C(36): error C202: 'sec1': undefined identifier
+TIMER0_OVER.C(55): error C202: 'T2CON': undefined identifier
+TIMER0_OVER.C(56): error C202: 'TH2': undefined identifier
+TIMER0_OVER.C(57): error C202: 'TL2': undefined identifier
+TIMER0_OVER.C(58): error C202: 'RCAP2H': undefined identifier
+TIMER0_OVER.C(59): error C202: 'RCAP2L': undefined identifier
+TIMER0_OVER.C(60): error C202: 'TR2': undefined identifier
+TIMER0_OVER.C(81): error C202: 'sec': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling timer0_over.c...
+timer0_over.c(3): warning C318: can't open file 'lcd.h'
+timer0_over.c(4): warning C318: can't open file 'varflag.h'
+timer0_over.c(5): warning C318: can't open file 'port.h'
+linking...
+Program Size: data=42.1 xdata=0 code=1349
+"timer" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling timer0_over.c...
+linking...
+Program Size: data=42.1 xdata=0 code=1349
+"timer" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling timer0_over.c...
+linking...
+Program Size: data=42.1 xdata=0 code=1349
+creating hex file from "timer"...
+"timer" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling timer0_over.c...
+linking...
+Program Size: data=44.1 xdata=0 code=1371
+creating hex file from "timer"...
+"timer" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling timer0_over.c...
+linking...
+Program Size: data=44.1 xdata=0 code=1370
+creating hex file from "timer"...
+"timer" - 0 Error(s), 0 Warning(s).

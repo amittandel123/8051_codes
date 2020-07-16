@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"EEPROM.obj" 
+TO "EEPROM" 
+RAMSIZE(256) 

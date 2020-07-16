@@ -1,0 +1,142 @@
+C51 COMPILER V7.06   MAIN                                                                  08/01/2011 22:58:36 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PREPRINT
+
+stmt level    source
+
+   1          #include<reg51.h>
+   1      =1  /*--------------------------------------------------------------------------
+   2      =1  REG51.H
+   3      =1  
+   4      =1  Header file for generic 80C51 and 80C31 microcontroller.
+   5      =1  Copyright (c) 1988-2002 Keil Elektronik GmbH and Keil Software, Inc.
+   6      =1  All rights reserved.
+   7      =1  --------------------------------------------------------------------------*/
+   8      =1  
+   9      =1  #ifndef __REG51_H__
+  10      =1  #define __REG51_H__
+  11      =1  
+  12      =1  /*  BYTE Register  */
+  13      =1  sfr P0   = 0x80;
+  14      =1  sfr P1   = 0x90;
+  15      =1  sfr P2   = 0xA0;
+  16      =1  sfr P3   = 0xB0;
+  17      =1  sfr PSW  = 0xD0;
+  18      =1  sfr ACC  = 0xE0;
+  19      =1  sfr B    = 0xF0;
+  20      =1  sfr SP   = 0x81;
+  21      =1  sfr DPL  = 0x82;
+  22      =1  sfr DPH  = 0x83;
+  23      =1  sfr PCON = 0x87;
+  24      =1  sfr TCON = 0x88;
+  25      =1  sfr TMOD = 0x89;
+  26      =1  sfr TL0  = 0x8A;
+  27      =1  sfr TL1  = 0x8B;
+  28      =1  sfr TH0  = 0x8C;
+  29      =1  sfr TH1  = 0x8D;
+  30      =1  sfr IE   = 0xA8;
+  31      =1  sfr IP   = 0xB8;
+  32      =1  sfr SCON = 0x98;
+  33      =1  sfr SBUF = 0x99;
+  34      =1  
+  35      =1  
+  36      =1  /*  BIT Register  */
+  37      =1  /*  PSW   */
+  38      =1  sbit CY   = 0xD7;
+  39      =1  sbit AC   = 0xD6;
+  40      =1  sbit F0   = 0xD5;
+  41      =1  sbit RS1  = 0xD4;
+  42      =1  sbit RS0  = 0xD3;
+  43      =1  sbit OV   = 0xD2;
+  44      =1  sbit P    = 0xD0;
+  45      =1  
+  46      =1  /*  TCON  */
+  47      =1  sbit TF1  = 0x8F;
+  48      =1  sbit TR1  = 0x8E;
+  49      =1  sbit TF0  = 0x8D;
+  50      =1  sbit TR0  = 0x8C;
+  51      =1  sbit IE1  = 0x8B;
+  52      =1  sbit IT1  = 0x8A;
+  53      =1  sbit IE0  = 0x89;
+  54      =1  sbit IT0  = 0x88;
+C51 COMPILER V7.06   MAIN                                                                  08/01/2011 22:58:36 PAGE 2   
+
+  55      =1  
+  56      =1  /*  IE   */
+  57      =1  sbit EA   = 0xAF;
+  58      =1  sbit ES   = 0xAC;
+  59      =1  sbit ET1  = 0xAB;
+  60      =1  sbit EX1  = 0xAA;
+  61      =1  sbit ET0  = 0xA9;
+  62      =1  sbit EX0  = 0xA8;
+  63      =1  
+  64      =1  /*  IP   */ 
+  65      =1  sbit PS   = 0xBC;
+  66      =1  sbit PT1  = 0xBB;
+  67      =1  sbit PX1  = 0xBA;
+  68      =1  sbit PT0  = 0xB9;
+  69      =1  sbit PX0  = 0xB8;
+  70      =1  
+  71      =1  /*  P3  */
+  72      =1  sbit RD   = 0xB7;
+  73      =1  sbit WR   = 0xB6;
+  74      =1  sbit T1   = 0xB5;
+  75      =1  sbit T0   = 0xB4;
+  76      =1  sbit INT1 = 0xB3;
+  77      =1  sbit INT0 = 0xB2;
+  78      =1  sbit TXD  = 0xB1;
+  79      =1  sbit RXD  = 0xB0;
+  80      =1  
+  81      =1  /*  SCON  */
+  82      =1  sbit SM0  = 0x9F;
+  83      =1  sbit SM1  = 0x9E;
+  84      =1  sbit SM2  = 0x9D;
+  85      =1  sbit REN  = 0x9C;
+  86      =1  sbit TB8  = 0x9B;
+  87      =1  sbit RB8  = 0x9A;
+  88      =1  sbit TI   = 0x99;
+  89      =1  sbit RI   = 0x98;
+  90      =1  
+  91      =1  #endif
+   2          
+   3          void main(void)
+   4          {
+   5   1      
+   6   1      
+   7   1      }
+C51 COMPILER V7.06   MAIN                                                                  08/01/2011 22:58:36 PAGE 3   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION main (BEGIN)
+                                           ; SOURCE LINE # 3
+                                           ; SOURCE LINE # 4
+                                           ; SOURCE LINE # 7
+0000 22                RET     
+             ; FUNCTION main (END)
+
+C51 COMPILER V7.06   MAIN                                                                  08/01/2011 22:58:36 PAGE 4   
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+main . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      1    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

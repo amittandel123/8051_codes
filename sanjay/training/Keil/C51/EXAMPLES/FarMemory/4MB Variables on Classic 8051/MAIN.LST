@@ -1,0 +1,101 @@
+C51 COMPILER V7.20   MAIN                                                                  09/01/2006 16:55:06 PAGE 1   
+
+
+C51 COMPILER V7.20, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN MAIN.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE MAIN.C OMF2 OPTIMIZE(9,SPEED) BROWSE DEBUG
+
+line level    source
+
+   1          #include <REG320.H>                      // SFR definition header file
+   2          #include <stdio.h>                       // prototype declarations for I/O functions
+   3          
+   4          #ifdef MONITOR51                         // Debugging with Monitor-51 needs
+              char code reserve [3] _at_ 0x23;         // space for serial interrupt if
+              #endif                                   // Stop Exection with Serial Intr.
+   7          
+   8          
+   9          /*
+  10           * this large arrays are stored 'banked' xdata and code memory
+  11           */ 
+  12                        unsigned char far large_array0[0x8000];
+  13          extern        unsigned char far large_array1[0x8000];
+  14                 const  unsigned char far large_carray0[0x8000] = { 1, 2, 3, 4, 5 };
+  15          extern const  unsigned char far large_carray1[0x8000];
+  16          
+  17          /* 
+  18           * the following timer interrupt routine uses a variable in xdata space
+  19           */
+  20          #define PERIOD     -250                   // 250 usec interrupt period
+  21          unsigned char xdata timer_tick;           // xdata variable
+  22          
+  23          void timer0 (void) interrupt 1 using 1 {  // Int Vector at 000BH, Reg Bank 1
+  24   1        timer_tick++;                           // increment xdata variable
+  25   1      }
+  26          
+  27          /*------------------------------------------------
+  28          The main C function.  Program execution starts
+  29          here after stack initialization.
+  30          ------------------------------------------------*/
+  31          
+  32          void main (void) {
+  33   1        unsigned int i;
+  34   1      /*------------------------------------------------
+  35   1      Setup the serial port for 1200 baud at 16MHz.
+  36   1      ------------------------------------------------*/
+  37   1      #ifndef MONITOR51
+  38   1        SCON0 = 0x50;               // SCON: mode 1, 8-bit UART, enable rcvr
+  39   1        TMOD |= 0x20;               // TMOD: timer 1, mode 2, 8-bit reload
+  40   1        TH1   = 221;                // TH1:  reload value for 1200 baud @ 16MHz
+  41   1        TR1   = 1;                  // TR1:  timer 1 run
+  42   1        TI    = 1;                  // TI:   set TI to send first char of UART
+  43   1      #endif
+  44   1      
+  45   1      /* setup the timer 0 interrupt */
+  46   1        TH0 = (unsigned char) PERIOD;          // set timer period
+  47   1        TL0 = (unsigned char) PERIOD;
+  48   1        TMOD = TMOD | 0x02;                    // select mode 2
+  49   1        TR0 = 1;                               // start timer 0
+  50   1        ET0 = 1;                               // enable timer 0 interrupt
+  51   1        EA  = 1;                               // global interrupt enable
+  52   1      
+  53   1        for (i = 0; i < sizeof (large_array0); i++)  {
+  54   2          large_array0[i] = (unsigned char) i;      // just an example
+  55   2          large_array1[i] = (unsigned char) i+0x80; // just an example
+C51 COMPILER V7.20   MAIN                                                                  09/01/2006 16:55:06 PAGE 2   
+
+  56   2        }
+  57   1        for (i = 0; i < 20; i++)  {
+  58   2          printf ("\nRead large_array0[0x%X]=%bX", i, large_array0[i]);
+  59   2        }
+  60   1        for (i = 0; i < 20; i++)  {
+  61   2          printf ("\nRead large_array2[0x%X]=%bX", i, large_array1[i]);
+  62   2        }
+  63   1        for (i = 0; i < 20; i++)  {
+  64   2          printf ("\nRead large const array0[0x%X]=%bX", i, large_carray0[i]);
+  65   2        }
+  66   1        for (i = 0; i < 20; i++)  {
+  67   2          printf ("\nRead large const array1[0x%X]=%bX", i, large_carray1[i]);
+  68   2        }
+  69   1        while (1);
+  70   1      }
+  71          
+  72          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    303    ----
+   CONSTANT SIZE    =    128    ----
+   XDATA SIZE       =      1    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =  32768    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =  32768    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

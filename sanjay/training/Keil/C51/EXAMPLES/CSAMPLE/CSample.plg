@@ -1,0 +1,17 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+C:\Keil\C51\EXAMPLES\CSAMPLE\CSAMPLE.uv2
+Project File Date:  10/20/2000
+
+<h2>Output:</h2>
+Build target 'Standard'
+compiling CSAMPLE1.C...
+compiling CSAMPLE2.C...
+compiling CSAMPLE3.C...
+linking...
+Program Size: data=100.3 xdata=0 code=1553
+creating hex file from "CSample"...
+"CSample" - 0 Error(s), 0 Warning(s).

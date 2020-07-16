@@ -1,0 +1,34 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+C:\Keil\C51\EXAMPLES\Philips 80C51MX\C Linear Rom on MX2\loadapp.uv2
+Project File Date:  09/01/2006
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling main_b.c...
+compiling main_a.c...
+compiling int.c...
+assembling Start_mx.a51...
+linking...
+*** ERROR L107: ADDRESS SPACE OVERFLOW
+    SPACE:   XDATA
+    SEGMENT: ?XD?MAIN_B
+    LENGTH:  000002H   
+Program Size: data=17.0 xdata=2 const=0 code=401
+Target not created
+Build target 'Target 1'
+compiling main_a.c...
+compiling int.c...
+linking...
+*** ERROR L121: IMPROPER FIXUP
+    MODULE:  Start_mx.obj (?C_STARTUP)
+    SEGMENT: ?C_C51STARTUP
+    OFFSET:  00000EH
+Program Size: data=9.0 xdata=0 const=0 code=26
+Target not created
+</pre>
+</body>
+</html>

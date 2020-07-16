@@ -1,0 +1,50 @@
+C51 COMPILER V7.20   C_ROOT                                                                09/01/2006 16:11:13 PAGE 1   
+
+
+C51 COMPILER V7.20, COMPILATION OF MODULE C_ROOT
+OBJECT MODULE PLACED IN C_root.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE C_root.c DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*------------------------------------------------------------------------------
+   2          C_ROOT.C
+   3          
+   4          Copyright 1995-1996 Keil Software, Inc.
+   5          ------------------------------------------------------------------------------*/
+   6          
+   7          #include <stdio.h>
+   8          #include <reg51.h>
+   9          
+  10          extern void func0(void);
+  11          extern void func1(void);
+  12          
+  13          void main(void) {
+  14   1      
+  15   1      /* INITIALIZE SERIAL INTERFACE TO 2400 BAUD @12MHz */
+  16   1        SCON = 0x52;    /* SCON */
+  17   1        TMOD = 0x20;    /* TMOD */
+  18   1        TCON = 0x69;    /* TCON */
+  19   1        TH1 =  0xf3;    /* TH1 */
+  20   1      
+  21   1        printf("MAIN PROGRAM CALLS A FUNCTION IN BANK 0 \n");
+  22   1        func0();
+  23   1        printf("MAIN PROGRAM CALLS A FUNCTION IN BANK 1 \n");
+  24   1        func1();
+  25   1      
+  26   1        while(1);
+  27   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     38    ----
+   CONSTANT SIZE    =     84    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

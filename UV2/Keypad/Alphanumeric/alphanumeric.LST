@@ -1,0 +1,595 @@
+C51 COMPILER V7.06   ALPHANUMERIC                                                          01/18/2012 16:37:50 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE ALPHANUMERIC
+OBJECT MODULE PLACED IN alphanumeric.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE alphanumeric.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          // Program to make alphabetical keypad similar to the one in mobiles
+   2          
+   3          #include<reg51.h>
+   4          #define port P1
+   5          #define dataport P2  //Data port for LCD
+   6          #define key P0          // Port for Keypad
+   7          #define sec 100
+   8          sbit rs = port^1;
+   9          sbit rw = port^2;
+  10          sbit en = port^3;
+  11          
+  12          sbit col1=key^6;
+  13          sbit col2=key^5;
+  14          sbit col3=key^4;
+  15          sbit row1=key^0;
+  16          sbit row2=key^1;
+  17          sbit row3=key^2;
+  18          sbit row4=key^3;
+  19          
+  20          unsigned char position=128,i=0;
+  21          int check_again[10]={0,0,0,0,0,0,0,0,0,0};
+  22          
+  23          void delay(unsigned int msec) // Time delay function
+  24          {
+  25   1              int i,j;
+  26   1              for(i=0;i<msec;i++)
+  27   1                for(j=0;j<1275;j++);
+  28   1      }
+  29          
+  30          void lcd_cmd(unsigned char item)
+  31          {
+  32   1              dataport=item;
+  33   1              rs=0;
+  34   1              rw=0;
+  35   1              en=1;
+  36   1              delay(1);
+  37   1              en=0;
+  38   1              return;
+  39   1      }
+  40          
+  41          void lcd_data(unsigned char item)
+  42          {
+  43   1              lcd_cmd(0x0f);
+  44   1              delay(10);
+  45   1              dataport=item;
+  46   1              rs=1;
+  47   1              rw=0;
+  48   1              en=1;
+  49   1              delay(1);
+  50   1              en=0;
+  51   1              return;
+  52   1      }
+  53          
+  54          void num_check(int a, int b)  //Check function
+  55          {
+C51 COMPILER V7.06   ALPHANUMERIC                                                          01/18/2012 16:37:50 PAGE 2   
+
+  56   1              int j;
+  57   1              for(j=0;j<10;j++)
+  58   1              {
+  59   2                 if(j!=a)
+  60   2                 {
+  61   3                              check_again[j]=0;
+  62   3                 }
+  63   2              }
+  64   1              if(check_again[a]==3)   // check if 3 times same key press occur
+  65   1                      check_again[a]=0;       // reset counter to 0
+  66   1              check_again[11]=1;
+  67   1              check_again[12]=1;
+  68   1      }
+*** WARNING C280 IN LINE 54 OF ALPHANUMERIC.C: 'b': unreferenced local variable
+  69          
+  70          void display(int a, int b) // Display function
+  71          {
+  72   1              switch(b)
+  73   1              {
+  74   2                      case 1:
+  75   2                  {
+  76   3                          switch(a)
+  77   3                          {
+  78   4                                   case 1:
+  79   4                                       {
+  80   5                                               if(check_again[a]>1)
+  81   5                                                      i--;
+  82   5                                               lcd_cmd(position+i);
+  83   5                                               lcd_data('a');
+  84   5                                               delay(5);
+  85   5                                               num_check(1 ,check_again[1]);
+  86   5                                               break;
+  87   5                                   }
+  88   4                                   case 2:
+  89   4                                       {
+  90   5                                           if(check_again[a]>1)
+  91   5                                                   i--;
+  92   5                                           lcd_cmd(position+i);
+  93   5                                           lcd_data('d');
+  94   5                                           delay(5);
+  95   5                                           num_check(2 ,check_again[2]);
+  96   5                                           break;
+  97   5                                   }
+  98   4                                   case 3: 
+  99   4                                       {
+ 100   5                                             if(check_again[a]>1)
+ 101   5                                                     i--;
+ 102   5                                             lcd_cmd(position+i);
+ 103   5                                             lcd_data('g');
+ 104   5                                             delay(5);
+ 105   5                                             num_check(3 ,check_again[3]);
+ 106   5                                             break;
+ 107   5                                   }
+ 108   4                                   case 4:
+ 109   4                                       {
+ 110   5                                             if(check_again[a]>1)
+ 111   5                                                    i--;
+ 112   5                                             lcd_cmd(position+i);
+ 113   5                                             lcd_data('j');
+ 114   5                                             delay(5);
+ 115   5                                             num_check(4 ,check_again[4]);
+ 116   5                                             break;
+C51 COMPILER V7.06   ALPHANUMERIC                                                          01/18/2012 16:37:50 PAGE 3   
+
+ 117   5                                   }
+ 118   4                                   case 5:
+ 119   4                                       {
+ 120   5                                             if(check_again[a]>1)
+ 121   5                                                    i--;
+ 122   5                                             lcd_cmd(position+i);
+ 123   5                                             lcd_data('m');
+ 124   5                                             delay(5);
+ 125   5                                             num_check(5 ,check_again[5]);
+ 126   5                                             break;
+ 127   5                                   }
+ 128   4                                   case 6:
+ 129   4                                       {
+ 130   5                                             if(check_again[a]>1)
+ 131   5                                                    i--;
+ 132   5                                             lcd_cmd(position+i);
+ 133   5                                                     lcd_data('p');
+ 134   5                                             delay(5);
+ 135   5                                             num_check(6 ,check_again[6]);
+ 136   5                                             break;
+ 137   5                                   }
+ 138   4                                   case 7:
+ 139   4                                       {
+ 140   5                                             if(check_again[a]>1)
+ 141   5                                             i--;
+ 142   5                                             lcd_cmd(position+i);
+ 143   5                                                     lcd_data('s');
+ 144   5                                             delay(5);
+ 145   5                                             num_check(7 ,check_again[7]);
+ 146   5                                             break;
+ 147   5                                   }
+ 148   4                                   case 8:
+ 149   4                                       {
+ 150   5                                             if(check_again[a]>1)
+ 151   5                                             i--;
+ 152   5                                             lcd_cmd(position+i);
+ 153   5                                                     lcd_data('v');
+ 154   5                                             delay(5);
+ 155   5                                             num_check(8 ,check_again[8]);
+ 156   5                                             break;
+ 157   5                                   }
+ 158   4                                   case 9:
+ 159   4                                       {
+ 160   5                                             if(check_again[a]>1)
+ 161   5                                             i--;
+ 162   5                                             lcd_cmd(position+i); 
+ 163   5                                                    lcd_data('y');
+ 164   5                                             delay(5);
+ 165   5                                             num_check(9 ,check_again[9]);
+ 166   5                                             break;
+ 167   5                                   }
+ 168   4                                   case 0:
+ 169   4                                       { 
+ 170   5                                             lcd_cmd(position+i);
+ 171   5                                             lcd_data(' ');
+ 172   5                                             delay(5);
+ 173   5                                             num_check(10 ,check_again[10]);
+ 174   5                                             break;
+ 175   5                                   }
+ 176   4                                   case 11:
+ 177   4                                       {
+ 178   5                                             if((position+i)>129)
+C51 COMPILER V7.06   ALPHANUMERIC                                                          01/18/2012 16:37:50 PAGE 4   
+
+ 179   5                                             {
+ 180   6                                                     i=i-2;
+ 181   6                                                     delay(5);
+ 182   6                                                     lcd_cmd(position+i+1);
+ 183   6                                                     num_check(11 ,check_again[11]);;
+ 184   6                                                     delay(5);
+ 185   6                                         }
+ 186   5                                         break;
+ 187   5                                   }
+ 188   4                                   case 12:
+ 189   4                                       {
+ 190   5                                             delay(5);
+ 191   5                                             lcd_cmd(position+i);
+ 192   5                                             num_check(12 ,check_again[12]);
+ 193   5                                             delay(5);
+ 194   5                                             break;
+ 195   5                               }
+ 196   4                          }
+ 197   3                              break;
+ 198   3                 }
+ 199   2              
+ 200   2                case 2:
+ 201   2                {
+ 202   3                       switch(a)
+ 203   3                           {
+ 204   4                                   case 1:
+ 205   4                                       {
+ 206   5                                     if(check_again[a]>1)
+ 207   5                                         i--;
+ 208   5                                     lcd_cmd(position+i);
+ 209   5                                     lcd_data('b');
+ 210   5                                     delay(5);
+ 211   5                                     num_check(1 ,check_again[1]);
+ 212   5                                     break;
+ 213   5                                   }
+ 214   4                                   case 2:
+ 215   4                                       {
+ 216   5                                     if(check_again[a]>1)
+ 217   5                                          i--;
+ 218   5                                     lcd_cmd(position+i);
+ 219   5                                     lcd_data('e');
+ 220   5                                     delay(5);
+ 221   5                                     num_check(2 ,check_again[2]);
+ 222   5                                     break;
+ 223   5                                   }
+ 224   4                                   case 3: {
+ 225   5                                     if(check_again[a]>1)
+ 226   5                                     i--;
+ 227   5                                     lcd_cmd(position+i);
+ 228   5                                     lcd_data('h');
+ 229   5                                     delay(5);
+ 230   5                                     num_check(3 ,check_again[3]);
+ 231   5                                     break;
+ 232   5                                     }
+ 233   4                                   case 4:{
+ 234   5                                     if(check_again[a]>1)
+ 235   5                                     i--;
+ 236   5                                     lcd_cmd(position+i);
+ 237   5                                     lcd_data('k');
+ 238   5                                     delay(5);
+ 239   5                                     num_check(4 ,check_again[4]);
+ 240   5                                     break;
+C51 COMPILER V7.06   ALPHANUMERIC                                                          01/18/2012 16:37:50 PAGE 5   
+
+ 241   5                                     }
+ 242   4                                   case 5:{
+ 243   5                                     if(check_again[a]>1)
+ 244   5                                     i--;
+ 245   5                                     lcd_cmd(position+i);
+ 246   5                                     lcd_data('n');
+ 247   5                                     delay(5);
+ 248   5                                     num_check(5 ,check_again[5]);
+ 249   5                                     break;
+ 250   5                                     }
+ 251   4                                   case 6:{
+ 252   5                                     if(check_again[a]>1)
+ 253   5                                     i--;
+ 254   5                                     lcd_cmd(position+i);
+ 255   5                                     lcd_data('q');
+ 256   5                                     delay(5);
+ 257   5                                     num_check(6 ,check_again[6]);
+ 258   5                                     break;
+ 259   5                                     }
+ 260   4                                   case 7:{
+ 261   5                                     if(check_again[a]>1)
+ 262   5                                     i--;
+ 263   5                                     lcd_cmd(position+i);
+ 264   5                                     lcd_data('t');
+ 265   5                                     delay(5);
+ 266   5                                     num_check(7 ,check_again[7]);
+ 267   5                                     break;
+ 268   5                                     }
+ 269   4                                   case 8:{
+ 270   5                                     if(check_again[a]>1)
+ 271   5                                     i--;
+ 272   5                                     lcd_cmd(position+i);
+ 273   5                                     lcd_data('w');
+ 274   5                                     delay(5);
+ 275   5                                     num_check(8 ,check_again[8]);
+ 276   5                                     break;
+ 277   5                                     }
+ 278   4                                   case 9:{
+ 279   5                                     if(check_again[a]>1)
+ 280   5                                     i--;
+ 281   5                                     lcd_cmd(position+i); 
+ 282   5                                     lcd_data('z');
+ 283   5                                     delay(5);
+ 284   5                                     num_check(9 ,check_again[9]);
+ 285   5                                     break;
+ 286   5                                     }
+ 287   4                                   case 0:{
+ 288   5                                     lcd_cmd(position+i);
+ 289   5                                     lcd_data('-');
+ 290   5                                     num_check(10 ,check_again[10]);
+ 291   5                                     break;
+ 292   5                                     }
+ 293   4                                   case 11:{
+ 294   5                                     i--;
+ 295   5                                     lcd_cmd(0x10);
+ 296   5                                     delay(5);
+ 297   5                                     break;
+ 298   5                                     }
+ 299   4                           }
+ 300   3                  break;
+ 301   3                 }
+ 302   2      
+C51 COMPILER V7.06   ALPHANUMERIC                                                          01/18/2012 16:37:50 PAGE 6   
+
+ 303   2                case 3:
+ 304   2                {
+ 305   3                              switch(a)
+ 306   3                      {
+ 307   4                                   case 1:{
+ 308   5                                     if(check_again[a]>1)
+ 309   5                                             i--;
+ 310   5                                     lcd_cmd(position+i);
+ 311   5                                     lcd_data('c');
+ 312   5                                     delay(5);
+ 313   5                                     num_check(1 ,check_again[1]);
+ 314   5                                     break;
+ 315   5                                     }
+ 316   4                                   case 2:{
+ 317   5                                     if(check_again[a]>1)
+ 318   5                                                  i--;
+ 319   5                                     lcd_cmd(position+i);
+ 320   5                                     lcd_data('f');
+ 321   5                                     delay(5);
+ 322   5                                     num_check(2 ,check_again[2]);
+ 323   5                                     break;
+ 324   5                                     }
+ 325   4                                   case 3: {
+ 326   5                                     if(check_again[a]>1)
+ 327   5                                                  i--;
+ 328   5                                     lcd_cmd(position+i);
+ 329   5                                     lcd_data('i');
+ 330   5                                     delay(5);
+ 331   5                                     num_check(3 ,check_again[3]);
+ 332   5                                     break;
+ 333   5                                     }
+ 334   4                                   case 4:{
+ 335   5                                     if(check_again[a]>1)
+ 336   5                                                  i--;
+ 337   5                                     lcd_cmd(position+i);
+ 338   5                                     lcd_data('l');
+ 339   5                                     delay(5);
+ 340   5                                     num_check(4 ,check_again[4]);
+ 341   5                                     break;
+ 342   5                                     }
+ 343   4                                   case 5:{
+ 344   5                                     if(check_again[a]>1)
+ 345   5                                                  i--;
+ 346   5                                     lcd_cmd(position+i);
+ 347   5                                     lcd_data('o');
+ 348   5                                     delay(5);
+ 349   5                                     num_check(5 ,check_again[5]);
+ 350   5                                     break;
+ 351   5                                     }
+ 352   4                                   case 6:{
+ 353   5                                     if(check_again[a]>1)
+ 354   5                                                   i--;
+ 355   5                                     lcd_cmd(position+i);
+ 356   5                                     lcd_data('r');
+ 357   5                                     delay(5);
+ 358   5                                     num_check(6 ,check_again[6]);
+ 359   5                                     break;
+ 360   5                                     }
+ 361   4                                   case 7:{
+ 362   5                                     if(check_again[a]>1)
+ 363   5                                                 i--;
+ 364   5                                     lcd_cmd(position+i);
+C51 COMPILER V7.06   ALPHANUMERIC                                                          01/18/2012 16:37:50 PAGE 7   
+
+ 365   5                                     lcd_data('u');
+ 366   5                                     delay(5);
+ 367   5                                     num_check(7 ,check_again[7]);
+ 368   5                                     break;
+ 369   5                                     }
+ 370   4                                   case 8:{
+ 371   5                                     if(check_again[a]>1)
+ 372   5                                                   i--;
+ 373   5                                     lcd_cmd(position+i);
+ 374   5                                     lcd_data('x');
+ 375   5                                     delay(5);
+ 376   5                                     num_check(8 ,check_again[8]);
+ 377   5                                     break;
+ 378   5                                     }
+ 379   4                                   case 9:{
+ 380   5                                     if(check_again[a]>1)
+ 381   5                                                    i--;
+ 382   5                                     lcd_cmd(position+i); 
+ 383   5                                     lcd_data('z');
+ 384   5                                     delay(5);
+ 385   5                                     num_check(9 ,check_again[9]);
+ 386   5                                     break;
+ 387   5                                     }
+ 388   4                                   case 0:{  lcd_cmd(position+i);
+ 389   5                                     lcd_data('-');
+ 390   5                                     num_check(10 ,check_again[10]);
+ 391   5                                     break;
+ 392   5                                    
+ 393   5                                     }
+ 394   4                                   case 11:{
+ 395   5                                     i=i-2;
+ 396   5                                     lcd_cmd(position+i);
+ 397   5                                     delay(5);
+ 398   5                                     break;
+ 399   5                                     }
+ 400   4                   }
+ 401   3                 break;
+ 402   3                 }
+ 403   2              }
+ 404   1      }
+ 405          
+ 406          void check_col1()   //Check column one
+ 407          {
+ 408   1              row1=row2=row3=row4=1;
+ 409   1              row1=0;
+ 410   1              if(col1==0)
+ 411   1              {
+ 412   2                delay(10);
+ 413   2                check_again[1]++;
+ 414   2                display(1,check_again[1]);
+ 415   2              }
+ 416   1              row1=1;
+ 417   1              row2=0;
+ 418   1              if(col1==0)
+ 419   1              {
+ 420   2                delay(10);
+ 421   2                check_again[4]++;
+ 422   2                display(4,check_again[4]);
+ 423   2              }
+ 424   1              row2=1;
+ 425   1              row3=0;
+ 426   1              if(col1==0)
+C51 COMPILER V7.06   ALPHANUMERIC                                                          01/18/2012 16:37:50 PAGE 8   
+
+ 427   1              {
+ 428   2                delay(10);
+ 429   2                check_again[7]++;
+ 430   2                display(7,check_again[7]);
+ 431   2              }
+ 432   1              row3=1;
+ 433   1              row4=0;
+ 434   1              if(col1==0)
+ 435   1              {
+ 436   2                delay(10);
+ 437   2                display(11,1);  //FOR *
+ 438   2              }
+ 439   1              row4=1;
+ 440   1      }
+ 441          
+ 442          void check_col2() //Check column two
+ 443          {
+ 444   1              row1=row2=row3=row4=1;
+ 445   1              row1=0;
+ 446   1              if(col2==0)
+ 447   1              {
+ 448   2                delay(10);
+ 449   2                check_again[2]++;
+ 450   2                display(2,check_again[2]);
+ 451   2              }
+ 452   1              row1=1;
+ 453   1              row2=0;
+ 454   1              if(col2==0)
+ 455   1              {
+ 456   2                check_again[5]++;
+ 457   2                display(5,check_again[5]);
+ 458   2              }
+ 459   1              row2=1;
+ 460   1              row3=0;
+ 461   1              if(col2==0)
+ 462   1              {
+ 463   2                delay(10);
+ 464   2                check_again[8]++;
+ 465   2                display(8,check_again[8]);
+ 466   2              }
+ 467   1              row3=1;
+ 468   1              row4=0;
+ 469   1              if(col2==0)
+ 470   1              {
+ 471   2                delay(10);
+ 472   2                check_again[0]++;
+ 473   2                display(0,1);
+ 474   2              }
+ 475   1              row4=1;
+ 476   1      }
+ 477          
+ 478          void check_col3() //check column three
+ 479          {
+ 480   1              row1=row2=row3=row4=1;
+ 481   1              row1=0;
+ 482   1              if(col3==0)
+ 483   1              {
+ 484   2                delay(10);
+ 485   2                check_again[3]++;
+ 486   2                display(3,check_again[3]);
+ 487   2              }
+ 488   1              row1=1;
+C51 COMPILER V7.06   ALPHANUMERIC                                                          01/18/2012 16:37:50 PAGE 9   
+
+ 489   1              row2=0;
+ 490   1              if(col3==0)
+ 491   1              {
+ 492   2                delay(10);
+ 493   2                check_again[6]++;
+ 494   2                display(6,check_again[6]);
+ 495   2              }
+ 496   1              row2=1;
+ 497   1              row3=0;
+ 498   1              if(col3==0)
+ 499   1              {
+ 500   2                delay(10);
+ 501   2                check_again[9]++;
+ 502   2                display(9,check_again[9]);
+ 503   2              }
+ 504   1              row3=1;
+ 505   1              row4=0;
+ 506   1              if(col3==0)
+ 507   1              {
+ 508   2                delay(10);
+ 509   2                display(12,1);  //FOR #
+ 510   2              }
+ 511   1              row4=1;
+ 512   1      }
+ 513          
+ 514          void keypad1()
+ 515          {
+ 516   1              if((position+i)>144 && i>16)
+ 517   1              {
+ 518   2                position=192;
+ 519   2                i=0;
+ 520   2              }
+ 521   1              if((position+i)>203 && i>12 )
+ 522   1              {
+ 523   2                lcd_cmd(0X01);
+ 524   2                i=0;
+ 525   2                position=128;
+ 526   2              }
+ 527   1              i++;
+ 528   1              lcd_cmd(position+i);
+ 529   1              if(col1==0)
+ 530   1                      check_col1();
+ 531   1              else if(col2==0)
+ 532   1                  check_col2();
+ 533   1              else if(col3==0)
+ 534   1                  check_col3();
+ 535   1              delay(10);
+ 536   1      }
+ 537          
+ 538          void main()
+ 539          {
+ 540   1              col1=col2=col3=1;
+ 541   1              lcd_cmd(0x38);
+ 542   1              lcd_cmd(0x0C);
+ 543   1              lcd_cmd(0x01);
+ 544   1              delay(sec);
+ 545   1              while(1)
+ 546   1              {
+ 547   2                        row1=row2=row3=row4=0;
+ 548   2                        while(col1==1 && col2==1 && col3==1);
+ 549   2                        {
+ 550   3                                      keypad1();
+C51 COMPILER V7.06   ALPHANUMERIC                                                          01/18/2012 16:37:50 PAGE 10  
+
+ 551   3                        }
+ 552   2              }
+ 553   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   2044    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     22       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

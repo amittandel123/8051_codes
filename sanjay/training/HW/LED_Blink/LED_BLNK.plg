@@ -1,0 +1,29 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\Amit\sanjay\training\HW\LED_Blink\LED_BLNK.uvproj
+Project File Date:  <unknown>
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+A51 MACRO ASSEMBLER V8.02 - SN: Eval Version
+COPYRIGHT KEIL ELEKTRONIK GmbH 1987 - 2008
+"C:\Keil\C51\BIN\A51.EXE" "D:\training\training\HW\LED_Blink\STARTUP.A51" SET (SMALL) DEBUG PRINT(.\STARTUP.lst) OBJECT(.\STARTUP.obj) EP
+A51 FATAL ERROR -
+  FILE:       D:\training\training\HW\LED_Blink\STARTUP.A51
+  ERROR:      FILE DOES NOT EXIST
+A51 TERMINATED.
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+A51 MACRO ASSEMBLER V8.02 - SN: Eval Version
+COPYRIGHT KEIL ELEKTRONIK GmbH 1987 - 2008
+"C:\Keil\C51\BIN\A51.EXE" "D:\training\training\HW\LED_Blink\STARTUP.A51" SET (SMALL) DEBUG PRINT(.\STARTUP.lst) OBJECT(.\STARTUP.obj) EP
+A51 FATAL ERROR -
+  FILE:       D:\training\training\HW\LED_Blink\STARTUP.A51
+  ERROR:      FILE DOES NOT EXIST
+A51 TERMINATED.
+Target not created

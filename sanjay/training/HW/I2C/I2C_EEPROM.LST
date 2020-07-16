@@ -1,0 +1,99 @@
+C51 COMPILER V7.06   I2C_EEPROM                                                            08/02/2011 22:16:06 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE I2C_EEPROM
+OBJECT MODULE PLACED IN I2C_EEPROM.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE I2C_EEPROM.C BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #include "I2C_EEPROM.H"
+   3          sbit WP = P2^0;
+   4          
+   5          void initialise(void)
+   6          {
+   7   1              P0              = 0xFF;
+   8   1              P1              = 0xFF;
+   9   1              WP              = 0x00;
+  10   1              SCON    = 0x50;
+  11   1              TMOD    = 0x20;
+  12   1              TI              = 0x01;
+  13   1              TR1             = 0x01;
+  14   1              TH1             = 0xFD;
+  15   1              EA              = 0x00;
+  16   1      }
+  17          
+  18          void Print(unsigned char mData)
+  19          {
+  20   1              TI              = 0x00;
+  21   1              SBUF    = mData;
+  22   1              while   (!TI);
+  23   1              TI              = 0x00;
+  24   1      }
+  25          
+  26          void main(void)
+  27          {
+  28   1              int xyz = 20, mno = 1;
+  29   1              unsigned char y,asm,Dev_Add = 0xA0,ReadByte;
+  30   1              unsigned int add;
+  31   1              unsigned int No_Of_Bytes_2_Write = 100;
+  32   1      //      unsigned char data_2_I2C[]= {"Amit Tandel Tarapur M"};
+  33   1              unsigned char PWD[] = {120,86,100,18}; 
+  34   1      
+  35   1      
+  36   1              //      xyz=test();
+  37   1              initialise();
+  38   1              I2C_initialise();       
+  39   1              y=mno;
+  40   1              mno = xyz+10;
+  41   1              {
+  42   2                      extern int xyz;
+  43   2                      mno = xyz;
+  44   2              }
+  45   1              //***************************************************************************
+  46   1              //*                                             Writing Data into Memory                                                        *
+  47   1              //***************************************************************************
+  48   1      
+  49   1      /*      for(y=0;y<21;y++)
+  50   1              {       
+  51   1                      I2C_Write(data_2_I2C[y], 0xA0, 0x00, y); // (data,Dev_add,word1,word2)
+  52   1                      wait(2);
+  53   1              }       
+  54   1      */      //***************************************************************************
+  55   1              //*                                             Reading Data from Memory                                                        *
+C51 COMPILER V7.06   I2C_EEPROM                                                            08/02/2011 22:16:06 PAGE 2   
+
+  56   1              //***************************************************************************
+  57   1      //      while(1);
+  58   1      
+  59   1              add=0;
+  60   1              asm=0;
+  61   1              No_Of_Bytes_2_Write = 21;
+  62   1              while(No_Of_Bytes_2_Write--)
+  63   1              {       
+  64   2                      ReadByte = I2C_Read(Dev_Add,asm,add);
+  65   2                      Print(ReadByte);
+  66   2                      if(add==255)
+  67   2                      {
+  68   3                              asm++;
+  69   3                      }
+  70   2                      add++;
+  71   2              }
+  72   1      
+  73   1              while(1);
+  74   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    158    ----
+   CONSTANT SIZE    =      4    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      15
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

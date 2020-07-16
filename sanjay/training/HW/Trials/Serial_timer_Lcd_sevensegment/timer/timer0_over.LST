@@ -1,0 +1,134 @@
+C51 COMPILER V7.06   TIMER0_OVER                                                           07/27/2011 22:09:25 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE TIMER0_OVER
+OBJECT MODULE PLACED IN timer0_over.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE timer0_over.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <stdio.h>
+   2          #include <reg52.h>
+   3          
+   4          void initilise();
+   5          unsigned int tick_count, timer0_flag,tick_count1,timer1_flag,sec,sec1;
+   6          void main()
+   7          {
+   8   1              int x;
+   9   1              initilise();
+  10   1              x = 0;
+  11   1              while(1)
+  12   1              {
+  13   2                      TR0 = 1;  // run timer0
+  14   2                      TR1 = 1; // run timer1;
+  15   2              
+  16   2                      if((timer0_flag == 1)|| (timer1_flag == 1))
+  17   2                      {
+  18   3                              timer0_flag = 0;
+  19   3                              tick_count = 0;
+  20   3                              sec++;
+  21   3                              printf("%d",sec);
+  22   3                              
+  23   3                              timer1_flag = 0;
+  24   3                              tick_count1 = 0; 
+  25   3                              sec1++;
+  26   3                              printf(" \t%d \n",sec1);
+  27   3      
+  28   3                      }
+  29   2      
+  30   2               // if sec are 60, then 1min is completed.
+  31   2                      if((sec == 60) || (sec1 == 60))                  
+  32   2                      {
+  33   3                              x++;    
+  34   3                              printf("\n %d min. is over", x);
+  35   3                              sec = 0; sec1 = 0;
+  36   3                      }
+  37   2              }
+  38   1      }
+  39          
+  40          void initilise()
+  41          {
+  42   1              
+  43   1      // timer0 used for counting and timer1 used to printf the statements
+  44   1      /*  TMOD = 0x21;    //mode 2 for timer1 and mode 1 for timer 0.
+  45   1      
+  46   1              SCON  = 0x50;                   /* SCON: mode 1, 8-bit UART, enable rcvr */
+  47   1       //     TH1   = 253;                       /* TH1:  reload value for 9600 baud @ 11.059 MHz */
+  48   1      //      TR1   = 1;                          /* TR1:  timer 1 run */
+  49   1      //      TI    = 1;  */
+  50   1      
+  51   1      //timer0 used for counting and timer2 used to printf the statements     
+  52   1      //      TMOD = 0x01;                            //mode 1 for timer 0.
+  53   1              SCON  = 0x50;                   /* SCON: mode 1, 8-bit UART, enable rcvr */
+  54   1              T2CON  = 0x30;                  /* SCON: mode 1, 8-bit UART, enable rcvr */
+  55   1              TH2 = 0xFF;
+C51 COMPILER V7.06   TIMER0_OVER                                                           07/27/2011 22:09:25 PAGE 2   
+
+  56   1              TL2 = 0xDC;
+  57   1              RCAP2H = 0xFF;                       /* TH1:  reload value for 9600 baud @ 11.059 MHz */
+  58   1              RCAP2L = 0xDC;
+  59   1              TR2   = 1;                          /* TR1:  timer 1 run */
+  60   1          TI    = 1;  
+  61   1      
+  62   1      // timer0 & timer1 used for counting and timer2 used to printf the statements   
+  63   1      
+  64   1              TMOD = 0x11; //mode 1 is selected for timer0 and timer1
+  65   1      
+  66   1              //5ms delay
+  67   1              TH1 = 0xEC;   //as per 11.059MHZ clock
+  68   1              TL1 = 0x78;
+  69   1              timer1_flag = 0;
+  70   1      
+  71   1              // 1ms delay
+  72   1              TH0 = 0xFC;   //as per 11.059MHZ clock
+  73   1              TL0 = 0x2B;
+  74   1              timer0_flag = 0;
+  75   1              
+  76   1              ET0 = 1;
+  77   1              ET1 = 1;
+  78   1              EA = 1;
+  79   1      //      TR0 = 1;
+  80   1              tick_count = tick_count1 =sec = sec1= 0;
+  81   1      }
+  82          
+  83          void timer0(void) interrupt 1
+  84          {
+  85   1              TR0 = 0;
+  86   1              TH0 = 0xFC;
+  87   1              TL0 = 0x2B;
+  88   1      //      TR0 = 1;
+  89   1      
+  90   1              tick_count++;
+  91   1      
+  92   1              if(tick_count == 900)   // for creating 1sec delay, call 1ms 
+  93   1                      timer0_flag = 1;        // delay approx. 900 times.
+  94   1      }
+  95          
+  96          void timer1(void) interrupt 3
+  97          {
+  98   1              TH1 = 0xEC;   
+  99   1              TL1 = 0x78;
+ 100   1              TR1 = 0;
+ 101   1      
+ 102   1              tick_count1++;
+ 103   1              
+ 104   1              if(tick_count1 == 180) // for creating 1sec delay, call 1ms 
+ 105   1                      timer1_flag = 1;   // delay approx. 180 times.
+ 106   1       
+ 107   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    280    ----
+   CONSTANT SIZE    =     28    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     12       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V7.06   TIMER0_OVER                                                           07/27/2011 22:09:25 PAGE 3   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

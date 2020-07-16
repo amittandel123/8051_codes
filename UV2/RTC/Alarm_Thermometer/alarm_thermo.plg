@@ -1,0 +1,33 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+D:\Amit\E-Projects\8051Projects\UV2\RTC\Alarm_Thermometer\alarm_thermo.uv2
+Project File Date:  05/05/2012
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling alarm_thermo.c...
+alarm_thermo.c(74): warning C290: missing return value
+linking...
+Program Size: data=67.0 xdata=0 code=1747
+"alarm_thermo" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling alarm_thermo.c...
+alarm_thermo.c(74): warning C290: missing return value
+linking...
+Program Size: data=67.0 xdata=0 code=1747
+"alarm_thermo" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling alarm_thermo.c...
+alarm_thermo.c(75): warning C290: missing return value
+linking...
+Program Size: data=67.0 xdata=0 code=1748
+"alarm_thermo" - 0 Error(s), 1 Warning(s).
+</pre>
+</body>
+</html>

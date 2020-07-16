@@ -1,0 +1,36 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+D:\IBT\I2C_LIB\I2C_LIB.uv2
+Project File Date:  12/09/2008
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling EEPROM_24C256.C...
+EEPROM_24C256.C(2): warning C318: can't open file 'declare.h'
+EEPROM_24C256.C(14): warning C206: 'I2C_Start': missing function-prototype
+EEPROM_24C256.C(15): warning C206: 'send_Device_Address': missing function-prototype
+EEPROM_24C256.C(15): error C267: 'send_Device_Address': requires ANSI-style prototype
+compiling I2C.c...
+I2C.C(96): warning C173: missing return-expression
+I2C.C(98): warning C280: 'mData': unreferenced local variable
+Target not created
+Build target 'Target 1'
+compiling EEPROM_24C256.C...
+compiling I2C.c...
+I2C.C(96): warning C173: missing return-expression
+I2C.C(98): warning C280: 'mData': unreferenced local variable
+assembling I2C.src...
+creating library I2C_LIB.LIB...
+TRANSFER
+"EEPROM_24C256.obj",
+"I2C.obj" 
+TO "I2C_LIB.LIB"
+LIB51 LIBRARY MANAGER V4.24
+COPYRIGHT KEIL ELEKTRONIK GmbH 1987 - 2002
+"I2C_LIB.LIB" - 0 Error(s), 2 Warning(s).
+</pre>
+</body>
+</html>

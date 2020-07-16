@@ -1,0 +1,49 @@
+C51 COMPILER V9.06   READ_RFID                                                             10/04/2012 10:58:01 PAGE 1   
+
+
+C51 COMPILER V9.06, COMPILATION OF MODULE READ_RFID
+OBJECT MODULE PLACED IN Read_RFID.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Read_RFID.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include"LCD.h"
+   3          #include"Serial.h"
+   4          
+   5          unsigned char u, recd_byte;
+   6          void main()
+   7          {
+   8   1              Initialize_LCD();
+   9   1              Send_Command_LCD(0x80);                         // Set cursor at home location
+  10   1              Delay(5);
+  11   1              Display_Data_LCD("LCD is Ready");       // Message for testing LCD
+  12   1              Delay(5);
+  13   1              Send_Command_LCD(0xC0);
+  14   1              Delay(5);
+  15   1              Serial_Init();
+  16   1              while(1)
+  17   1              {
+  18   2                      recd_byte=Serial_Receive();
+  19   2                      for(u=0;u<12;u++)
+  20   2                      {
+  21   3                              Display_Char_LCD(recd_byte);    
+  22   3                              Delay(5);
+  23   3                      }
+  24   2              }
+  25   1      
+  26   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     77    ----
+   CONSTANT SIZE    =     13    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

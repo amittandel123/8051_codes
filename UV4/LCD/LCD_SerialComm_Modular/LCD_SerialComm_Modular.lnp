@@ -1,0 +1,6 @@
+"STARTUP.obj",
+"main.obj",
+"Serial.obj",
+"LCD.obj" 
+TO "LCD_SerialComm_Modular" 
+RAMSIZE(256) 

@@ -1,0 +1,152 @@
+C51 COMPILER V9.03   7SEGMENTTIMER                                                         11/18/2011 16:45:02 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE 7SEGMENTTIMER
+OBJECT MODULE PLACED IN 7SegmentTimer.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE 7SegmentTimer.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <stdio.h>
+   2          #include <reg51.h>
+   3          
+   4          void display();
+   5          void look_uptable(unsigned char display_val);
+   6          unsigned char val[4] = {"0000"};
+   7          
+   8          void initilise();
+   9          unsigned int tick_count, timer0_flag,tick_count1,timer1_flag,sec,sec1;
+  10          
+  11          void main()
+  12          {
+  13   1              unsigned int i,j;
+  14   1              initilise();
+  15   1              while(1)
+  16   1              {
+  17   2                      display();
+  18   2                      if(timer0_flag == 1)
+  19   2                      {
+  20   3                              timer0_flag = 0;
+  21   3      
+  22   3                              sec++;
+  23   3                              if(sec>99)
+  24   3                                      sec = 0;
+  25   3                              sec1 = sec;
+  26   3                              for(j=0;j<4;j++)
+  27   3                              {
+  28   4                                      i = sec1%10;
+  29   4                                      sec1 /= 10;
+  30   4                                      val[3-j] = i + 0x30;
+  31   4                              }
+  32   3                      }
+  33   2              }
+  34   1      }
+  35          
+  36          void initilise()
+  37          {
+  38   1              
+  39   1              TMOD = 0x11;             //mode 1 is selected for timer0 and timer1
+  40   1      
+  41   1                                       // 1ms delay
+  42   1              TH0 = 0xFC;              //as per 11.059MHZ clock
+  43   1              TL0 = 0x2B;
+  44   1              timer0_flag = 0;
+  45   1              TR0 = 1;
+  46   1              ET0 = 1;
+  47   1              EA = 1;
+  48   1              tick_count = tick_count1 =sec = sec1= 0;
+  49   1      }
+  50          
+  51          void timer0(void) interrupt 1
+  52          {
+  53   1              TR0 = 0;
+  54   1              TH0 = 0xFC;
+  55   1              TL0 = 0x2B;
+C51 COMPILER V9.03   7SEGMENTTIMER                                                         11/18/2011 16:45:02 PAGE 2   
+
+  56   1      //      TR0 = 1;
+  57   1      
+  58   1              tick_count++;
+  59   1      
+  60   1              if(tick_count == 700)           // for creating 1sec delay, call 1ms 
+  61   1              {
+  62   2                      timer0_flag = 1;        // delay approx. 900 times.
+  63   2                      tick_count = 0;
+  64   2              }
+  65   1              TR0 = 1;
+  66   1      }
+  67          
+  68          void display()
+  69          {
+  70   1              unsigned int x;
+  71   1      
+  72   1              for(x=0;x<4;x++)
+  73   1              {
+  74   2                      P2=0xFF;
+  75   2                      P1 = ~(1<<x);
+  76   2                      look_uptable(val[x]);
+  77   2              }
+  78   1      }
+  79          
+  80          void look_uptable(unsigned char display_val)
+  81          {
+  82   1              int i;
+  83   1              switch(display_val)
+  84   1              {
+  85   2                      case '0':P2=0xFC;
+  86   2                              break;
+  87   2                      
+  88   2                      case '1':P2=0x60;
+  89   2                              break;
+  90   2                      
+  91   2                      case '2':P2=0xDA;
+  92   2                              break;
+  93   2                      
+  94   2                      case '3':P2=0xF2;
+  95   2                              break;
+  96   2                      
+  97   2                      case '4':P2=0x66;
+  98   2                              break;
+  99   2                      
+ 100   2                      case '5':P2=0xB6;
+ 101   2                              break;
+ 102   2                      
+ 103   2                      case '6':P2=0xBE;
+ 104   2                              break;
+ 105   2                      
+ 106   2                      case '7':P2=0xE0;
+ 107   2                              break;
+ 108   2                      
+ 109   2                      case '8':P2=0xFE;
+ 110   2                              break;
+ 111   2                      
+ 112   2                      case '9':P2=0xF6;
+ 113   2                              break;
+ 114   2                      
+ 115   2                      default :
+ 116   2                              P2=0x00;        
+ 117   2              }
+C51 COMPILER V9.03   7SEGMENTTIMER                                                         11/18/2011 16:45:02 PAGE 3   
+
+ 118   1      
+ 119   1              for(i=0;i<200;i++)
+ 120   1              {
+ 121   2                      i=i;
+ 122   2              }                                        
+ 123   1      }
+ 124          
+ 125          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    378    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     16       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

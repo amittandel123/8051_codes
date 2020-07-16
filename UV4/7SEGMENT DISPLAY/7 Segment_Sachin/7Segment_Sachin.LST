@@ -1,0 +1,220 @@
+C51 COMPILER V9.03   7SEGMENT_SACHIN                                                       11/18/2011 15:39:23 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE 7SEGMENT_SACHIN
+OBJECT MODULE PLACED IN 7Segment_Sachin.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE 7Segment_Sachin.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include<stdio.h>
+   3          
+   4          sbit LED_A=P0^0;
+   5          sbit LED_B=P0^1;
+   6          sbit LED_C=P0^2;
+   7          sbit LED_D=P0^3;
+   8          
+   9          
+  10          void initialise();
+  11          void display_string();
+  12          void look_uptable(unsigned char display_val);
+  13          unsigned char val[4]= "8051";
+  14          
+  15          void main()
+  16          {
+  17   1                      initialise();
+  18   1                      while(1)
+  19   1                      {
+  20   2                              display_string();
+  21   2                      }
+  22   1      }
+  23          
+  24          void initialise()
+  25          {
+  26   1              P2=0xFF;
+  27   1              P1=0xFF;
+  28   1      }
+  29          
+  30          void display_string()
+  31          {
+  32   1              unsigned int x;
+  33   1      
+  34   1              for(x=0;x<4;x++)
+  35   1              {
+  36   2                      P2=0xFF;
+  37   2                      P0=0;
+  38   2                      P1 = ~(1<<x);
+  39   2                      look_uptable(val[x]);
+  40   2              }
+  41   1      }
+  42          
+  43          void look_uptable(unsigned char display_val)
+  44          {
+  45   1              int i;
+  46   1              switch(display_val)
+  47   1              {
+  48   2                      case '0':P2=~0x3F;
+  49   2                              break;
+  50   2                      
+  51   2                      case '1':P2=~0x06;
+  52   2                              break;
+  53   2                      
+  54   2                      case '2':P2=~0x5B;
+  55   2                              break;
+C51 COMPILER V9.03   7SEGMENT_SACHIN                                                       11/18/2011 15:39:23 PAGE 2   
+
+  56   2                      
+  57   2                      case '3':P2=~0x4F;
+  58   2                              break;
+  59   2                      
+  60   2                      case '4':P2=~0x66;
+  61   2                              break;
+  62   2                      
+  63   2                      case '5':P2=~0x6D;
+  64   2                              break;
+  65   2                      
+  66   2                      case '6':P2=~0x7D;
+  67   2                              break;
+  68   2                      
+  69   2                      case '7':P2=~0x07;
+  70   2                              break;
+  71   2                      
+  72   2                      case '8':P2=~0x7F;
+  73   2                              break;
+  74   2                      
+  75   2                      case '9':P2=~0x6F;
+  76   2                              break;
+  77   2                      
+  78   2                      case 'A':
+  79   2                      case 'a':
+  80   2                              P2=~0x77;
+  81   2                              break;
+  82   2                      case 'B':
+  83   2                      case 'b':
+  84   2                              P2=~0x7C;
+  85   2                              break;
+  86   2                      case 'C':
+  87   2                      case 'c':
+  88   2                              P2=~0x39;
+  89   2                              break;
+  90   2                      case 'D':
+  91   2                      case 'd':
+  92   2                              P2=~0x5E;
+  93   2                              break;
+  94   2                      case 'E':
+  95   2                      case 'e':
+  96   2                              P2=~0x79;
+  97   2                              break;
+  98   2                      case 'F':
+  99   2                      case 'f':
+ 100   2                              P2=~0x71;
+ 101   2                              break;
+ 102   2                      case 'G':
+ 103   2                      case 'g':
+ 104   2                              P2=~0x6F;
+ 105   2                              break;
+ 106   2                      case 'H':
+ 107   2                      case 'h':
+ 108   2                              P2=~0x74;
+ 109   2                              break;
+ 110   2                      case 'I':
+ 111   2                      case 'i':
+ 112   2                              P2=~0x30;
+ 113   2                              break;
+ 114   2                      case 'J':
+ 115   2                      case 'j':
+ 116   2                              P2=~0x0E;
+ 117   2                              break;
+C51 COMPILER V9.03   7SEGMENT_SACHIN                                                       11/18/2011 15:39:23 PAGE 3   
+
+ 118   2                      case 'K':
+ 119   2                      case 'k':
+ 120   2                              P2=~0x70;
+ 121   2                              break;
+ 122   2                      case 'L':
+ 123   2                      case 'l':
+ 124   2                              P2=~0x38;
+ 125   2                              break;
+ 126   2                      case 'M':
+ 127   2                      case 'm':
+ 128   2                              P2=~0x55;
+ 129   2                              break;
+ 130   2                      case 'N':
+ 131   2                      case 'n':
+ 132   2                              P2=~0x54;
+ 133   2                              break;
+ 134   2                      case 'O':
+ 135   2                      case 'o':
+ 136   2                              P2=~0x5C;
+ 137   2                              break;
+ 138   2                      case 'P':
+ 139   2                      case 'p':
+ 140   2                              P2=~0x73;
+ 141   2                              break;
+ 142   2                      case 'Q':
+ 143   2                      case 'q':
+ 144   2                              P2=~0x6B;
+ 145   2                              break;
+ 146   2                      case 'R':
+ 147   2                      case 'r':
+ 148   2                              P2=~0x50;
+ 149   2                              break;
+ 150   2                      case 'S':
+ 151   2                      case 's':
+ 152   2                              P2=~0x6D;
+ 153   2                              break;
+ 154   2                      case 'T':
+ 155   2                      case 't':
+ 156   2                              P2=~0x78;
+ 157   2                              break;
+ 158   2                      case 'U':
+ 159   2                      case 'u':
+ 160   2                              P2=~0x3E;
+ 161   2                              break;
+ 162   2                      case 'V':
+ 163   2                      case 'v':
+ 164   2                              P2=~0x1C;
+ 165   2                              break;
+ 166   2                      case 'W':
+ 167   2                      case 'w':
+ 168   2                              P2=~0x6A;
+ 169   2                              break;
+ 170   2                      case 'X':
+ 171   2                      case 'x':
+ 172   2                              P2=~0x76;
+ 173   2                              break;
+ 174   2                      case 'Y':
+ 175   2                      case 'y':
+ 176   2                              P2=~0x6E;       
+ 177   2                              break;
+ 178   2                      case 'Z':
+ 179   2                      case 'z':
+C51 COMPILER V9.03   7SEGMENT_SACHIN                                                       11/18/2011 15:39:23 PAGE 4   
+
+ 180   2                              P2=~0x5B;
+ 181   2                              break;
+ 182   2                      case '!':
+ 183   2                              P2=~0x40;
+ 184   2                              break;
+ 185   2                      
+ 186   2                      default :
+ 187   2                              P2=~0x00;       
+ 188   2              }
+ 189   1              for(i=0;i<200;i++);                                              
+ 190   1      }
+ 191          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    469    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

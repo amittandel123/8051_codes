@@ -1,0 +1,22 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+D:\Amit\E-Projects\8051Projects\sanjay\training\HW\SevenSegment\SevenSeg.uv2
+Project File Date:  07/30/2011
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+A51 MACRO ASSEMBLER V7.07 - SN: K1DZP-5IUSHE
+COPYRIGHT KEIL ELEKTRONIK GmbH 1987 - 2003
+"C:\Keil\C51\BIN\A51.EXE" "F:\training\HW\SevenSegment\STARTUP.A51" SET (SMALL) DEBUG PRINT(.\STARTUP.lst) OBJECT(.\STARTUP.obj) EP
+A51 FATAL ERROR -
+  FILE:       F:\training\HW\SevenSegment\STARTUP.A51
+  ERROR:      FILE DOES NOT EXIST
+A51 TERMINATED.
+Target not created
+</pre>
+</body>
+</html>

@@ -1,0 +1,37 @@
+C51 COMPILER V7.20   C_BANK0                                                               09/01/2006 16:11:13 PAGE 1   
+
+
+C51 COMPILER V7.20, COMPILATION OF MODULE C_BANK0
+OBJECT MODULE PLACED IN C_bank0.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE C_bank0.c DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*------------------------------------------------------------------------------
+   2          C_BANK0.C
+   3          
+   4          Copyright 1995-1996 Keil Software, Inc.
+   5          ------------------------------------------------------------------------------*/
+   6          
+   7          #include <stdio.h>
+   8          
+   9          extern void func2(void);
+  10          
+  11          void func0(void) {
+  12   1        printf("FUNCTION IN BANK 0 CALLS A FUNCTION IN BANK 2 \n");
+  13   1        func2();
+  14   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     12    ----
+   CONSTANT SIZE    =     48    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

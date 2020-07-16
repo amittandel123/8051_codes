@@ -1,0 +1,592 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fswiss\fcharset0 Arial;}}
+{\*\generator Msftedit 5.41.15.1515;}\viewkind4\uc1\pard\f0\fs20 / interfacing ds1307 with AT89C51\par
+\par
+#include<reg51.h>\par
+\par
+void _nop_(void);\par
+\par
+#define delay_us _nop_(); //generates 1 microsecond\par
+\par
+ \par
+\par
+#define LCD P1\par
+\par
+ \par
+\par
+ \par
+\par
+ \par
+\par
+sbit RS=P3^0; //connect p3.0 to rs pin of lcd\par
+\par
+sbit EN=P3^2; //connect p3.2 to en pin of lcd\par
+\par
+sbit RW=P3^1; //connect p3.1 to en pin of lcd\par
+\par
+ \par
+\par
+sbit SCK=P2^4; //serial clock pin\par
+\par
+sbit SDA=P2^5; //serial data pin\par
+\par
+ \par
+\par
+#define SCKHIGH  SCK=1;\par
+\par
+#define SCKLOW   SCK=0;\par
+\par
+#define SDAHIGH  SDA=1;\par
+\par
+#define SDALOW   SDA=0;\par
+\par
+ \par
+\par
+void integer_lcd(int);\par
+\par
+void init_lcd(void);\par
+\par
+void cmd_lcd(unsigned char);\par
+\par
+void write_lcd(unsigned char);\par
+\par
+void display_lcd(unsigned char *);\par
+\par
+void delay_ms(unsigned int);\par
+\par
+ \par
+\par
+void start(void);\par
+\par
+void stop(void);\par
+\par
+void send_byte(unsigned char);\par
+\par
+unsigned char receive_byte(unsigned char);\par
+\par
+void write_i2c(unsigned char,unsigned char,unsigned char);\par
+\par
+unsigned char read_i2c(unsigned char,unsigned char);\par
+\par
+ \par
+\par
+//clock[]=\{seconds,minutes,hours,day_of_week,date,month,year\};\par
+\par
+unsigned char clock[]=\{0x00,0x40,0x17,0x06,0x24,0x03,0x06\};\par
+\par
+unsigned char *s[]=\{"SUN","MON","TUE","WED","THU","FRI","SAT"\};\par
+\par
+unsigned char slave_ack,add=0,c,k;\par
+\par
+unsigned int num;\par
+\par
+ \par
+\par
+           \par
+\par
+                       \par
+\par
+           \par
+\par
+            // Real Time Clock Mode\par
+\par
+void main(void)\par
+\par
+\{\par
+\par
+init_lcd();\par
+\par
+//cmd_lcd(0x01);\par
+\par
+//display_lcd("UTL");\par
+\par
+//delay_ms(1000);\par
+\par
+            while(add<=6)   //update real time clock\par
+\par
+                        \{\par
+\par
+                        write_i2c(0xd0,add,clock[add]);\par
+\par
+                        add++;\par
+\par
+                        \}\par
+\par
+            //          stop();\par
+\par
+ \par
+\par
+     \par
+\par
+            while(1)\par
+\par
+            \{\par
+\par
+                c=read_i2c(0xd0,0x02);//read hours register and display on LCD\par
+\par
+                        write_lcd((c/16)+48);\par
+\par
+                        write_lcd((c%16)+48);\par
+\par
+                        write_lcd(':');\par
+\par
+                       \par
+\par
+                        c=read_i2c(0xd0,0x01);//read minutes register and display on LCD\par
+\par
+                        write_lcd((c/16)+48);\par
+\par
+                        write_lcd((c%16)+48);\par
+\par
+                        write_lcd(':');\par
+\par
+                       \par
+\par
+                        delay_ms(10);\par
+\par
+                        c=read_i2c(0xd0,0x00);//read seconds register and display on LCD\par
+\par
+                        write_lcd((c/16)+48);\par
+\par
+                        write_lcd((c%16)+48);\par
+\par
+                        write_lcd(' ');\par
+\par
+                       \par
+\par
+                        display_lcd(s[read_i2c(0xd0,0x03)]);//read day register and display\par
+\par
+                       \par
+\par
+                        cmd_lcd(0xc0);\par
+\par
+                        c=read_i2c(0xd0,0x04);//read date register and display on LCD\par
+\par
+                        write_lcd((c/16)+48);\par
+\par
+                        write_lcd((c%16)+48);\par
+\par
+                        write_lcd('/');\par
+\par
+                       \par
+\par
+                        c=read_i2c(0xd0,0x05);//read month register and display on LCD\par
+\par
+                        write_lcd((c/16)+48);\par
+\par
+                        write_lcd((c%16)+48);\par
+\par
+                        write_lcd('/');\par
+\par
+                       \par
+\par
+                        write_lcd('2');\par
+\par
+                        write_lcd('0');\par
+\par
+                        c=read_i2c(0xd0,0x06);//read year register and display on LCD\par
+\par
+                        write_lcd((c/16)+48);\par
+\par
+                        write_lcd((c%16)+48);\par
+\par
+                       \par
+\par
+                        delay_ms(100);\par
+\par
+                        cmd_lcd(0x01);\par
+\par
+                       \par
+\par
+                       \par
+\par
+            \}\par
+\par
+\}\par
+\par
+ \par
+\par
+                       \par
+\par
+//starts i2c, if both SCK & SDA are idle\par
+\par
+void start(void)\par
+\par
+\{ \par
+\par
+            if(SCK==0) //check SCK. if SCK busy, return else SCK idle\par
+\par
+                        return;\par
+\par
+            if(SDA==0) //check SDA. if SDA busy, return else SDA idle\par
+\par
+                        return;\par
+\par
+SDALOW //data low\par
+\par
+delay_us\par
+\par
+SCKLOW  //clock low   \par
+\par
+delay_us\par
+\par
+\}          \par
+\par
+ \par
+\par
+//stops i2c, releasing the bus\par
+\par
+void stop(void)\par
+\par
+\{        \par
+\par
+SDALOW //data low\par
+\par
+SCKHIGH //clock high\par
+\par
+delay_us\par
+\par
+SDAHIGH //data high\par
+\par
+delay_us\par
+\par
+\}\par
+\par
+ \par
+\par
+//transmits one byte of data to i2c bus\par
+\par
+void send_byte(unsigned char c)\par
+\par
+\{\par
+\par
+unsigned mask=0x80;\par
+\par
+            do  //transmits 8 bits\par
+\par
+            \{\par
+\par
+                        if(c&mask) //set data line accordingly(0 or 1)\par
+\par
+                                    SDAHIGH //data high\par
+\par
+                        else\par
+\par
+                                    SDALOW //data low\par
+\par
+                        SCKHIGH   //clock high\par
+\par
+                        delay_us\par
+\par
+                        SCKLOW   //clock low\par
+\par
+                        delay_us\par
+\par
+                        mask/=2;  //shift mask\par
+\par
+            \}while(mask>0);\par
+\par
+SDAHIGH  //release data line for acknowledge\par
+\par
+SCKHIGH  //send clock for acknowledge\par
+\par
+delay_us\par
+\par
+slave_ack=SDA; //read data pin for acknowledge\par
+\par
+SCKLOW  //clock low\par
+\par
+delay_us\par
+\par
+\}      \par
+\par
+ \par
+\par
+//receives one byte of data from i2c bus\par
+\par
+unsigned char receive_byte(unsigned char master_ack)\par
+\par
+\{\par
+\par
+unsigned char c=0,mask=0x80;\par
+\par
+            do  //receive 8 bits\par
+\par
+            \{\par
+\par
+                        SCKHIGH //clock high\par
+\par
+                        delay_us\par
+\par
+                                    if(SDA==1) //read data\par
+\par
+                                                c|=mask;  //store data\par
+\par
+                        SCKLOW  //clock low\par
+\par
+                        delay_us\par
+\par
+                        mask/=2; //shift mask\par
+\par
+            \}while(mask>0);\par
+\par
+            if(master_ack==1)\par
+\par
+                        SDAHIGH //don't acknowledge\par
+\par
+            else\par
+\par
+                        SDALOW //acknowledge\par
+\par
+SCKHIGH //clock high\par
+\par
+delay_us\par
+\par
+SCKLOW //clock low\par
+\par
+delay_us\par
+\par
+SDAHIGH //data high\par
+\par
+return c;\par
+\par
+\}\par
+\par
+ \par
+\par
+ \par
+\par
+ \par
+\par
+//writes one byte of data(c) to slave device(device_id) at given address(location)\par
+\par
+void write_i2c(unsigned char device_id,unsigned char location,unsigned char c)\par
+\par
+\{\par
+\par
+            do\par
+\par
+            \{\par
+\par
+                        start();      //starts i2c bus\par
+\par
+                        send_byte(device_id); //select slave device\par
+\par
+                        if(slave_ack==1)  //if acknowledge not received, stop i2c bus\par
+\par
+                                    stop();\par
+\par
+            \}while(slave_ack==1); //loop until acknowledge is received\par
+\par
+send_byte(location); //send address location\par
+\par
+send_byte(c); //send data to i2c bus\par
+\par
+stop(); //stop i2c bus\par
+\par
+delay_ms(4);\par
+\par
+\}      \par
+\par
+ \par
+\par
+//reads one byte of data(c) from slave device(device_id) at given address(location)\par
+\par
+unsigned char read_i2c(unsigned char device_id,unsigned char location)\par
+\par
+\{\par
+\par
+unsigned char c;\par
+\par
+            do\par
+\par
+            \{\par
+\par
+                        start();   //starts i2c bus  \par
+\par
+                        send_byte(device_id); //select slave device\par
+\par
+                        if(slave_ack==1) //if acknowledge not received, stop i2c bus\par
+\par
+                                    stop();\par
+\par
+            \}while(slave_ack==1); //loop until acknowledge is received\par
+\par
+send_byte(location);  //send address location     \par
+\par
+stop(); //stop i2c bus\par
+\par
+start(); //starts i2c bus  \par
+\par
+send_byte(device_id+1); //select slave device in read mode\par
+\par
+c=receive_byte(1); //receive data from i2c bus\par
+\par
+stop(); //stop i2c bus\par
+\par
+return c;\par
+\par
+\}      \par
+\par
+ \par
+\par
+/*display of 16bit(integers) values on LCD\par
+\par
+void integer_lcd(int n)\par
+\par
+\{\par
+\par
+unsigned char c[6];\par
+\par
+unsigned int i=0;\par
+\par
+  if(n<0)\par
+\par
+  \{\par
+\par
+    write_lcd('-');\par
+\par
+    n=-n;\par
+\par
+  \}\par
+\par
+  if(n==0)\par
+\par
+    write_lcd('0');\par
+\par
+  while(n>0)//Split integer to 2 bytes and send on 8bit line.\par
+\par
+  \{\par
+\par
+    c[i++]=(n%10)+48;\par
+\par
+    n/=10;\par
+\par
+  \}\par
+\par
+  while(i-->=1)\par
+\par
+    write_lcd(c[i]);\par
+\par
+\}*/\par
+\par
+ \par
+\par
+//initialize lcd\par
+\par
+void init_lcd(void)\par
+\par
+\{                           \par
+\par
+delay_ms(10); //delay 10 milliseconds\par
+\par
+cmd_lcd(0x0e); //lcd on, cursor on\par
+\par
+delay_ms(10);\par
+\par
+cmd_lcd(0x38); //8 bit initialize, 5x7 character font, 16x2 display\par
+\par
+delay_ms(10);\par
+\par
+cmd_lcd(0x06); //right shift cursor automatically after each character is displayed\par
+\par
+delay_ms(10);\par
+\par
+cmd_lcd(0x01); //clear lcd\par
+\par
+delay_ms(10);\par
+\par
+cmd_lcd (0x80);\par
+\par
+\}\par
+\par
+ \par
+\par
+//transmit command or instruction to lcd\par
+\par
+void cmd_lcd(unsigned char c)\par
+\par
+\{\par
+\par
+EN=1;\par
+\par
+RW=0;//set enable pin\par
+\par
+RS=0; //clear register select pin\par
+\par
+LCD=c; //load 8 bit data\par
+\par
+EN=0; //clear enable pin\par
+\par
+delay_ms(2); //delay 2 milliseconds\par
+\par
+\}\par
+\par
+ \par
+\par
+//transmit a character to be displayed on lcd\par
+\par
+void write_lcd(unsigned char c)\par
+\par
+\{\par
+\par
+ \par
+\par
+EN=1; //set enable pin\par
+\par
+RW=0;\par
+\par
+RS=1; //set register select pin\par
+\par
+LCD=c;  //load 8 bit data\par
+\par
+EN=0; //clear enable pin\par
+\par
+delay_ms(2); //delay 2 milliseconds\par
+\par
+ \par
+\par
+           \par
+\par
+\}\par
+\par
+ \par
+\par
+//transmit a string to be displayed on lcd\par
+\par
+void display_lcd(unsigned char *s)\par
+\par
+\{\par
+\par
+while(*s)\par
+\par
+write_lcd(*s++);\par
+\par
+\}\par
+\par
+ \par
+\par
+//generates delay in milli seconds\par
+\par
+void delay_ms(unsigned int i)\par
+\par
+\{\par
+\par
+unsigned int j;\par
+\par
+            while(i-->0)\par
+\par
+            \{\par
+\par
+                        for(j=0;j<500;j++)\par
+\par
+                        \{\par
+\par
+                                    ;\par
+\par
+                        \}\par
+\par
+            \}\par
+\par
+\}   \par
+}
+ 

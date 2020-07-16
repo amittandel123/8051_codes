@@ -1,0 +1,308 @@
+; .\main.SRC generated from: main.c
+; COMPILER INVOKED BY:
+;        C:\Keil\C51\BIN\C51.EXE main.c LARGE BROWSE DEBUG OBJECTEXTEND SRC(.\main.SRC)
+
+$NOMOD51
+
+NAME	MAIN
+
+P0	DATA	080H
+P1	DATA	090H
+P2	DATA	0A0H
+P3	DATA	0B0H
+T0	BIT	0B0H.4
+AC	BIT	0D0H.6
+T1	BIT	0B0H.5
+EA	BIT	0A8H.7
+IE	DATA	0A8H
+RD	BIT	0B0H.7
+ES	BIT	0A8H.4
+IP	DATA	0B8H
+RI	BIT	098H.0
+INT0	BIT	0B0H.2
+CY	BIT	0D0H.7
+TI	BIT	098H.1
+INT1	BIT	0B0H.3
+PS	BIT	0B8H.4
+SP	DATA	081H
+OV	BIT	0D0H.2
+WR	BIT	0B0H.6
+SBUF	DATA	099H
+PCON	DATA	087H
+SCON	DATA	098H
+TMOD	DATA	089H
+TCON	DATA	088H
+IE0	BIT	088H.1
+IE1	BIT	088H.3
+B	DATA	0F0H
+ACC	DATA	0E0H
+ET0	BIT	0A8H.1
+ET1	BIT	0A8H.3
+TF0	BIT	088H.5
+TF1	BIT	088H.7
+RB8	BIT	098H.2
+TH0	DATA	08CH
+EX0	BIT	0A8H.0
+IT0	BIT	088H.0
+TH1	DATA	08DH
+TB8	BIT	098H.3
+EX1	BIT	0A8H.2
+IT1	BIT	088H.2
+P	BIT	0D0H.0
+SM0	BIT	098H.7
+TL0	DATA	08AH
+SM1	BIT	098H.6
+TL1	DATA	08BH
+SM2	BIT	098H.5
+PT0	BIT	0B8H.1
+PT1	BIT	0B8H.3
+RS0	BIT	0D0H.3
+TR0	BIT	088H.4
+RS1	BIT	0D0H.4
+TR1	BIT	088H.6
+PX0	BIT	0B8H.0
+PX1	BIT	0B8H.2
+DPH	DATA	083H
+DPL	DATA	082H
+REN	BIT	098H.4
+RXD	BIT	0B0H.0
+TXD	BIT	0B0H.1
+F0	BIT	0D0H.5
+PSW	DATA	0D0H
+?PR?board_init?MAIN  SEGMENT CODE 
+?PR?main?MAIN        SEGMENT CODE 
+?XD?main?MAIN        SEGMENT XDATA OVERLAYABLE 
+?CO?MAIN             SEGMENT CODE 
+	EXTRN	CODE (writeCommand_LCD)
+	EXTRN	CODE (_SendCommand)
+	EXTRN	CODE (_writeData_LCD)
+	EXTRN	CODE (_display_data)
+	EXTRN	CODE (initialise_LCD)
+	EXTRN	CODE (_delay)
+	EXTRN	CODE (?C_STARTUP)
+	EXTRN	CODE (?C?COPY)
+	PUBLIC	main
+	PUBLIC	board_init
+
+	RSEG  ?XD?main?MAIN
+?main?BYTE:
+          i?140:   DS   1
+     myChar?141:   DS   48
+
+	RSEG  ?CO?MAIN
+?SC_0:
+	DB  '*' ,'*' ,'*' ,'*' ,' ' ,'S' ,'a' ,'c' ,'h' ,'i' 
+	DB  'n' ,' ' ,'*' ,'*' ,'*' ,'*' ,000H
+
+?SC_17:
+	DB  ' ' ,'S' ,'a' ,'c' ,'h' ,'i' ,'n' ,' ' ,'b' ,'a' 
+	DB  'm' ,'a' ,'n' ,'e' ,000H
+
+_?ix1000:
+	DB	01FH
+	DB	010H
+	DB	01FH
+	DB	001H
+	DB	01FH
+	DB	000H
+	DB	000H
+	DB	000H
+	DB	00EH
+	DB	011H
+	DB	011H
+	DB	01FH
+	DB	011H
+	DB	000H
+	DB	000H
+	DB	000H
+	DB	01FH
+	DB	010H
+	DB	010H
+	DB	010H
+	DB	01FH
+	DB	000H
+	DB	000H
+	DB	000H
+	DB	011H
+	DB	011H
+	DB	01FH
+	DB	011H
+	DB	011H
+	DB	000H
+	DB	000H
+	DB	000H
+	DB	01FH
+	DB	004H
+	DB	004H
+	DB	004H
+	DB	01FH
+	DB	000H
+	DB	000H
+	DB	000H
+	DB	011H
+	DB	019H
+	DB	015H
+	DB	013H
+	DB	011H
+	DB	000H
+	DB	000H
+	DB	000H
+
+; #include <reg51.h>
+; #include "LCD.H"
+; #include "COMMON.H"
+; #include "Keydata.h"
+; 
+; void board_init(void)
+
+	RSEG  ?PR?board_init?MAIN
+board_init:
+	USING	0
+			; SOURCE LINE # 6
+; {
+			; SOURCE LINE # 7
+; 	initialise_LCD();
+			; SOURCE LINE # 8
+	LJMP 	initialise_LCD
+; END OF board_init
+
+; }
+; 
+; void main(void)
+
+	RSEG  ?PR?main?MAIN
+main:
+	USING	0
+			; SOURCE LINE # 11
+; {
+			; SOURCE LINE # 12
+; 
+; 	unsigned char i,myChar[6][8]={{31,16,31,01,31,00,00,00},
+			; SOURCE LINE # 14
+	MOV  	R0,#LOW (myChar?141)
+	MOV  	R4,#HIGH (myChar?141)
+	MOV  	R5,#01H
+	MOV  	R3,#0FFH
+	MOV  	R2,#HIGH (_?ix1000)
+	MOV  	R1,#LOW (_?ix1000)
+	MOV  	R6,#00H
+	MOV  	R7,#030H
+	LCALL	?C?COPY
+; 								{14,17,17,31,17,00,00,00},
+; 								{31,16,16,16,31,00,00,00},
+; 								{17,17,31,17,17,00,00,00},
+; 								{31,04,04,04,31,00,00,00},
+; 								{17,25,21,19,17,00,00,00}};
+; 	board_init();
+			; SOURCE LINE # 20
+	LCALL	board_init
+; 	writeCommand_LCD();
+			; SOURCE LINE # 21
+	LCALL	writeCommand_LCD
+; 	SendCommand(0x80);// select line 1 on LCD
+			; SOURCE LINE # 22
+	MOV  	R7,#080H
+	LCALL	_SendCommand
+; 	delay(5);
+			; SOURCE LINE # 23
+	MOV  	R7,#05H
+	MOV  	R6,#00H
+	LCALL	_delay
+; 
+; 	writeData_LCD("**** Sachin ****",16);
+			; SOURCE LINE # 25
+	MOV  	R3,#0FFH
+	MOV  	R2,#HIGH (?SC_0)
+	MOV  	R1,#LOW (?SC_0)
+	MOV  	R5,#010H
+	MOV  	R4,#00H
+	LCALL	_writeData_LCD
+; 		
+; 	SendCommand(0xC0);// select line 2 n LCD
+			; SOURCE LINE # 27
+	MOV  	R7,#0C0H
+	LCALL	_SendCommand
+; 	delay(5);
+			; SOURCE LINE # 28
+	MOV  	R7,#05H
+	MOV  	R6,#00H
+	LCALL	_delay
+; 	
+; 	writeData_LCD(" Sachin bamane",14);
+			; SOURCE LINE # 30
+	MOV  	R3,#0FFH
+	MOV  	R2,#HIGH (?SC_17)
+	MOV  	R1,#LOW (?SC_17)
+	MOV  	R5,#0EH
+	MOV  	R4,#00H
+	LCALL	_writeData_LCD
+; 	P0=0xFF;
+			; SOURCE LINE # 31
+	MOV  	P0,#0FFH
+; 	SendCommand(0x02);
+			; SOURCE LINE # 32
+	MOV  	R7,#02H
+	LCALL	_SendCommand
+; 	delay(5);
+			; SOURCE LINE # 33
+	MOV  	R7,#05H
+	MOV  	R6,#00H
+	LCALL	_delay
+?C0002:
+; 	
+; 	while(1)
+			; SOURCE LINE # 35
+; 	{
+			; SOURCE LINE # 36
+; //		if(P0!=0xFF)
+; 		{
+			; SOURCE LINE # 38
+; //			if(P0==0x7F)
+; 			{
+			; SOURCE LINE # 40
+; 				for(i=0;i<8;i++)
+			; SOURCE LINE # 41
+	CLR  	A
+	MOV  	DPTR,#i?140
+	MOVX 	@DPTR,A
+?C0004:
+	MOV  	DPTR,#i?140
+	MOVX 	A,@DPTR
+	MOV  	R7,A
+	CLR  	C
+	SUBB 	A,#08H
+	JNC  	?C0002
+; 				{
+			; SOURCE LINE # 42
+; 					SendCommand(0x80 + i);// select line 1 on LCD
+			; SOURCE LINE # 43
+	MOV  	A,R7
+	ADD  	A,#080H
+	MOV  	R7,A
+	LCALL	_SendCommand
+; 					delay(5);
+			; SOURCE LINE # 44
+	MOV  	R7,#05H
+	MOV  	R6,#00H
+	LCALL	_delay
+; 					display_data(i);
+			; SOURCE LINE # 45
+	MOV  	DPTR,#i?140
+	MOVX 	A,@DPTR
+	MOV  	R7,A
+	LCALL	_display_data
+; 					delay(5);
+			; SOURCE LINE # 46
+	MOV  	R7,#05H
+	MOV  	R6,#00H
+	LCALL	_delay
+; 				}
+			; SOURCE LINE # 47
+	MOV  	DPTR,#i?140
+	MOVX 	A,@DPTR
+	INC  	A
+	MOVX 	@DPTR,A
+	SJMP 	?C0004
+; END OF main
+
+	END

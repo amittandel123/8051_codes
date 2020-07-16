@@ -1,0 +1,141 @@
+C51 COMPILER V9.03   LCD                                                                   11/09/2011 15:26:43 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN LCD.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LCD.C BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1                                                                                                  //user defined header
+   2          
+   3                  #include<reg51.h>
+   4                  #include"LCD.h"
+   5          //========================================================================================================
+             -===================
+   6                                                                                                  //variable local
+   7          
+   8                                                                                                                  //8 bit data to be displayed on LCD
+   9          //========================================================================================================
+             -====================
+  10          
+  11                                                                                                  //function body
+  12            sbit EN=P2^2;
+  13            sbit RS=P2^0;
+  14            sbit RW=P2^1;
+  15          //ENABLE PIN 0
+  16          //RS     PIN 2
+  17                                                                                                          
+  18                  void LCD_delay(unsigned int ms)
+  19                  {
+  20   1                      unsigned int n;
+  21   1                      unsigned int i;
+  22   1                      unsigned char LCD_DELAY = 100;                    
+  23   1                      for (n=0; n<ms; n++)
+  24   1                              {
+  25   2                                      for (i=0; i<LCD_DELAY; i++);
+  26   2                              }     
+  27   1              }
+  28          //--------------------------------------------------------------------------------------------------------
+             --------------------
+  29          
+  30                  void LCD_command(unsigned char command)                                 //Command mode
+  31                          {
+  32   1                              
+  33   1                              RS=0;
+  34   1                              EN=1;
+  35   1                              P1=command;
+  36   1                              LCD_delay(10);
+  37   1                              EN=0;
+  38   1                              LCD_delay(10);
+  39   1      
+  40   1                      }
+  41          //--------------------------------------------------------------------------------------------------------
+             --------------------
+  42          
+  43                  void LCD_putc(unsigned char ascii)                                      //Data Mode
+  44                          {
+  45   1      
+  46   1                                      
+  47   1                              RS=1;
+  48   1                              EN=1;
+  49   1                              P1=ascii;
+  50   1                              LCD_delay(10);
+  51   1                              EN=0;
+C51 COMPILER V9.03   LCD                                                                   11/09/2011 15:26:43 PAGE 2   
+
+  52   1                              LCD_delay(10);
+  53   1      
+  54   1      
+  55   1                      }
+  56          //--------------------------------------------------------------------------------------------------------
+             --------------------
+  57          
+  58                  void LCD_puts(unsigned char *lcd_string)   
+  59                          {                                                                                                                                               
+  60   1                                      while (*lcd_string)                             //first row data
+  61   1                                              {                                                                                                                                                                                          
+  62   2                                                      LCD_putc(*lcd_string++);
+  63   2                                              }                                                                                       
+  64   1                      }
+  65          //--------------------------------------------------------------------------------------------------------
+             --------------------
+  66                  
+  67                  void LCD_row_col(unsigned char row ,unsigned char col)
+  68                          {
+  69   1                              switch(row)
+  70   1                                      {
+  71   2                                              case 1:         LCD_command(0x80+(col-1));
+  72   2                                                                      break;
+  73   2                                                                              
+  74   2                                              case 2:         LCD_command(0xC0+(col-1));
+  75   2                                                                      break;
+  76   2      
+  77   2                                              default:        break;  
+  78   2      
+  79   2                                      }                                
+  80   1                      }
+  81          
+  82          
+  83          
+  84          
+  85          
+  86          
+  87          //--------------------------------------------------------------------------------------------------------
+             --------------------
+  88          
+  89                  void LCD_init()
+  90                          {       
+  91   1                              RW=0;
+  92   1                              LCD_command(0x01);                                                                                                      //Clear Display
+  93   1                              LCD_delay(20);                                                                                                          //Let LCD Driver stabilize
+  94   1      //                      LCD_command(0x33);                                                                                                      //8 bit mode, 8 bit mode
+  95   1      //                      LCD_command(0x33);                                                                                                      //8 bit mode, 8 bit mode
+  96   1      //                      LCD_command(0x32);                                                                                                      //8 bit mode, 4 bit mode
+  97   1                              LCD_command(0x38);                                                                                                      //4 bit mode, 2 line mode
+  98   1                              LCD_command(0x0C);                                                                                                      //Display Cursor (Underline and Blink)
+  99   1                              LCD_command(0x03);                                                                                                      //Display and Cursor Home
+ 100   1                              LCD_delay(20);                                                                                                          //Display and Cursor Home requres more time
+ 101   1                              LCD_command(0x01);                                                                                                      //Clear Display
+ 102   1                              LCD_delay(20);                                                                                                          //Clear Display requires more time
+ 103   1                      }
+ 104          //--------------------------------------------------------------------------------------------------------
+             --------------------
+ 105          
+ 106          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V9.03   LCD                                                                   11/09/2011 15:26:43 PAGE 3   
+
+   CODE SIZE        =    180    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
